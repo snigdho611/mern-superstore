@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
 
-function App() {
+const App = () => {
+  // return (
+  //   <div className={classes.flex_center}>
+  //     <h3 style={{ textAlign: "center" }}>Please log in to continue</h3>
+  //     <div className={classes.flex_center}>
+  //       <div>
+  //         <div className={classes.flex_row}>
+  //           <div style={{ width: "150px" }}>
+  //             <label>Username:</label>
+  //           </div>
+  //           <div style={{ width: "210px" }}>
+  //             <input className={classes.inputBox} type="text" />
+  //           </div>
+  //         </div>
+  //         <div className={classes.flex_row}>
+  //           <div style={{ width: "150px" }}>
+  //             <label>Password:</label>
+  //           </div>
+  //           <div style={{ width: "210px" }}>
+  //             <input className={classes.inputBox} type="text" />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index path="/" element={<Login />} />
+        <Route index path="/home" element={<Navbar />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

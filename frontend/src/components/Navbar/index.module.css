@@ -1,0 +1,19 @@
+.main {
+  width: 100%;
+  position: sticky;
+  top: 5px;
+  background-color: rgb(28, 28, 54);
+  height: 80px;
+}
+
+.main_child {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.navlink {
+  color: azure;
+  margin: 25px;
+}
