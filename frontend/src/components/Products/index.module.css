@@ -11,3 +11,13 @@
 .paginateBtn:hover {
   background-color: #62c6ee;
 }
+
+.tinput {
+  margin: 15px;
+  font-size: 20px;
+  padding: 5px 15px;
+}
+
+.tradio {
+  margin: 15px 10px;
+}
