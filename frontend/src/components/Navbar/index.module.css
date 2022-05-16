@@ -1,19 +1,28 @@
 .main {
   width: 100%;
   position: sticky;
-  top: 5px;
-  background-color: rgb(28, 28, 54);
+  top: 0px;
+  background-color: #1c1c36;
   height: 80px;
 }
 
 .main_child {
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 50%;
   margin: 0 auto;
+  justify-content: center;
 }
 
 .navlink {
   color: azure;
   margin: 25px;
+  cursor: pointer;
+  padding: 5px;
+  transition: 0.25s background-color;
+  border-radius: 5px;
+}
+
+.navlink:hover {
+  background-color: #5a5acc;
 }
