@@ -13,11 +13,16 @@
 }
 
 .cart_btn {
-  width: 100px;
+  min-width: 50px;
+  min-height: 50px;
   height: fit-content;
   text-decoration: none;
-  background-color: var(--nav_background_secondary);
   text-align: center;
+  background-image: url("https://www.freeiconspng.com/uploads/basket-cart-icon-27.png");
+  background-size: contain;
+  background-color: var(--nav_background_secondary);
+  margin: 10px;
+  border: 2px solid azure;
 }
 .image_container {
   width: 50%;

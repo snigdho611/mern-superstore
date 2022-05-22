@@ -4,7 +4,7 @@ import classes from './index.module.css'
 import { useDispatch } from 'react-redux';
 
 const ProductList = () => {
-    const [allData, setAllData] = useState();
+    const [allData, setAllData] = useState([]);
     const [btnCount, setBtnCount] = useState({
         count: 0,
         range: []
@@ -15,7 +15,6 @@ const ProductList = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // fetch(process.env.REACT_APP_PRODUCT_API, { method: "GET" })
         fetch(process.env.REACT_APP_LARAVEL_API, { method: "GET" })
             .then((response) => {
                 return response.json();
@@ -38,7 +37,6 @@ const ProductList = () => {
     const paginateChange = (index) => {
         setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
     };
-
 
     useEffect(() => {
     }, [btnCount.range])

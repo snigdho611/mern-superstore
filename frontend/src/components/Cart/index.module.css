@@ -1,0 +1,10 @@
+.dataCell {
+  text-align: center;
+  background-color: var(--nav_background_secondary);
+  border: 1px solid green;
+}
+
+.dataHead {
+  background-color: green;
+  color: azure;
+}

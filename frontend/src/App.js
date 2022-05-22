@@ -2,7 +2,6 @@ import "./App.css";
 import ProductList from "components/ProductList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "components/Navbar";
-import { useSelector } from "react-redux";
 import Header from "components/Header";
 import Login from "components/Login";
 import Cart from "components/Cart";
