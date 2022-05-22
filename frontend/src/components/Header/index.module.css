@@ -1,12 +1,29 @@
 .main {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   height: 100px;
   background-color: var(--nav_background);
   position: sticky;
   top: 0;
 }
+.cart_container {
+  width: 50%;
+  display: flex;
+  justify-content: right;
+}
 
+.cart_btn {
+  width: 100px;
+  height: fit-content;
+  text-decoration: none;
+  background-color: var(--nav_background_secondary);
+  text-align: center;
+}
+.image_container {
+  width: 50%;
+  display: flex;
+  justify-content: right;
+}
 .image {
   height: 80px;
 }

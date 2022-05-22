@@ -22,6 +22,6 @@
 }
 
 .main_a:hover {
-  color: #1b4d89;
-  background-color: #50d2fa;
+  color: var(--font_color_basic);
+  background-color: var(--nav_background_secondary);
 }

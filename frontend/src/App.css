@@ -1,6 +1,8 @@
 :root {
   --nav_background: #558d67;
+  --nav_background_secondary: #a1e7b3;
   --main_background: #cdfff0;
+  --font_color_basic: #1b4d89;
 }
 
 body {

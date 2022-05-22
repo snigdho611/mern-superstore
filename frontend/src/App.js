@@ -4,11 +4,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "components/Navbar";
 import { useSelector } from "react-redux";
 import Header from "components/Header";
-import Login from "Login";
+import Login from "components/Login";
+import Cart from "components/Cart";
 
 function App() {
-  const counter = useSelector((state) => state.counter);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -54,6 +53,16 @@ function App() {
             <>
               <Header />
               <Navbar />
+            </>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <>
+              <Header />
+              <Navbar />
+              <Cart />
             </>
           }
         />
