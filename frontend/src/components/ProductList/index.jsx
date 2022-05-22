@@ -72,7 +72,6 @@ const ProductList = () => {
                 <button onClick={() => { paginateInc() }}>{"<"}</button>
                 {Array(btnCount.count)
                     .fill()
-                    // .slice(btnCount.range[0], btnCount.range[1])
                     .map((_, i) => {
                         if (i >= btnCount.range[0] && i < btnCount.range[1]) {
                             return <button key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
@@ -80,11 +79,6 @@ const ProductList = () => {
                             return null
                         }
                     })}
-
-                {/* {console.log(Array(btnCount.count)
-                    .fill(btnCount.range[0], btnCount.range[1])
-                    .slice(btnCount.range[0], btnCount.range[1])
-                )} */}
                 {btnCount.range[1] !== btnCount.count ? <button onClick={() => { paginateDec() }}>{">"}</button> : null}
             </div>
         </div>

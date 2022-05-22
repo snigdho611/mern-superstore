@@ -1,5 +1,6 @@
 .main__container {
   position: fixed;
+  background-color: var(--nav_background);
 }
 
 .main {
@@ -8,13 +9,19 @@
   flex-direction: column;
   height: 100vh;
   width: 250px;
-  gap: 20px;
 }
 
-a {
+.main_a {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
   font-size: 20px;
-  color: black;
+  color: azure;
+  transition: 0.5s background-color, 0.5s color;
+  padding: 10px 0px;
+}
+
+.main_a:hover {
+  color: #1b4d89;
+  background-color: #50d2fa;
 }
