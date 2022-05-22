@@ -24,7 +24,7 @@ const ProductList = () => {
                 setBtnCount(prevState => ({
                     ...prevState,
                     count: Math.ceil(response.length / 8),
-                    range: [0, 8]
+                    range: [0, 3]
                 }));
                 setDataToShow(response.slice(0, 8));
             })
@@ -72,7 +72,14 @@ const ProductList = () => {
                 })}
             </div>
             <div className={classes.pagination}>
-                <button className={classes.pagination_btn} onClick={() => { paginateInc() }}>{"<"}</button>
+                {<button
+                    className={classes.pagination_btn}
+                    style={btnCount.range[0] !== 0 ? null : { backgroundColor: "gray", color: "azure" }}
+                    onClick={btnCount.range[0] !== 0 ?
+                        () => { paginateInc() }
+                        : null}>
+                    {"<"}
+                </button>}
                 {Array(btnCount.count)
                     .fill()
                     .map((_, i) => {
@@ -82,13 +89,12 @@ const ProductList = () => {
                             return null
                         }
                     })}
-                {btnCount.range[1] !== btnCount.count ?
-                    <button
-                        className={classes.pagination_btn}
-                        onClick={() => { paginateDec() }}>
-                        {">"}
-                    </button> :
-                    null}
+                <button
+                    className={classes.pagination_btn}
+                    style={btnCount.range[1] !== btnCount.count ? null : { backgroundColor: "gray", color: "azure" }}
+                    onClick={btnCount.range[1] !== btnCount.count ? () => { paginateDec() } : null}>
+                    {">"}
+                </button>
             </div>
         </div>
     )
