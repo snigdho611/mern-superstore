@@ -1,0 +1,12 @@
+.tinput {
+  width: 300px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.tinput:focus {
+  outline: none;
+  background-color: pink;
+}

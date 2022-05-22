@@ -5,8 +5,9 @@ import Navbar from "components/Navbar";
 import Header from "components/Header";
 import Login from "components/Login";
 import Cart from "components/Cart";
+import Form from "components/Form";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -14,6 +15,7 @@ function App() {
           path="/"
           element={
             <>
+              <Header />
               <Login />
             </>
           }
@@ -52,6 +54,7 @@ function App() {
             <>
               <Header />
               <Navbar />
+              <Form />
             </>
           }
         />
@@ -68,6 +71,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
