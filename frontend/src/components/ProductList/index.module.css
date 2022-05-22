@@ -1,5 +1,5 @@
 .main {
-  margin-left: 200px;
+  margin-left: 300px;
 }
 
 .pagination {
@@ -7,6 +7,7 @@
   flex-direction: row;
   justify-content: center;
   gap: 5px;
+  margin: 40px 0px;
 }
 
 .list {
@@ -15,4 +16,6 @@
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+  margin: 40px 0px;
+  height: 600px;
 }
