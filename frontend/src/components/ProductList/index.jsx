@@ -4,7 +4,10 @@ import classes from './index.module.css'
 
 const ProductList = () => {
     const [allData, setAllData] = useState();
-    const [btnCount, setBtnCount] = useState(0);
+    const [btnCount, setBtnCount] = useState({
+        count: 0,
+        range: []
+    });
     const [dataToShow, setDataToShow] = useState([]);
 
     useEffect(() => {
@@ -14,7 +17,11 @@ const ProductList = () => {
             })
             .then((response) => {
                 setAllData(response);
-                setBtnCount(Math.ceil(response.length / 8));
+                setBtnCount(prevState => ({
+                    ...prevState,
+                    count: Math.ceil(response.length / 8),
+                    range: [0, 8]
+                }));
                 setDataToShow(response.slice(0, 8));
             })
             .catch((err) => {
@@ -22,12 +29,37 @@ const ProductList = () => {
                 setDataToShow([]);
             });
     }, []);
+    // console.log(btnCount)
 
     const paginateChange = (index) => {
         setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
         // console.log((index + 1) * 5 - 5, (index + 1) * 5);
     };
 
+    const paginateInc = () => {
+        if (btnCount.range[0] === 0) {
+            //
+        } else {
+            setBtnCount(prevState => ({ ...prevState, range: [btnCount.range[0] - 1, btnCount.range[1] - 1] }))
+            console.log(btnCount);
+
+        }
+    }
+
+    useEffect(() => {
+
+    }, [btnCount.range])
+
+    const paginateDec = () => {
+        // console.log("BTN")
+        if (btnCount.range[0] === btnCount.count) {
+            // console.log(btnCount.range);
+        } else {
+            setBtnCount(prevState => ({ ...prevState, range: [prevState.range[0] + 1, prevState.range[1] + 1] }))
+            console.log(btnCount);
+
+        }
+    }
 
     return (
         <div className={classes.main}>
@@ -37,11 +69,23 @@ const ProductList = () => {
                 })}
             </div>
             <div className={classes.pagination}>
-                {Array(btnCount)
+                <button onClick={() => { paginateInc() }}>{"<"}</button>
+                {Array(btnCount.count)
                     .fill()
+                    // .slice(btnCount.range[0], btnCount.range[1])
                     .map((_, i) => {
-                        return <button key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
+                        if (i >= btnCount.range[0] && i < btnCount.range[1]) {
+                            return <button key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
+                        } else {
+                            return null
+                        }
                     })}
+
+                {/* {console.log(Array(btnCount.count)
+                    .fill(btnCount.range[0], btnCount.range[1])
+                    .slice(btnCount.range[0], btnCount.range[1])
+                )} */}
+                {btnCount.range[1] !== btnCount.count ? <button onClick={() => { paginateDec() }}>{">"}</button> : null}
             </div>
         </div>
     )
