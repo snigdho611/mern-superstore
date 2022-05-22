@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard';
 import classes from './index.module.css'
+import { useDispatch } from 'react-redux';
 
 const ProductList = () => {
     const [allData, setAllData] = useState();
@@ -10,8 +11,12 @@ const ProductList = () => {
     });
     const [dataToShow, setDataToShow] = useState([]);
 
+    // const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        fetch(process.env.REACT_APP_PRODUCT_API, { method: "GET" })
+        // fetch(process.env.REACT_APP_PRODUCT_API, { method: "GET" })
+        fetch(process.env.REACT_APP_LARAVEL_API, { method: "GET" })
             .then((response) => {
                 return response.json();
             })
@@ -29,12 +34,18 @@ const ProductList = () => {
                 setDataToShow([]);
             });
     }, []);
-    // console.log(btnCount)
 
     const paginateChange = (index) => {
         setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
-        // console.log((index + 1) * 5 - 5, (index + 1) * 5);
     };
+
+
+    useEffect(() => {
+    }, [btnCount.range])
+
+    const addToCart = (data) => {
+        dispatch({ type: "add", payLoad: { id: data.id, name: data.name, price: data.price, count: 1 } })
+    }
 
     const paginateInc = () => {
         if (btnCount.range[0] === 0) {
@@ -46,14 +57,8 @@ const ProductList = () => {
         }
     }
 
-    useEffect(() => {
-
-    }, [btnCount.range])
-
     const paginateDec = () => {
-        // console.log("BTN")
-        if (btnCount.range[0] === btnCount.count) {
-            // console.log(btnCount.range);
+        if (btnCount.range[1] === btnCount.count) {
         } else {
             setBtnCount(prevState => ({ ...prevState, range: [prevState.range[0] + 1, prevState.range[1] + 1] }))
             console.log(btnCount);
@@ -65,21 +70,27 @@ const ProductList = () => {
         <div className={classes.main}>
             <div className={classes.list}>
                 {dataToShow.map((element) => {
-                    return <ProductCard key={element.id} title={element.title} price={100} data={element} />;
+                    return <ProductCard key={element.id} name={element.name} price={100} data={element} dispathMethod={addToCart} />;
                 })}
             </div>
             <div className={classes.pagination}>
-                <button onClick={() => { paginateInc() }}>{"<"}</button>
+                <button className={classes.pagination_btn} onClick={() => { paginateInc() }}>{"<"}</button>
                 {Array(btnCount.count)
                     .fill()
                     .map((_, i) => {
                         if (i >= btnCount.range[0] && i < btnCount.range[1]) {
-                            return <button key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
+                            return <button className={classes.pagination_btn} key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
                         } else {
                             return null
                         }
                     })}
-                {btnCount.range[1] !== btnCount.count ? <button onClick={() => { paginateDec() }}>{">"}</button> : null}
+                {btnCount.range[1] !== btnCount.count ?
+                    <button
+                        className={classes.pagination_btn}
+                        onClick={() => { paginateDec() }}>
+                        {">"}
+                    </button> :
+                    null}
             </div>
         </div>
     )

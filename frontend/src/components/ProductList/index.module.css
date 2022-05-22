@@ -3,11 +3,31 @@
 }
 
 .pagination {
+  position: fixed;
   display: flex;
+  bottom: 0;
   flex-direction: row;
-  justify-content: center;
-  gap: 5px;
-  margin: 40px 0px;
+  left: 50%;
+  bottom: 3%;
+}
+
+.pagination_btn {
+  font-size: 18px;
+  /* width: 40px;
+  height: 40px; */
+  padding: 10px 15px;
+  margin: 0px 5px;
+  border: none;
+  background-color: var(--nav_background);
+  color: azure;
+  cursor: pointer;
+  transition: 0.5s color, 0.5s background-color;
+  border-radius: 8px;
+}
+
+.pagination_btn:hover {
+  background-color: var(--nav_background_secondary);
+  color: var(--font_color_basic);
 }
 
 .list {
