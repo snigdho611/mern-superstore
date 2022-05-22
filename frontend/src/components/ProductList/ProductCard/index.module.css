@@ -1,0 +1,9 @@
+.main {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  height: 180px;
+}

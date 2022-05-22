@@ -1,30 +1,22 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Navbar from "./components/Navbar";
-import Products from "./components/Products";
+import ProductList from "components/ProductList";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "components/Navbar";
+import { useSelector } from "react-redux";
 
-const App = () => {
+function App() {
+
+  const counter = useSelector((state) => state.counter);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route index path="/" element={<Login />} />
-        <Route index path="/home" element={<Navbar />} />
-        <Route
-          index
-          path="/products"
-          element={
-            <>
-              <Navbar />
-              <Products />
-            </>
-          }
-        />
-        <Route index path="/sellers" element={<Navbar />} />
-        <Route index path="/deals" element={<Navbar />} />
+        <Route path="/" element={<><div>Counter: {counter}</div></>} />
+        <Route path="/home" />
+        <Route path="/products" element={<><Navbar /><ProductList /></>} />
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default App;
