@@ -2,6 +2,13 @@
   width: 200px;
   display: flex;
   flex-direction: column;
+  background-color: rgb(130, 231, 135);
+}
+
+.main__child {
+  /* style={{ display: "flex", justifyContent: 'center' }} */
+  display: flex;
+  justify-content: center;
 }
 
 img {

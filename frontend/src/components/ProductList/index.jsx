@@ -11,6 +11,7 @@ const ProductList = () => {
         range: []
     });
     const [dataToShow, setDataToShow] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // Search
     const [search, setSearch] = useState({
@@ -36,6 +37,7 @@ const ProductList = () => {
                     range: [0, 3]
                 }));
                 setDataToShow(response.slice(0, 8));
+                setLoading(false);
             })
             .catch((err) => {
                 setAllData([]);
@@ -80,14 +82,13 @@ const ProductList = () => {
         }
     };
 
-    const paginateChange = (index) => {
-        setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
-    };
-
-
     const addToCart = (data) => {
         dispatch({ type: "add", payLoad: { id: data.id, name: data.name, price: data.price, count: 1 } })
     }
+
+    const paginateChange = (index) => {
+        setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
+    };
 
     const paginateInc = () => {
         if (btnCount.range[0] !== 0) {
@@ -139,11 +140,11 @@ const ProductList = () => {
                     </div>
                 </div>
             </div>
-            <div className={classes.list}>
+            {!loading ? <div className={classes.list}>
                 {dataToShow.map((element) => {
-                    return <ProductCard key={element.id} name={element.name} price={100} data={element} dispathMethod={addToCart} />;
+                    return <ProductCard key={element.id} name={element.name} price={100} data={element} dispatchMethod={addToCart} />;
                 })}
-            </div>
+            </div> : <div className={classes.loader} />}
             {!search.status && <div className={classes.pagination}>
                 {<button
                     className={classes.pagination_btn}
