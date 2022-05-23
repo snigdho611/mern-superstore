@@ -1,0 +1,9 @@
+.main {
+  margin-left: 300px;
+}
+
+.main__link {
+  color: limegreen;
+  cursor: pointer;
+  font-weight: bold;
+}

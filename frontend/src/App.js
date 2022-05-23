@@ -9,6 +9,7 @@ import Form from "components/Form";
 import ProductDetails from "components/ProductDetails";
 import Footer from "components/Footer";
 import Deals from "components/Deals";
+import Home from "components/Home";
 
 const App = () => {
   return (
@@ -30,6 +31,8 @@ const App = () => {
             <>
               <Header />
               <Navbar />
+              <Home />
+              <Footer />
             </>
           }
         />
@@ -40,6 +43,7 @@ const App = () => {
               <Header />
               <Navbar />
               <ProductList />
+              <Footer />
             </>
           }
         />
@@ -50,6 +54,7 @@ const App = () => {
               <Header />
               <Navbar />
               <ProductDetails />
+              <Footer />
             </>
           }
         />
@@ -71,6 +76,7 @@ const App = () => {
               <Header />
               <Navbar />
               <Form />
+              <Footer />
             </>
           }
         />
@@ -81,6 +87,7 @@ const App = () => {
               <Header />
               <Navbar />
               <Cart />
+              <Footer />
             </>
           }
         />
