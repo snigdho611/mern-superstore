@@ -1,3 +1,9 @@
+.main {
+  /* style={{ width: "60%", margin: "0 300px" }} */
+  width: 60%;
+  margin: 0 300px;
+}
+
 .dataCell {
   text-align: center;
   background-color: var(--nav_background_secondary);
@@ -7,4 +13,62 @@
 .dataHead {
   background-color: green;
   color: azure;
+}
+
+.cart_checkout_btn {
+  width: 100%;
+  height: 40px;
+  border: 1px solid limegreen;
+  background-color: green;
+  font-weight: bold;
+  color: azure;
+  cursor: pointer;
+  transition: 0.25s background-color;
+}
+
+.cart_checkout_btn:hover {
+  background-color: var(--nav_background);
+}
+
+.cart_goback_btn {
+  width: 100%;
+  background-color: green;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.25s background-color;
+}
+
+.cart_goback_btn:hover {
+  background-color: var(--nav_background);
+}
+
+a {
+  text-decoration: none;
+  color: azure;
+}
+
+.confirmationMsg,
+.errorMsg {
+  text-align: center;
+  font-weight: bold;
+}
+.confirmationMsg {
+  color: green;
+}
+
+.errorMsg {
+  color: red;
+}
+
+.cart__crossBtn {
+  color: azure;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s background-color, 0.25s color;
+}
+
+.cart__crossBtn:hover {
+  color: green;
+  background-color: pink;
 }
