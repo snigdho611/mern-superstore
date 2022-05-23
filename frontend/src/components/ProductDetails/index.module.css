@@ -1,0 +1,43 @@
+.image {
+  height: 260px;
+  /* margin: 0 auto; */
+}
+
+.main {
+  margin-left: 300px;
+  width: 70%;
+  display: flex;
+  border: 1px solid green;
+}
+
+.main__data {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  /* padding-top: 50px; */
+}
+
+.main__img {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.dataCell {
+  display: flex;
+  flex-direction: row;
+}
+
+.dataCell__left,
+.dataCell__right {
+  padding: 10px 0px;
+  border: 1px solid green;
+}
+
+.dataCell__left {
+  width: 30%;
+}
+
+.dataCell__right {
+  width: 70%;
+}

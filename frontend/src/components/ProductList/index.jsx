@@ -24,7 +24,7 @@ const ProductList = () => {
 
     // Use effect for initial data loading and storing
     useEffect(() => {
-        fetch(process.env.REACT_APP_LARAVEL_API, { method: "GET" })
+        fetch(process.env.REACT_APP_ALL_PRODUCTS, { method: "GET" })
             .then((response) => {
                 return response.json();
             })
@@ -104,10 +104,10 @@ const ProductList = () => {
     return (
         <div className={classes.main}>
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <div>
-                    <div className={classes.tradio}>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div className={classes.search_radio}>
                         <input
-                            className={classes.tradio}
+                            // className={classes.tradio}
                             type="radio"
                             value="id"
                             defaultChecked
@@ -117,10 +117,8 @@ const ProductList = () => {
                             name="category"
                         />
                         ID
-                    </div>
-                    <div className={classes.tradio}>
                         <input
-                            className={classes.tradio}
+                            // className={classes.tradio}
                             type="radio"
                             value="name"
                             name="category"
@@ -130,10 +128,15 @@ const ProductList = () => {
                         />
                         Name
                     </div>
-                    <input type="text" onChange={(e) => {
-                        startSearching(e.target.value)
-                    }}
-                        className={classes.tinput} />
+                    <div>
+                        <input
+                            type="text"
+                            onChange={(e) => {
+                                startSearching(e.target.value)
+                            }}
+                            className={classes.search_input}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={classes.list}>

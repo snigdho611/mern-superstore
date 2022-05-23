@@ -33,7 +33,7 @@ const Login = () => {
         if (username !== "" && password !== "") {
             setLoading(true)
 
-            fetch(process.env.REACT_APP_AUTHENTICATE_API, {
+            fetch(process.env.REACT_APP_AUTHENTICATE, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -92,7 +92,7 @@ const Login = () => {
                         <div style={{ width: "210px" }}>
                             <input
                                 className={classes.inputBox}
-                                type="text"
+                                type="password"
                                 onChange={(e) => {
                                     setPassword(e.target.value)
                                 }}

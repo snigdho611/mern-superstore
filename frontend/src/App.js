@@ -6,6 +6,8 @@ import Header from "components/Header";
 import Login from "components/Login";
 import Cart from "components/Cart";
 import Form from "components/Form";
+import ProductDetails from "components/ProductDetails";
+import Footer from "components/Footer";
 
 const App = () => {
   return (
@@ -17,6 +19,7 @@ const App = () => {
             <>
               <Header />
               <Login />
+              <Footer />
             </>
           }
         />
@@ -45,6 +48,7 @@ const App = () => {
             <>
               <Header />
               <Navbar />
+              <ProductDetails />
             </>
           }
         />
