@@ -4,10 +4,6 @@ import classes from './index.module.css'
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
-    // console.log(cart)
-    // useEffect(() => {
-
-    // }, [cart])
 
     const calculateTotal = () => {
         const total = cart.reduce((accumulator, object) => {
@@ -18,7 +14,6 @@ const Cart = () => {
 
     return (
         <div style={{ width: "60%", margin: "0 300px" }}>
-            {/* {cart.state.map((element) => { <div>{element}</div> })} */}
             <table style={{ width: "100%" }}>
                 <thead>
                     <tr>

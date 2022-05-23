@@ -12,7 +12,6 @@ const Navbar = () => {
                 <Link className={classes.main_a} to="/products">Products</Link>
                 <Link className={classes.main_a} to="/deals">Deals</Link>
                 <Link className={classes.main_a} to="/change">Change Details</Link>
-                {/* <Link className={classes.main_a} to="/change">Change Details</Link> */}
                 <a href="/#" className={classes.main_a} onClick={() => {
                     removeUser();
                     navigate("/");

@@ -39,3 +39,8 @@
   margin: 40px 0px;
   height: 600px;
 }
+.tinput {
+  margin: 15px auto;
+  font-size: 20px;
+  padding: 5px 15px;
+}

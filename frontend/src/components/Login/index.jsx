@@ -102,7 +102,6 @@ const Login = () => {
                     <div style={{ display: "flex", flexDirection: "column", margin: "0 auto", width: "100%", justifyContent: "center" }}>
                         <div style={{ margin: "0 auto" }}>
                             {!loading ? <button className={classes.loginBtn} onClick={(e) => {
-                                // setLoading(true);
                                 handleSubmit(e)
                             }}>Log In</button> : <div className={classes.loader} />}
                         </div>

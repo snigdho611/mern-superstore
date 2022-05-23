@@ -40,6 +40,15 @@ const App = () => {
           }
         />
         <Route
+          path="/products/:productId"
+          element={
+            <>
+              <Header />
+              <Navbar />
+            </>
+          }
+        />
+        <Route
           path="/deals"
           element={
             <>

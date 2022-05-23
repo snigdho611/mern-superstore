@@ -13,39 +13,16 @@ const ProductList = () => {
     const [dataToShow, setDataToShow] = useState([]);
 
     // Search
-    const [searching, setSearching] = useState(false);
-    const [searchParams, setSearchParams] = useState("");
-    const [searchCategory, setSearchCategory] = useState("id");
-
-    useEffect(() => {
-
-    }, [searchParams])
+    const [search, setSearch] = useState({
+        status: false,
+        params: "",
+        category: "id"
+    })
 
     // Cart
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const handleSearch = () => {
-            const regex = RegExp(searchParams);
-            const result = allData.filter((e) => {
-                return regex.test(e[searchCategory]);
-            });
-            console.log(result);
-            if (result === []) {
-                console.log("Not found");
-                setDataToShow([]);
-            } else {
-                setDataToShow(result);
-            }
-        };
-        if (searching) {
-            setDataToShow([]);
-            handleSearch();
-        } else {
-            setDataToShow(allData.slice(0, 10));
-        }
-    }, [searching, searchParams, searchCategory, allData]);
-
+    // Use effect for initial data loading and storing
     useEffect(() => {
         fetch(process.env.REACT_APP_LARAVEL_API, { method: "GET" })
             .then((response) => {
@@ -66,13 +43,40 @@ const ProductList = () => {
             });
     }, []);
 
+    // Use Effect for searching
+    useEffect(() => {
+        const handleSearch = () => {
+            const regex = RegExp(search.params);
+            const result = allData.filter((e) => {
+                return regex.test(e[search.category]);
+            });
+            // console.log(regex)
+            if (result === []) {
+                console.log("Not found");
+                setDataToShow([]);
+            } else {
+                setDataToShow(result);
+            }
+        };
+        if (search.status) {
+            setDataToShow([]);
+            handleSearch();
+        } else {
+            setDataToShow(allData.slice(0, 8));
+        }
+    }, [search.params, search.category, search.status, allData]);
+
+    // Use Effect for button range changes
+    useEffect(() => {
+    }, [btnCount.range])
+
     const startSearching = (value) => {
         if (value !== "") {
-            setSearching(true);
+            setSearch(prevState => ({ ...prevState, status: true }));
+            setSearch(prevState => ({ ...prevState, params: value }))
             setDataToShow([]);
-            setSearchParams(value);
         } else {
-            setSearching(false);
+            setSearch(prevState => ({ ...prevState, status: false }))
         }
     };
 
@@ -80,45 +84,64 @@ const ProductList = () => {
         setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
     };
 
-    useEffect(() => {
-    }, [btnCount.range])
 
     const addToCart = (data) => {
         dispatch({ type: "add", payLoad: { id: data.id, name: data.name, price: data.price, count: 1 } })
     }
 
     const paginateInc = () => {
-        if (btnCount.range[0] === 0) {
-            //
-        } else {
+        if (btnCount.range[0] !== 0) {
             setBtnCount(prevState => ({ ...prevState, range: [btnCount.range[0] - 1, btnCount.range[1] - 1] }))
-            console.log(btnCount);
-
         }
     }
 
     const paginateDec = () => {
-        if (btnCount.range[1] === btnCount.count) {
-        } else {
+        if (btnCount.range[1] !== btnCount.count) {
             setBtnCount(prevState => ({ ...prevState, range: [prevState.range[0] + 1, prevState.range[1] + 1] }))
-            console.log(btnCount);
-
         }
     }
 
     return (
         <div className={classes.main}>
-            <div>
-                <input type="text" onChange={(e) => {
-                    startSearching(e.target.value)
-                }} />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <div>
+                    <div className={classes.tradio}>
+                        <input
+                            className={classes.tradio}
+                            type="radio"
+                            value="id"
+                            defaultChecked
+                            onChange={(e) => {
+                                setSearch(prevState => ({ ...prevState, category: e.target.value }))
+                            }}
+                            name="category"
+                        />
+                        ID
+                    </div>
+                    <div className={classes.tradio}>
+                        <input
+                            className={classes.tradio}
+                            type="radio"
+                            value="name"
+                            name="category"
+                            onChange={(e) => {
+                                setSearch(prevState => ({ ...prevState, category: e.target.value }))
+                            }}
+                        />
+                        Name
+                    </div>
+                    <input type="text" onChange={(e) => {
+                        startSearching(e.target.value)
+                    }}
+                        className={classes.tinput} />
+                </div>
             </div>
             <div className={classes.list}>
                 {dataToShow.map((element) => {
                     return <ProductCard key={element.id} name={element.name} price={100} data={element} dispathMethod={addToCart} />;
                 })}
             </div>
-            <div className={classes.pagination}>
+            {!search.status && <div className={classes.pagination}>
                 {<button
                     className={classes.pagination_btn}
                     style={btnCount.range[0] !== 0 ? null : { backgroundColor: "gray", color: "azure" }}
@@ -142,7 +165,7 @@ const ProductList = () => {
                     onClick={btnCount.range[1] !== btnCount.count ? () => { paginateDec() } : null}>
                     {">"}
                 </button>
-            </div>
+            </div>}
         </div>
     )
 }

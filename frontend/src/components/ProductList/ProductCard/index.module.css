@@ -7,3 +7,19 @@
 img {
   height: 180px;
 }
+
+.card__add {
+  width: 110px;
+  height: 40px;
+  background-color: var(--nav_background);
+  border: none;
+  cursor: pointer;
+  color: azure;
+  border-radius: 10px;
+  transition: 0.5s background-color, 0.5s color;
+}
+
+.card__add:hover {
+  background-color: var(--nav_background_secondary);
+  color: green;
+}

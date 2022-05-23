@@ -27,7 +27,6 @@ const Form = () => {
         setSuccess(true);
         const uploadData = data;
         uploadData.dob = JSON.stringify(uploadData.dob);
-        // console.log([uploadData])
         localStorage.setItem("user", [JSON.stringify([uploadData])])
     };
 

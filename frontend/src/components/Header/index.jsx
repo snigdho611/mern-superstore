@@ -6,7 +6,6 @@ import classes from './index.module.css'
 const Header = () => {
     const user = getUser();
     const navigate = useNavigate();
-    // console.log(user)
     useEffect(() => {
         if (!user) {
             navigate('/');
