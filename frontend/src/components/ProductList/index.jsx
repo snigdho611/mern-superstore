@@ -4,6 +4,7 @@ import classes from './index.module.css'
 import { useDispatch } from 'react-redux';
 
 const ProductList = () => {
+    // Data
     const [allData, setAllData] = useState([]);
     const [btnCount, setBtnCount] = useState({
         count: 0,
@@ -11,8 +12,39 @@ const ProductList = () => {
     });
     const [dataToShow, setDataToShow] = useState([]);
 
-    // const cart = useSelector((state) => state.cart);
+    // Search
+    const [searching, setSearching] = useState(false);
+    const [searchParams, setSearchParams] = useState("");
+    const [searchCategory, setSearchCategory] = useState("id");
+
+    useEffect(() => {
+
+    }, [searchParams])
+
+    // Cart
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const handleSearch = () => {
+            const regex = RegExp(searchParams);
+            const result = allData.filter((e) => {
+                return regex.test(e[searchCategory]);
+            });
+            console.log(result);
+            if (result === []) {
+                console.log("Not found");
+                setDataToShow([]);
+            } else {
+                setDataToShow(result);
+            }
+        };
+        if (searching) {
+            setDataToShow([]);
+            handleSearch();
+        } else {
+            setDataToShow(allData.slice(0, 10));
+        }
+    }, [searching, searchParams, searchCategory, allData]);
 
     useEffect(() => {
         fetch(process.env.REACT_APP_LARAVEL_API, { method: "GET" })
@@ -33,6 +65,16 @@ const ProductList = () => {
                 setDataToShow([]);
             });
     }, []);
+
+    const startSearching = (value) => {
+        if (value !== "") {
+            setSearching(true);
+            setDataToShow([]);
+            setSearchParams(value);
+        } else {
+            setSearching(false);
+        }
+    };
 
     const paginateChange = (index) => {
         setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
@@ -66,6 +108,11 @@ const ProductList = () => {
 
     return (
         <div className={classes.main}>
+            <div>
+                <input type="text" onChange={(e) => {
+                    startSearching(e.target.value)
+                }} />
+            </div>
             <div className={classes.list}>
                 {dataToShow.map((element) => {
                     return <ProductCard key={element.id} name={element.name} price={100} data={element} dispathMethod={addToCart} />;
