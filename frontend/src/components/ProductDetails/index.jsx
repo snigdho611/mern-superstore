@@ -15,7 +15,6 @@ const ProductDetails = () => {
             .catch((err) => {
                 console.log("Could not load data");
             })
-        console.log(productData)
     }, [productId])
 
     return (

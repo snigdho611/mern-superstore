@@ -8,6 +8,7 @@ import Cart from "components/Cart";
 import Form from "components/Form";
 import ProductDetails from "components/ProductDetails";
 import Footer from "components/Footer";
+import Deals from "components/Deals";
 
 const App = () => {
   return (
@@ -58,6 +59,8 @@ const App = () => {
             <>
               <Header />
               <Navbar />
+              <Deals />
+              <Footer />
             </>
           }
         />
