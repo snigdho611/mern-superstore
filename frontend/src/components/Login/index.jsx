@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import getUser from 'util/localStorage/getUser';
+import setUser from 'util/localStorage/setUser';
 import classes from './index.module.css';
 
 const Login = () => {
@@ -9,7 +11,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const user = localStorage.getItem("user");
+    const user = getUser();
     useEffect(() => {
         if (user) {
             navigate("/home");
@@ -45,8 +47,7 @@ const Login = () => {
                 return response.json()
             }).then((response) => {
                 if (response.length > 0) {
-                    console.log(response);
-                    localStorage.setItem("user", JSON.stringify(response))
+                    setUser(JSON.stringify(response));
                     return navigate("/home");
                 } else {
                     setTimeout(() => {

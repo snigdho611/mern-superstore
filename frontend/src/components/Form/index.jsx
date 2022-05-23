@@ -3,17 +3,32 @@ import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 
 const Form = () => {
-    const user = JSON.parse(localStorage.getItem("user"))[0];
+    const [success, setSuccess] = useState(false);
+    const user = localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"))[0] ? JSON.parse(localStorage.getItem("user"))[0] : {};
+
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            firstname: user && user.firstname ? user.firstname : "",
+            lastname: user && user.lastname ? user.lastname : "",
+            phone: user && user.phone ? user.phone : "",
+            email: user && user.email ? user.email : "",
+            gender: user && user.gender ? user.gender : ""
+        }
+    });
 
-    const [allData, setAllData] = useState([]);
+    const [allUserData, setAllUserData] = useState([]);
 
     const onSubmit = (data) => {
-        setAllData([...allData, data]);
+        setAllUserData([...allUserData, data]);
+        setSuccess(true);
+        const uploadData = data;
+        uploadData.dob = JSON.stringify(uploadData.dob);
+        // console.log([uploadData])
+        localStorage.setItem("user", [JSON.stringify([uploadData])])
     };
 
     return (
@@ -28,33 +43,31 @@ const Form = () => {
         >
             <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column" }}>
                 <input
-                    {...register("firstName", {
+                    {...register("firstname", {
                         required: { value: true, message: "First name is required" },
                         pattern: {
                             value: /^[A-Z a-z]+$/i,
                             message: "Only alphabetical characters or spaces are allowed",
                         },
                     })}
-                    value={user.firstname}
                     className={classes.tinput}
                     type="text"
                     placeholder="First Name"
                 />
-                <div style={{ color: "red" }}>{errors.firstName ? errors.firstName.message : null}</div>
+                <div style={{ color: "red" }}>{errors.firstname ? errors.firstname.message : null}</div>
                 <input
-                    {...register("lastName", {
+                    {...register("lastname", {
                         required: { value: true, message: "Last name is required" },
                         pattern: {
                             value: /^[A-Z a-z]+$/i,
                             message: "Only alphabetical characters or spaces are allowed",
                         },
                     })}
-                    value={user.lastname}
                     className={classes.tinput}
                     type="text"
                     placeholder="Last Name"
                 />
-                <div style={{ color: "red" }}>{errors.lastName ? errors.lastName.message : null}</div>
+                <div style={{ color: "red" }}>{errors.lastname ? errors.lastname.message : null}</div>
                 <input
                     {...register("phone", {
                         required: { value: true, message: "Phone number is required" },
@@ -91,28 +104,14 @@ const Form = () => {
                     placeholder="Email"
                 />
                 <div style={{ color: "red" }}>{errors.email ? errors.email.message : null}</div>
-                <input
-                    {...register("address", {
-                        required: { value: true, message: "Address is required" },
-                        minLength: { value: 15, message: "Address must be at least 15 characters" },
-                    })}
-                    className={classes.tinput}
-                    type="date"
-                    placeholder="Address"
-                />
-                <div style={{ color: "red" }}>{errors.address ? errors.address.message : null}</div>
+
                 <button
-                    style={{
-                        width: "200px",
-                        margin: "0 auto",
-                        height: "30px",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                    }}
+                    className={classes.submitBtn}
                     type="submit"
                 >
                     Submit
                 </button>
+                {success ? <label style={{ margin: "0 auto", color: "green" }}>Success!</label> : null}
             </form>
         </div>
     );

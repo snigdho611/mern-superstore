@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import getUser from 'util/localStorage/getUser';
 import classes from './index.module.css'
 
 const Header = () => {
-    const user = localStorage.getItem('user');
+    const user = getUser();
     const navigate = useNavigate();
     // console.log(user)
     useEffect(() => {
