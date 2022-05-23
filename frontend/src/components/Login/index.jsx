@@ -33,7 +33,7 @@ const Login = () => {
         if (username !== "" && password !== "") {
             setLoading(true)
 
-            fetch("http://127.0.0.1:8000/api/login", {
+            fetch(process.env.REACT_APP_AUTHENTICATE_API, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
