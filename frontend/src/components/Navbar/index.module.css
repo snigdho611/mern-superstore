@@ -1,9 +1,9 @@
-.main__container {
+.main {
   position: fixed;
   background-color: var(--nav_background);
 }
 
-.main {
+.main__child {
   top: 0;
   display: flex;
   flex-direction: column;

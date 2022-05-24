@@ -11,30 +11,30 @@ const Deals = () => {
             <h1 style={{ textAlign: "center" }}>Here are some of our best deals going on!</h1>
             <div className={classes.main__row}>
                 <div className={classes.main__row__cell}>
-                    <img src={img_one} alt="" />
+                    <img src={img_one} alt="Not found" />
                 </div>
                 <div className={classes.main__row__cell}>
-                    <img src={img_two} alt="" />
+                    <img src={img_two} alt="Not found" />
                 </div>
                 <div className={classes.main__row__cell}>
-                    <img src={img_one} alt="" />
+                    <img src={img_one} alt="Not found" />
                 </div>
                 <div className={classes.main__row__cell}>
-                    <img src={img_two} alt="" />
+                    <img src={img_two} alt="Not found" />
                 </div>
             </div>
             <div className={classes.main__row}>
                 <div className={classes.main__row__cell}>
-                    <img src={img_three} alt="" />
+                    <img src={img_three} alt="Not found" />
                 </div>
                 <div className={classes.main__row__cell}>
-                    <img src={img_four} alt="" />
+                    <img src={img_four} alt="Not found" />
                 </div>
                 <div className={classes.main__row__cell}>
-                    <img src={img_three} alt="" />
+                    <img src={img_three} alt="Not found" />
                 </div>
                 <div className={classes.main__row__cell}>
-                    <img src={img_four} alt="" />
+                    <img src={img_four} alt="Not found" />
                 </div>
             </div>
         </div>

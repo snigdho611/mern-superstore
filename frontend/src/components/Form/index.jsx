@@ -40,7 +40,7 @@ const Form = () => {
                 margin: "0 auto",
             }}
         >
-            <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column" }}>
+            <form onSubmit={handleSubmit(onSubmit)} className={classes.main}>
                 <input
                     {...register("firstname", {
                         required: { value: true, message: "First name is required" },
@@ -49,7 +49,7 @@ const Form = () => {
                             message: "Only alphabetical characters or spaces are allowed",
                         },
                     })}
-                    className={classes.tinput}
+                    className={classes.main__input}
                     type="text"
                     placeholder="First Name"
                 />
@@ -62,7 +62,7 @@ const Form = () => {
                             message: "Only alphabetical characters or spaces are allowed",
                         },
                     })}
-                    className={classes.tinput}
+                    className={classes.main__input}
                     type="text"
                     placeholder="Last Name"
                 />
@@ -72,10 +72,10 @@ const Form = () => {
                         required: { value: true, message: "Phone number is required" },
                         pattern: {
                             value: /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/,
-                            message: "Phone number must only have numbers",
+                            message: "Phone number must match Bangladeshi format",
                         },
                     })}
-                    className={classes.tinput}
+                    className={classes.main__input}
                     type="text"
                     placeholder="Phone Number"
                 />
@@ -98,14 +98,14 @@ const Form = () => {
                             message: "Email format does not match",
                         },
                     })}
-                    className={classes.tinput}
+                    className={classes.main__input}
                     type="text"
                     placeholder="Email"
                 />
                 <div style={{ color: "red" }}>{errors.email ? errors.email.message : null}</div>
 
                 <button
-                    className={classes.submitBtn}
+                    className={classes.main__submitBtn}
                     type="submit"
                 >
                     Submit

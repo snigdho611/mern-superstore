@@ -1,4 +1,10 @@
-.tinput {
+.main {
+  /* style={{ display: "flex", flexDirection: "column" }} */
+  display: flex;
+  flex-direction: column;
+}
+
+.main__input {
   width: 300px;
   margin: 10px auto;
   padding: 10px;
@@ -6,12 +12,12 @@
   border: none;
 }
 
-.tinput:focus {
+.main__input:focus {
   outline: none;
   background-color: var(--nav_background_secondary);
 }
 
-.submitBtn {
+.main__submitBtn {
   width: 200px;
   margin: 0 auto;
   height: 30px;
@@ -23,7 +29,7 @@
   transition: 0.5s background-color, 0.5s color;
 }
 
-.submitBtn:hover {
+.main__submitBtn:hover {
   background-color: var(--nav_background_secondary);
   color: green;
 }

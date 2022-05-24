@@ -6,8 +6,8 @@ import classes from './index.module.css'
 const Navbar = () => {
     const navigate = useNavigate();
     return (
-        <div className={classes.main__container}>
-            <div className={classes.main}>
+        <div className={classes.main}>
+            <div className={classes.main__child}>
                 <Link className={classes.main_a} to="/home" >Home</Link>
                 <Link className={classes.main_a} to="/products">Products</Link>
                 <Link className={classes.main_a} to="/deals">Deals</Link>

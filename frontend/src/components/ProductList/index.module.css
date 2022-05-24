@@ -3,7 +3,17 @@
   z-index: 1;
 }
 
-.pagination {
+.main__child {
+  display: flex;
+  justify-content: center;
+}
+
+.main__search {
+  display: flex;
+  flex-direction: row;
+}
+
+.main__pagination {
   position: fixed;
   display: flex;
   bottom: 0;
@@ -12,10 +22,8 @@
   bottom: 3%;
 }
 
-.pagination_btn {
+.main__pagination__btn {
   font-size: 18px;
-  /* width: 40px;
-  height: 40px; */
   padding: 10px 15px;
   margin: 0px 5px;
   border: none;
@@ -40,14 +48,14 @@
   margin: 40px 0px;
   height: 600px;
 }
-.search_input {
+.main__search__input {
   margin: 15px auto;
   font-size: 20px;
   padding: 5px 15px;
   border: none;
 }
 
-.search_input:focus {
+.main__search__input:focus {
   background-color: var(--nav_background_secondary);
   outline: none;
 }

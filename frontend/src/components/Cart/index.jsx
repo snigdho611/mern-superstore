@@ -69,7 +69,7 @@ const Cart = () => {
             </table>
             {displayCheckoutMsg ?
                 checkout ?
-                    <div className={classes.confirmationMsg}>Thank you for shopping with us, {JSON.parse(getUser())[0].firstname} san</div> :
+                    <div className={classes.confirmationMsg}>Thank you for shopping with us, {JSON.parse(getUser())[0].firstname} san, please wait for a confirmation email</div> :
                     <div className={classes.errorMsg}>Sorry, {JSON.parse(getUser())[0].firstname} san, but you need to select something to buy it</div> : null}
         </div>
     )

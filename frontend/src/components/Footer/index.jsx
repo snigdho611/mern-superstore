@@ -1,10 +1,11 @@
 import React from 'react'
 import shopLogo from '../../shop.png'
+import classes from './index.module.css'
 
 const Footer = () => {
     return (
-        <div style={{ width: "100%", position: "fixed", display: "flex", justifyContent: "right", bottom: "0", zIndex: "-1" }}>
-            <img src={shopLogo} alt="" style={{ height: "80px" }} />
+        <div className={classes.footer}>
+            <img src={shopLogo} alt="" className={classes.footer__img} />
         </div>
     )
 }

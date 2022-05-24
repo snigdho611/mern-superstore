@@ -66,15 +66,15 @@ const Login = () => {
     }
 
     return (
-        <div className={classes.flex_center}>
+        <div className={classes.main}>
             <h3 style={{ textAlign: "center" }}>Please log in to continue</h3>
             <div className={classes.flex_center}>
                 <div>
-                    <div className={classes.flex_row}>
-                        <div style={{ width: "150px" }}>
+                    <div className={classes.flex__row}>
+                        <div className={classes.flex__row__labelCell}>
                             <label>Username:</label>
                         </div>
-                        <div style={{ width: "210px" }}>
+                        <div className={classes.flex__row__inputCell}>
                             <input
                                 className={classes.inputBox}
                                 type="text"
@@ -85,11 +85,11 @@ const Login = () => {
                             />
                         </div>
                     </div>
-                    <div className={classes.flex_row}>
-                        <div style={{ width: "150px" }}>
+                    <div className={classes.flex__row}>
+                        <div className={classes.flex__row__labelCell}>
                             <label>Password:</label>
                         </div>
-                        <div style={{ width: "210px" }}>
+                        <div className={classes.flex__row__inputCell}>
                             <input
                                 className={classes.inputBox}
                                 type="password"
@@ -99,16 +99,13 @@ const Login = () => {
                                 value={password} />
                         </div>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", margin: "0 auto", width: "100%", justifyContent: "center" }}>
+                    <div className={classes.main__bottom}>
                         <div style={{ margin: "0 auto" }}>
                             {!loading ? <button className={classes.loginBtn} onClick={(e) => {
                                 handleSubmit(e)
                             }}>Log In</button> : <div className={classes.loader} />}
                         </div>
-                        <label style={{
-                            textAlign: "center", color: "red", margin: "10px",
-                            textShadow: "2px 2px 3px crimson"
-                        }}>{errorMsg}</label>
+                        <label className={classes.main__error}>{errorMsg}</label>
                     </div>
                 </div>
             </div>

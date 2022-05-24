@@ -104,11 +104,10 @@ const ProductList = () => {
 
     return (
         <div className={classes.main}>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <div style={{ display: "flex", flexDirection: "row" }}>
+            <div className={classes.main__child}>
+                <div className={classes.main__search}>
                     <div className={classes.search_radio}>
                         <input
-                            // className={classes.tradio}
                             type="radio"
                             value="id"
                             defaultChecked
@@ -119,7 +118,6 @@ const ProductList = () => {
                         />
                         ID
                         <input
-                            // className={classes.tradio}
                             type="radio"
                             value="name"
                             name="category"
@@ -129,7 +127,6 @@ const ProductList = () => {
                         />
                         Name
                         <input
-                            // className={classes.tradio}
                             type="radio"
                             value="type"
                             name="category"
@@ -145,7 +142,7 @@ const ProductList = () => {
                             onChange={(e) => {
                                 startSearching(e.target.value)
                             }}
-                            className={classes.search_input}
+                            className={classes.main__search__input}
                         />
                     </div>
                 </div>
@@ -155,9 +152,9 @@ const ProductList = () => {
                     return <ProductCard key={element.id} name={element.name} price={100} data={element} dispatchMethod={addToCart} />;
                 })}
             </div> : <div className={classes.loader} />}
-            {!search.status && <div className={classes.pagination}>
+            {!search.status && <div className={classes.main__pagination}>
                 {<button
-                    className={classes.pagination_btn}
+                    className={classes.main__pagination__btn}
                     style={btnCount.range[0] !== 0 ? null : { backgroundColor: "gray", color: "azure" }}
                     onClick={btnCount.range[0] !== 0 ?
                         () => { paginateInc() }
@@ -168,13 +165,13 @@ const ProductList = () => {
                     .fill()
                     .map((_, i) => {
                         if (i >= btnCount.range[0] && i < btnCount.range[1]) {
-                            return <button className={classes.pagination_btn} key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
+                            return <button className={classes.main__pagination__btn} key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
                         } else {
                             return null
                         }
                     })}
                 <button
-                    className={classes.pagination_btn}
+                    className={classes.main__pagination__btn}
                     style={btnCount.range[1] !== btnCount.count ? null : { backgroundColor: "gray", color: "azure" }}
                     onClick={btnCount.range[1] !== btnCount.count ? () => { paginateDec() } : null}>
                     {">"}
