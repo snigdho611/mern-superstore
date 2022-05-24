@@ -74,11 +74,9 @@ const ProductList = () => {
 
     const startSearching = (value) => {
         if (value !== "") {
-            setTimeout(() => {
-                setSearch(prevState => ({ ...prevState, status: true }));
-                setSearch(prevState => ({ ...prevState, params: value }))
-                setDataToShow([]);
-            }, 1000)
+            setSearch(prevState => ({ ...prevState, status: true }));
+            setSearch(prevState => ({ ...prevState, params: value }))
+            setDataToShow([]);
         } else {
             setSearch(prevState => ({ ...prevState, status: false }))
         }
