@@ -12,6 +12,7 @@ const ProductList = () => {
     });
     const [dataToShow, setDataToShow] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingError, setLoadingError] = useState(false);
 
     // Search
     const [search, setSearch] = useState({
@@ -42,6 +43,7 @@ const ProductList = () => {
             .catch((err) => {
                 setAllData([]);
                 setDataToShow([]);
+                setLoadingError(true);
             });
     }, []);
 
@@ -152,6 +154,7 @@ const ProductList = () => {
                     return <ProductCard key={element.id} name={element.name} price={100} data={element} dispatchMethod={addToCart} />;
                 })}
             </div> : <div className={classes.loader} />}
+            {loadingError ? <div>Error loading data</div> : null}
             {!search.status && <div className={classes.main__pagination}>
                 {<button
                     className={classes.main__pagination__btn}
