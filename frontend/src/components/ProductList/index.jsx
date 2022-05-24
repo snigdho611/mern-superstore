@@ -74,9 +74,11 @@ const ProductList = () => {
 
     const startSearching = (value) => {
         if (value !== "") {
-            setSearch(prevState => ({ ...prevState, status: true }));
-            setSearch(prevState => ({ ...prevState, params: value }))
-            setDataToShow([]);
+            setTimeout(() => {
+                setSearch(prevState => ({ ...prevState, status: true }));
+                setSearch(prevState => ({ ...prevState, params: value }))
+                setDataToShow([]);
+            }, 1000)
         } else {
             setSearch(prevState => ({ ...prevState, status: false }))
         }
@@ -128,6 +130,16 @@ const ProductList = () => {
                             }}
                         />
                         Name
+                        <input
+                            // className={classes.tradio}
+                            type="radio"
+                            value="type"
+                            name="category"
+                            onChange={(e) => {
+                                setSearch(prevState => ({ ...prevState, category: e.target.value }))
+                            }}
+                        />
+                        Type
                     </div>
                     <div>
                         <input

@@ -1,14 +1,17 @@
 .main {
   width: 200px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   background-color: rgb(130, 231, 135);
+  border: 1px solid green;
 }
 
 .main__child {
   /* style={{ display: "flex", justifyContent: 'center' }} */
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 }
 
 img {
@@ -24,6 +27,7 @@ img {
   color: azure;
   border-radius: 10px;
   transition: 0.5s background-color, 0.5s color;
+  margin-top: 5px;
 }
 
 .card__add:hover {

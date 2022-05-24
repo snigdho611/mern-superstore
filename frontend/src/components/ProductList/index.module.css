@@ -1,5 +1,6 @@
 .main {
   margin-left: 300px;
+  z-index: 1;
 }
 
 .pagination {

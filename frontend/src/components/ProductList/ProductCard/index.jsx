@@ -13,15 +13,15 @@ const ProductCard = ({ data, dispatchMethod }) => {
                     <img src="https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg" alt="Not found" className={classes.image} />
                 </Link>
             </div>
-            <div style={{ display: "flex", justifyContent: 'center' }}>
+            <div style={{ display: "flex", justifyContent: 'center', border: "1px solid green" }}>
                 {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}
             </div>
-            <div style={{ display: "flex", width: "100%", padding: "5px" }}>
-                <div style={{ width: "50%" }}>
+            <div style={{ display: "flex", width: "100%" }}>
+                <div style={{ width: "50%", border: "1px solid green", padding: "5px" }}>
                     BDT {data.price}
                 </div>
-                <div style={{ width: "50%" }}>
-                    Weight: {data.weight}
+                <div style={{ width: "50%", border: "1px solid green", padding: "5px" }}>
+                    Wt: {data.weight}
                 </div>
             </div>
             <div
