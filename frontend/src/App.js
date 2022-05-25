@@ -1,96 +1,24 @@
 import "./App.css";
-import ProductList from "components/ProductList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "components/Navbar";
-import Header from "components/Header";
-import Login from "components/Login";
-import Cart from "components/Cart";
-import Form from "components/Form";
-import ProductDetails from "components/ProductDetails";
-import Footer from "components/Footer";
-import Deals from "components/Deals";
-import Home from "components/Home";
+import LoginPage from "pages/LoginPage";
+import HomePage from "pages/HomePage";
+import ProductsPage from "pages/ProductsPage";
+import ProductsIdPage from "pages/ProductsIdPage";
+import DealsPage from "pages/Deals";
+import ChangePage from "pages/ChangePage";
+import CartPage from "pages/CartPage";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <Login />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/home"
-          element={
-            <>
-              <Header />
-              <Navbar />
-              <Home />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <>
-              <Header />
-              <Navbar />
-              <ProductList />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/products/:productId"
-          element={
-            <>
-              <Header />
-              <Navbar />
-              <ProductDetails />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/deals"
-          element={
-            <>
-              <Header />
-              <Navbar />
-              <Deals />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/change"
-          element={
-            <>
-              <Header />
-              <Navbar />
-              <Form />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <>
-              <Header />
-              <Navbar />
-              <Cart />
-              <Footer />
-            </>
-          }
-        />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:productId" element={<ProductsIdPage />} />
+        <Route path="/deals" element={<DealsPage />} />
+        <Route path="/change" element={<ChangePage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </BrowserRouter>
   );
