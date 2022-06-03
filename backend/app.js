@@ -17,23 +17,6 @@ app.use(cors());
 app.use("/products", productRouter);
 
 databaseConnection(() => {
-  User.find()
-    .then((user) => {
-      if (!user.length) {
-        const newUser = new User({ name: "Mominul", email: "mominul@gmail.com" });
-        newUser
-          .save()
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
   app.listen(8000, () => {
     console.log("Application is running on 8000");
   });
