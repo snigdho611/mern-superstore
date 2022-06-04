@@ -18,15 +18,19 @@ class productController {
     }
   }
 
-  async addProduct(req, res, next) {
-    //
-    if (req.body) {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure(errors.array()));
+  async getOne(req, res, next) {
+    try {
+      const product = await Product.findById(req.params.productId).exec();
+      if (product) {
+        return res.status(HTTP_STATUS.OK).send(success("All products received", product));
+      } else {
+        return res
+          .status(HTTP_STATUS.NOT_FOUND)
+          .send(success("No product found with this id", product));
       }
-      console.log(req.body);
-      return res.status(HTTP_STATUS.OK).send({ message: req.body });
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
   }
 }
