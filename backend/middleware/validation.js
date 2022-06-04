@@ -10,6 +10,7 @@ const validator = {
     body("price").notEmpty().withMessage("Price is required"),
   ],
   updateProduct: [
+    body("productId").notEmpty().withMessage("Product Id required"),
     body("name").notEmpty().withMessage("Name is required"),
     body("description").notEmpty().withMessage("Description is required"),
     body("weight").notEmpty().withMessage("Weight is required"),
@@ -17,6 +18,7 @@ const validator = {
     body("image").notEmpty().withMessage("Image is required"),
     body("price").notEmpty().withMessage("Price is required"),
   ],
+  deleteProduct: [body("productId").notEmpty().withMessage("Product Id required")],
 };
 
 module.exports = validator;
