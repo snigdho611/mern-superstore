@@ -1,14 +1,11 @@
 const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const databaseConnection = require("./config/database");
 const productRouter = require("./routes/products");
 const adminRouter = require("./routes/admin");
 const authenticateRouter = require("./routes/authenticate");
-// const shopRouter = require("./routes/shop");
-const { failure } = require("./utils/commonResponse");
-const HTTP_STATUS = require("./utils/httpStatus");
-const dotenv = require("dotenv");
-const databaseConnection = require("./config/database");
-const cors = require("cors");
-// const User = require("./models/user");
+const cartRouter = require("./routes/cart");
 
 const app = express();
 dotenv.config();
@@ -18,6 +15,7 @@ app.use(cors());
 
 app.use("/products", productRouter);
 app.use("/admin", adminRouter);
+app.use("/cart", cartRouter);
 app.use("/", authenticateRouter);
 
 databaseConnection(() => {

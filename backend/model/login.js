@@ -1,7 +1,5 @@
-const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const User = require("./users");
-
 const loginSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -15,9 +13,9 @@ const loginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  user: {
-    type: ObjectId,
-    ref: "User",
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
   },
 });
 

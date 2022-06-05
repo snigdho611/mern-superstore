@@ -14,8 +14,8 @@ class authenticateController {
       email: req.body.email.toString(),
       password: req.body.password.toString(),
     })
-      .select("email _id type user")
-      .populate("user");
+      .select("email _id type userId")
+      .populate("userId");
     if (result) {
       console.log("Successfully logged in, user: " + result?.email);
       return res.status(HTTP_STATUS.OK).send(success("Successfully logged in", result));
