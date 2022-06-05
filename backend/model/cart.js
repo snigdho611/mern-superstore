@@ -26,5 +26,33 @@ const cartSchema = new mongoose.Schema({
   },
 });
 
+cartSchema.methods.addToCart = async function (prodId) {
+  try {
+    const productIndex = this.products.findIndex(
+      (prod) => prod.product.toString() === prodId.toString()
+    );
+    if (productIndex >= 0) {
+      this.products[productIndex].quantity++;
+    } else {
+      this.products.push({
+        product: prodId,
+        quantity: 1,
+      });
+    }
+    await this.save();
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+cartSchema.methods.removeFromCart = async function (prodId) {
+  try {
+    this.products = this.products.filter((prod) => prod.product.toString() !== prodId.toString());
+    await this.save();
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const Cart = mongoose.model("Cart", cartSchema);
 module.exports = Cart;

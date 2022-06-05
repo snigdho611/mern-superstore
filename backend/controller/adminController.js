@@ -52,7 +52,7 @@ class productController {
           type: req.body.type,
         },
         { new: false }
-      );
+      ).exec();
       //   console.log(result);
       if (result) {
         return res
@@ -73,7 +73,7 @@ class productController {
       if (!errors.isEmpty()) {
         return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure(errors.array()));
       }
-      const result = await Product.findByIdAndDelete(req.body.productId);
+      const result = await Product.findByIdAndDelete(req.body.productId).exec();
       if (!result) {
         return res.status(HTTP_STATUS.OK).send(failure({ message: "Product id does not exist!" }));
       }

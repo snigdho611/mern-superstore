@@ -13,6 +13,8 @@ class cartController {
         return res.status(HTTP_STATUS.NOT_ACCEPTABLE).send(failure("Failed to get cart.", errors));
       }
       const cart = await Cart.findOne({ userId: req.body.userId })
+        .exec()
+        .exec()
         .populate({ path: "itemList.productId", select: "-_id" })
         .select("itemList total -_id");
       console.log(cart);
@@ -23,9 +25,19 @@ class cartController {
     }
   }
 
-  async addProduct(req, res, next) {
+  async addProductToCart(req, res, next) {
     try {
       //
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(HTTP_STATUS.NOT_ACCEPTABLE).send(failure("Failed to get cart.", errors));
+      }
+
+      const result = await Cart.findOne({ userId: req.body.userId }).exec();
+      if (result) {
+        console.log(result);
+        return res.status(HTTP_STATUS.OK).send(success("Got cart successfully.", result));
+      }
     } catch (error) {
       console.log(error);
       next(error);
