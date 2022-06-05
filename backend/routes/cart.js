@@ -5,11 +5,9 @@ const router = express.Router();
 
 router.get("/get", validator.getCart, cartController.getCart);
 
-router.post("/add-product", cartController.addProductToCart);
+router.post("/add-product", validator.addToCart, cartController.addProductToCart);
 
-router.post("/remove-product", (req, res) => {
-  console.log(req);
-});
+router.post("/remove-product", validator.removeProduct, cartController.removeProductFromCart);
 
 router.post("/delete", (req, res) => {
   console.log(req);
