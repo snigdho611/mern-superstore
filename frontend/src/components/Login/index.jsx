@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import getUser from 'util/localStorage/getUser';
@@ -5,7 +6,7 @@ import setUser from 'util/localStorage/setUser';
 import classes from './index.module.css';
 
 const Login = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [loading, setLoading] = useState(false);
@@ -22,44 +23,40 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg("")
-        if (username === "") {
-            setErrorMsg("Please enter a username");
+        if (email === "") {
+            setErrorMsg("Please enter a email");
             return;
         }
         if (password === "") {
             setErrorMsg("Please enter a password");
             return;
         }
-        if (username !== "" && password !== "") {
+        if (email !== "" && password !== "") {
             setLoading(true)
-
-            fetch(process.env.REACT_APP_AUTHENTICATE, {
-                method: "POST",
+            axios.post(`${process.env.REACT_APP_BASE_BACKEND}/login`,
+                {
+                    email: email,
+                    password: password
+                }, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
-            }).then((response) => {
-                return response.json()
-            }).then((response) => {
-                if (response.length > 0) {
-                    setUser(JSON.stringify(response));
-                    return navigate("/home");
-                } else {
-                    setTimeout(() => {
-                        setLoading(false);
-                        setErrorMsg("Invalid username or password")
-                    }, 3000)
-                }
             })
+                .then((response) => {
+                    if (response) {
+                        setUser(JSON.stringify(response.data.results));
+                        return navigate("/home");
+                    } else {
+                        setTimeout(() => {
+                            setLoading(false);
+                            setErrorMsg("Invalid email or password")
+                        }, 3000)
+                    }
+                })
                 .catch((err) => {
                     console.log(err)
                 })
-
         } else {
             setErrorMsg("Username or password does not match");
         }
@@ -79,9 +76,9 @@ const Login = () => {
                                 className={classes.inputBox}
                                 type="text"
                                 onChange={(e) => {
-                                    setUsername(e.target.value)
+                                    setEmail(e.target.value)
                                 }}
-                                value={username}
+                                value={email}
                             />
                         </div>
                     </div>

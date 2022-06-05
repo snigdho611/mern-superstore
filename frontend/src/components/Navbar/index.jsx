@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import getUser from 'util/localStorage/getUser';
 import removeUser from 'util/localStorage/removeUser';
 import classes from './index.module.css'
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const user = JSON.parse(getUser());
+
+    useEffect(() => {
+        if (!user) {
+            return navigate("/");
+        }
+    }, [user, navigate])
     return (
         <div className={classes.main}>
             <div className={classes.main__child}>

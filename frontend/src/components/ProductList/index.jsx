@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import ProductCard from './ProductCard';
 import classes from './index.module.css'
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 const ProductList = () => {
     // Data
@@ -18,7 +19,7 @@ const ProductList = () => {
     const [search, setSearch] = useState({
         status: false,
         params: "",
-        category: "id"
+        category: "name"
     })
 
     // Cart
@@ -26,29 +27,30 @@ const ProductList = () => {
 
     // Use effect for initial data loading and storing
     useEffect(() => {
-        fetch(process.env.REACT_APP_ALL_PRODUCTS, { method: "GET" })
-            .then((response) => {
-                return response.json();
-            })
-            .then((response) => {
-                setAllData(response);
-                setBtnCount(prevState => ({
-                    ...prevState,
-                    count: Math.ceil(response.length / 8),
-                    range: [0, 3]
-                }));
-                setDataToShow(response.slice(0, 8));
-                setLoading(false);
-            })
-            .catch((err) => {
-                setAllData([]);
-                setDataToShow([]);
-                setLoadingError(true);
-            });
+        try {
+            axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/all`)
+                .then((response) => {
+                    setAllData(response.data.results);
+                    setBtnCount(prevState => ({
+                        ...prevState,
+                        count: Math.ceil(response.data.results.length / 8),
+                        range: [0, 3]
+                    }));
+                    setDataToShow(response?.data?.results.slice(0, 8));
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    setAllData([]);
+                    setDataToShow([]);
+                    setLoadingError(true);
+                });
+        } catch (error) {
+            console.log("Failed to call products")
+        }
     }, []);
 
     // Use Effect for searching
-    useEffect(() => {
+    useLayoutEffect(() => {
         const handleSearch = () => {
             const regex = RegExp(search.params);
             const result = allData.filter((e) => {
@@ -63,8 +65,12 @@ const ProductList = () => {
             }
         };
         if (search.status) {
-            setDataToShow([]);
-            handleSearch();
+            setTimeout(
+                () => {
+                    setDataToShow([]);
+                    handleSearch();
+                }, 500
+            )
         } else {
             setDataToShow(allData.slice(0, 8));
         }
@@ -73,6 +79,12 @@ const ProductList = () => {
     // Use Effect for button range changes
     useEffect(() => {
     }, [btnCount.range])
+
+    // useEffect(() => {
+    //     console.log(allData)
+
+    // })
+
 
     const startSearching = (value) => {
         if (value !== "") {
@@ -84,9 +96,6 @@ const ProductList = () => {
         }
     };
 
-    const addToCart = (data) => {
-        dispatch({ type: "add", payLoad: { id: data.id, name: data.name, price: data.price, count: 1 } })
-    }
 
     const paginateChange = (index) => {
         setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
@@ -104,12 +113,29 @@ const ProductList = () => {
         }
     }
 
+    const addToCart = (data) => {
+        try {
+            dispatch({
+                type: "add",
+                payLoad: {
+                    id: data._id,
+                    name: data.name,
+                    price: data.price,
+                    count: 1
+                }
+            })
+            // axios.post()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className={classes.main}>
             <div className={classes.main__child}>
                 <div className={classes.main__search}>
                     <div className={classes.search_radio}>
-                        <input
+                        {/* <input
                             type="radio"
                             value="id"
                             defaultChecked
@@ -118,11 +144,12 @@ const ProductList = () => {
                             }}
                             name="category"
                         />
-                        ID
+                        ID */}
                         <input
                             type="radio"
                             value="name"
                             name="category"
+                            defaultChecked
                             onChange={(e) => {
                                 setSearch(prevState => ({ ...prevState, category: e.target.value }))
                             }}
@@ -151,7 +178,7 @@ const ProductList = () => {
             </div>
             {!loading ? <div className={classes.list}>
                 {dataToShow.map((element) => {
-                    return <ProductCard key={element.id} name={element.name} price={100} data={element} dispatchMethod={addToCart} />;
+                    return <ProductCard key={element._id} name={element.name} price={100} data={element} dispatchMethod={addToCart} />;
                 })}
             </div> : <div className={classes.loader} />}
             {loadingError ? <div>Error loading data</div> : null}
