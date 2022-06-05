@@ -4,7 +4,7 @@ const { success, failure } = require("../utils/commonResponse");
 const HTTP_STATUS = require("../utils/httpStatus");
 
 class authenticateController {
-  login = async (req, res, next) => {
+  async login(req, res, next) {
     // console.log("Log in");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -22,7 +22,7 @@ class authenticateController {
     }
     console.log("Invalid user credentials");
     return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("Invalid credentials"));
-  };
+  }
 }
 
 module.exports = new authenticateController();
