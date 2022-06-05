@@ -23,6 +23,7 @@ const validator = {
     body("email").notEmpty().withMessage("Email is required"),
     body("password").notEmpty().withMessage("Password is required"),
   ],
+  getCart: [body("userId").notEmpty().withMessage("User ID is required")],
 };
 
 module.exports = validator;
