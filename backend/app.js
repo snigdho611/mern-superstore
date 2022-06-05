@@ -1,6 +1,7 @@
 const express = require("express");
 const productRouter = require("./routes/products");
 const adminRouter = require("./routes/admin");
+const authenticateRouter = require("./routes/authenticate");
 // const shopRouter = require("./routes/shop");
 const { failure } = require("./utils/commonResponse");
 const HTTP_STATUS = require("./utils/httpStatus");
@@ -17,6 +18,7 @@ app.use(cors());
 
 app.use("/products", productRouter);
 app.use("/admin", adminRouter);
+app.use("/", authenticateRouter);
 
 databaseConnection(() => {
   app.listen(8000, () => {

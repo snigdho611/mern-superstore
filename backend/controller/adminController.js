@@ -4,7 +4,7 @@ const HTTP_STATUS = require("../utils/httpStatus");
 const { validationResult } = require("express-validator");
 
 class productController {
-  async addProduct(req, res, next) {
+  addProduct = async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -32,9 +32,9 @@ class productController {
       console.log(error);
       next(error);
     }
-  }
+  };
 
-  async editProduct(req, res, next) {
+  editProduct = async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -65,9 +65,9 @@ class productController {
       console.log(error);
       next(error);
     }
-  }
+  };
 
-  async deleteProduct(req, res) {
+  deleteProduct = async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -82,7 +82,7 @@ class productController {
       console.log(error);
       next(error);
     }
-  }
+  };
 }
 
 module.exports = new productController();

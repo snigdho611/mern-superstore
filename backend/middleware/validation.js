@@ -19,6 +19,10 @@ const validator = {
     body("price").notEmpty().withMessage("Price is required"),
   ],
   deleteProduct: [body("productId").notEmpty().withMessage("Product Id required")],
+  login: [
+    body("email").notEmpty().withMessage("Email is required"),
+    body("password").notEmpty().withMessage("Password is required"),
+  ],
 };
 
 module.exports = validator;

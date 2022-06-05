@@ -1,0 +1,28 @@
+const { validationResult } = require("express-validator");
+const Login = require("../model/login");
+const { success, failure } = require("../utils/commonResponse");
+const HTTP_STATUS = require("../utils/httpStatus");
+
+class authenticateController {
+  login = async (req, res, next) => {
+    // console.log("Log in");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("Failed to login", errors));
+    }
+    const result = await Login.findOne({
+      email: req.body.email.toString(),
+      password: req.body.password.toString(),
+    })
+      .select("email _id type user")
+      .populate("user");
+    if (result) {
+      console.log("Successfully logged in, user: " + result?.email);
+      return res.status(HTTP_STATUS.OK).send(success("Successfully logged in", result));
+    }
+    console.log("Invalid user credentials");
+    return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("Invalid credentials"));
+  };
+}
+
+module.exports = new authenticateController();
