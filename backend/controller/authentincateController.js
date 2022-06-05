@@ -8,7 +8,9 @@ class authenticateController {
     // console.log("Log in");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure(failure(errors.array())));
+      return res
+        .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+        .send(failure(failure("Invalid inputs", errors.array())));
     }
     const result = await Login.findOne({
       email: req.body.email.toString(),

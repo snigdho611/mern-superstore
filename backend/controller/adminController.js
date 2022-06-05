@@ -8,7 +8,9 @@ class productController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure(errors.array()));
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Invalid inputs", "Invalid inputs", errors.array()));
       }
       const product = new Product({
         name: req.body.name,
@@ -38,7 +40,9 @@ class productController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure(errors.array()));
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Invalid inputs", errors.array()));
       }
       //   console.log(req.body.productId);
       const result = await Product.findOneAndUpdate(
@@ -71,7 +75,9 @@ class productController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure(errors.array()));
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Invalid inputs", errors.array()));
       }
       const result = await Product.findByIdAndDelete(req.body.productId).exec();
       if (!result) {

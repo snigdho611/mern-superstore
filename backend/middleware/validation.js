@@ -24,6 +24,14 @@ const validator = {
     body("password").notEmpty().withMessage("Password is required"),
   ],
   getCart: [body("userId").notEmpty().withMessage("User ID is required")],
+  addToCart: [
+    body("userId").notEmpty().withMessage("User ID is required"),
+    body("productId").notEmpty().withMessage("Product ID is required"),
+  ],
+  removeProduct: [
+    body("userId").notEmpty().withMessage("User ID is required"),
+    body("productId").notEmpty().withMessage("Product ID is required"),
+  ],
 };
 
 module.exports = validator;
