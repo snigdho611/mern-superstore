@@ -30,9 +30,9 @@ const Cart = () => {
                         'Content-Type': 'application/json',
                     }
                 }).then((response) => {
-                    if (cart.length === 0) {
-                        dispatch({ type: "fill", payLoad: { initialCart: response.data.results } })
-                    }
+                    // if (cart.length === 0) {
+                    dispatch({ type: "fill", payLoad: { initialCart: response.data.results } })
+                    // }
 
                 }).catch((error) => {
                     console.log(error)
