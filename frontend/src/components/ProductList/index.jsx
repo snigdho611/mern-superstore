@@ -147,6 +147,16 @@ const ProductList = () => {
         }
     }
 
+    const deleteProduct = (productId) => {
+        const newData = allData.filter((element) => element._id !== productId)
+        setAllData(newData)
+        axios.delete(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete`, {
+            data: {
+                productId: productId
+            }
+        })
+    }
+
     return (
         <div className={classes.main}>
             <div className={classes.main__child}>
@@ -185,7 +195,7 @@ const ProductList = () => {
             </div>
             {!loading ? <div className={classes.list}>
                 {dataToShow.map((element) => {
-                    return <ProductCard key={element._id} name={element.name} price={100} data={element} dispatchMethod={addToCart} />;
+                    return <ProductCard key={element._id} name={element.name} price={100} data={element} dispatchMethod={addToCart} deleteProduct={deleteProduct} />;
                 })}
             </div> : <div className={classes.loader} />}
             {loadingError ? <div>Error loading data</div> : null}

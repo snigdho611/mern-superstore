@@ -4,21 +4,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const ChangeProduct = () => {
+const AddProduct = () => {
     const [success, setSuccess] = useState(false);
-    const { productId } = useParams()
-    const [product, setProduct] = useState();
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/${productId}`)
-            .then((response) => {
-                setProduct(response.data.results);
-            }).catch((error) => {
-                console.log(error)
-            })
-    }, [productId])
     const {
-        register, reset,
+        register,
         handleSubmit,
         formState: { errors },
     } = useForm({
@@ -28,26 +18,12 @@ const ChangeProduct = () => {
             image: "",
             price: "",
             weight: "",
+            type: ""
         }
     });
 
-    useEffect(() => {
-        reset({
-            name: product && product.name ? product.name : "",
-            description: product && product.description ? product.description : "",
-            image: product && product.image ? product.image : "",
-            price: product && product.price ? product.price : "",
-            weight: product && product.weight ? product.weight : "",
-        })
-    }, [product, reset])
-
     const onSubmit = (data) => {
-        const editData = {
-            ...data,
-            productId: productId,
-            type: product.type
-        }
-        axios.put(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/edit`, editData)
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/add`, data)
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
@@ -128,6 +104,19 @@ const ChangeProduct = () => {
                     placeholder="Image"
                 />
                 <div style={{ color: "red" }}>{errors.image ? errors.image.message : null}</div>
+                <input
+                    {...register("type", {
+                        required: { value: true, message: "Type is required" },
+                        pattern: {
+                            value: /^[A-Z a-z]+$/i,
+                            message: "Only alphabetical characters or spaces are allowed",
+                        }
+                    })}
+                    className={classes.main__input}
+                    type="text"
+                    placeholder="Type"
+                />
+                <div style={{ color: "red" }}>{errors.type ? errors.type.message : null}</div>
 
                 <button
                     className={classes.main__submitBtn}
@@ -141,4 +130,4 @@ const ChangeProduct = () => {
     );
 };
 
-export default ChangeProduct;
+export default AddProduct;

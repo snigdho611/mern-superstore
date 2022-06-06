@@ -44,17 +44,17 @@ const Login = () => {
                 },
             })
                 .then((response) => {
-                    if (response) {
-                        setUser(JSON.stringify(response.data.results));
-                        return navigate("/home");
-                    } else {
-                        setTimeout(() => {
-                            setLoading(false);
-                            setErrorMsg("Invalid email or password")
-                        }, 3000)
-                    }
+                    console.log(response.success)
+                    setUser(JSON.stringify(response.data.results));
+                    return navigate("/home");
+
                 })
                 .catch((err) => {
+                    setTimeout(() => {
+                        setErrorMsg("Invalid email or password")
+
+                        setLoading(false);
+                    }, 2000)
                     console.log(err)
                 })
         } else {

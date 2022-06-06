@@ -12,6 +12,7 @@ import Navbar from "components/Navbar";
 import ProductList from "components/ProductList";
 import Footer from "components/Footer";
 import ChangeProduct from "components/ChangeProduct";
+import AddProduct from "components/AddProduct";
 
 const App = () => {
   return (
@@ -31,6 +32,17 @@ const App = () => {
               <Header />
               <Navbar />
               <ChangeProduct />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/products/add/"
+          element={
+            <>
+              <Header />
+              <Navbar />
+              <AddProduct />
               <Footer />
             </>
           }

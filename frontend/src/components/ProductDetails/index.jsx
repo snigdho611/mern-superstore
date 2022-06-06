@@ -18,7 +18,6 @@ const ProductDetails = () => {
                 console.log("Could not load data");
             })
     }, [productId])
-    console.log(productData)
     return (
         productData ?
             <div className={classes.main} >

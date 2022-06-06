@@ -24,7 +24,11 @@ const Header = () => {
 
             </div>
             <div className={classes.cart_container}>
-                {user ? user_type === "regular" ? <Link to="/cart" className={classes.cart_btn}></Link> : <div>Admin Mode</div> : null}</div>
+                {user ? user_type === "regular" ? <Link to="/cart" className={classes.cart_btn}></Link> :
+                    <div >
+                        <div>Admin Mode</div>
+                        <Link to="/products/add">Add Product</Link>
+                    </div> : null}</div>
         </div>
     )
 }
