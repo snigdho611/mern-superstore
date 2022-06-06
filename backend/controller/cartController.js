@@ -44,9 +44,9 @@ class cartController {
           return res.status(HTTP_STATUS.OK).send(success("Incremented product to cart"));
         } else {
           console.log("User doesn't have a cart");
-          const newCart = new Cart({ userId: req.user.id, itemList: [], total: 0 });
+          const newCart = new Cart({ userId: req.body.userId, itemList: [], total: 0 });
           await newCart.save();
-          await cart.addToCart(product._id);
+          await newCart.addToCart(product._id);
           return res.status(HTTP_STATUS.OK).send(success("Created new cart for user"));
         }
       } else {
