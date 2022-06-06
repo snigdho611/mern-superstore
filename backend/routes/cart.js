@@ -3,7 +3,7 @@ const cartController = require("../controller/cartController");
 const validator = require("../middleware/validation");
 const router = express.Router();
 
-router.get("/get", validator.getCart, cartController.getCart);
+router.post("/get", validator.getCart, cartController.getCart);
 
 router.post("/add-product", validator.addToCart, cartController.addProductToCart);
 

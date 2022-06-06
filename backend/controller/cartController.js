@@ -15,7 +15,7 @@ class cartController {
           .send(failure("Invalid inputs", errors.array()));
       }
       const cart = await Cart.findOne({ userId: req.body.userId })
-        .populate({ path: "itemList.productId", select: "-_id" })
+        .populate({ path: "itemList.productId" })
         .select("itemList total -_id");
       console.log(cart);
       return res.status(HTTP_STATUS.OK).send(success("Got cart successfully.", cart));
