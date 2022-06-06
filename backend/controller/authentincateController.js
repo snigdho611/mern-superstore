@@ -17,8 +17,10 @@ class authenticateController {
       password: req.body.password.toString(),
     })
       .select("email _id type userId")
-      .populate("userId");
+      .populate("userId")
+      .exec();
     if (result) {
+      console.log(result);
       console.log("Successfully logged in, user: " + result?.email);
       return res.status(HTTP_STATUS.OK).send(success("Successfully logged in", result));
     }
