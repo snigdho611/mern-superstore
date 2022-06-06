@@ -1,18 +1,52 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import getUser from 'util/localStorage/getUser';
 import classes from './index.module.css'
 
 const Cart = () => {
+    const user = JSON.parse(getUser());
+    const firstName = user && user.userId && user.userId.firstName ? user.userId.firstName : null;
+    const lastName = user && user.userId && user.userId.lastName ? user.userId.lastName : null;
+    const user_id = user && user.userId ? user.userId._id : null;
+
     const cart = useSelector((state) => state.cart);
     const [checkout, setCheckout] = useState(false);
     const [displayCheckoutMsg, setDisplayCheckoutMsg] = useState();
-
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        // console.log(cart)
+        try {
+            axios.post(`${process.env.REACT_APP_BASE_BACKEND
+                }/cart/get`,
+                {
+                    userId: user_id.toString()
+                },
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then((response) => {
+                    if (cart.length === 0) {
+                        dispatch({ type: "fill", payLoad: { initialCart: response.data.results } })
+                    }
+
+                }).catch((error) => {
+                    console.log(error)
+                })
+        } catch (error) {
+            console.log(error)
+        }
+
+    }, [user_id, dispatch])
+
+
     const calculateTotal = () => {
         const total = cart.reduce((accumulator, object) => {
-            return accumulator + (object.price * object.count);
+            return accumulator + (object.price * object.quantity);
         }, 0)
         return total
     }
@@ -42,13 +76,14 @@ const Cart = () => {
                     </tr>
                 </thead>
                 <tbody>
+                    {console.log(cart)}
                     {cart.map(element => {
                         return (
                             <tr key={element.id}>
-                                <td className={classes.dataCell}>{element.id}</td>
+                                <td className={classes.dataCell}>{element.id.slice(-2)}</td>
                                 <td className={classes.dataCell}>{element.name}</td>
-                                <td className={classes.dataCell}>{element.count}</td>
-                                <td className={classes.dataCell}>{element.price}x{element.count} = {element.price * element.count}</td>
+                                <td className={classes.dataCell}>{element.quantity}</td>
+                                <td className={classes.dataCell}>{element.price}x{element.quantity} = {element.price * element.quantity}</td>
                                 <td ><button className={classes.cart__crossBtn} onClick={() => { removeFromCart(element) }}>x</button></td>
                             </tr>
                         )
@@ -69,8 +104,8 @@ const Cart = () => {
             </table>
             {displayCheckoutMsg ?
                 checkout ?
-                    <div className={classes.confirmationMsg}>Thank you for shopping with us, {JSON.parse(getUser())[0].firstname} san, please wait for a confirmation email</div> :
-                    <div className={classes.errorMsg}>Sorry, {JSON.parse(getUser())[0].firstname} san, but you need to select something to buy it</div> : null}
+                    <div className={classes.confirmationMsg}>Thank you for shopping with us, {firstName} {lastName} san, please wait for a confirmation email</div> :
+                    <div className={classes.errorMsg}>Sorry, {firstName} {lastName} san, but you need to select something to buy it</div> : null}
         </div>
     )
 }

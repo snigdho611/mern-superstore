@@ -65,6 +65,7 @@ a {
   background-color: red;
   border: none;
   cursor: pointer;
+  padding: 5px 10px;
   transition: 0.25s background-color, 0.25s color;
 }
 

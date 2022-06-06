@@ -9,9 +9,7 @@ const ProductCard = ({ data, dispatchMethod }) => {
             className={classes.main}
         >
             <div className={classes.main__child}>
-                <Link to={`/products/${data.id}`}>
-                    <img src="https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg" alt="Not found" className={classes.image} />
-                </Link>
+                <img src="https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg" alt="Not found" className={classes.image} />
             </div>
             <div style={{ display: "flex", justifyContent: 'center', border: "1px solid green" }}>
                 {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}
@@ -25,16 +23,29 @@ const ProductCard = ({ data, dispatchMethod }) => {
                 </div>
             </div>
             <div
-                style={{ display: "flex", justifyContent: 'center' }}
+                style={{ display: "flex", flexDirection: 'column', justifyContent: 'center' }}
             >
                 <button
                     onClick={() =>
-                        dispatchMethod(data)
+                        dispatchMethod(
+                            {
+                                _id: data._id,
+                                name: data.name,
+                                price: data.price,
+                                quantity: data.quantity
+                            }
+                        )
                     }
                     className={classes.card__add}
                 >
                     Add to Cart
                 </button>
+                <Link
+                    to={`/products/${data._id}`}
+                    className={classes.card__add}
+                >
+                    Details
+                </Link>
             </div>
         </div>
     )

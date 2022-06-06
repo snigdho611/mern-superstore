@@ -3,8 +3,12 @@ import ProductCard from './ProductCard';
 import classes from './index.module.css'
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import getUser from 'util/localStorage/getUser';
 
 const ProductList = () => {
+    const user = JSON.parse(getUser());
+    const user_id = user && user.userId ? user.userId._id : null;
+
     // Data
     const [allData, setAllData] = useState([]);
     const [btnCount, setBtnCount] = useState({
@@ -115,13 +119,28 @@ const ProductList = () => {
 
     const addToCart = (data) => {
         try {
+            axios.post(`${process.env.REACT_APP_BASE_BACKEND}/cart/add-product`,
+                {
+                    userId: user_id.toString(),
+                    productId: data._id
+                },
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }).then((response) => {
+
+                }).catch((error) => {
+                    console.log(error)
+                })
             dispatch({
                 type: "add",
                 payLoad: {
                     id: data._id,
                     name: data.name,
                     price: data.price,
-                    count: 1
+                    quantity: 1
                 }
             })
             // axios.post()
@@ -135,16 +154,6 @@ const ProductList = () => {
             <div className={classes.main__child}>
                 <div className={classes.main__search}>
                     <div className={classes.search_radio}>
-                        {/* <input
-                            type="radio"
-                            value="id"
-                            defaultChecked
-                            onChange={(e) => {
-                                setSearch(prevState => ({ ...prevState, category: e.target.value }))
-                            }}
-                            name="category"
-                        />
-                        ID */}
                         <input
                             type="radio"
                             value="name"

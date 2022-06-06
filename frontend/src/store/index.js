@@ -11,7 +11,7 @@ const reducerFn = (state = initialState, action) => {
       // Already in cart
       if (alreadyInCart !== -1) {
         const copyArray = [...state.cart];
-        copyArray[alreadyInCart].count += 1;
+        copyArray[alreadyInCart].quantity += 1;
         return { ...state, cart: copyArray };
       }
       // Not already in cart
@@ -25,15 +25,27 @@ const reducerFn = (state = initialState, action) => {
       let copyArray = [...state.cart];
       // If the count of the corresponding element is down to 1,
       // that means it needs to be deleted from cart the next time cross is pressed
-      if (copyArray[index].count - 1 === 0) {
+      if (copyArray[index].quantity - 1 === 0) {
         copyArray.splice(index, 1);
         return { ...state, cart: copyArray };
       }
       // Otherwise, simply decrement the count by 1 for that particular element
       else {
-        copyArray[index].count -= 1;
+        copyArray[index].quantity -= 1;
         return { ...state, cart: copyArray };
       }
+    case "fill":
+      // console.log(action.payLoad.initialCart.itemList);
+      let data = [];
+      action.payLoad.initialCart.itemList.map((element) => {
+        return data.push({
+          id: element.productId._id,
+          name: element.productId.name,
+          price: element.productId.price,
+          quantity: element.quantity,
+        });
+      });
+      return { ...state, cart: data };
     default: {
       return state;
     }

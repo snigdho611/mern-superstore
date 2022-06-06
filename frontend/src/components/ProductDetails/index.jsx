@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import classes from './index.module.css'
@@ -7,16 +8,17 @@ const ProductDetails = () => {
     const [productData, setProductData] = useState(null);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_PRODUCT_SINGLE}/${productId}`, { method: "GET" })
-            .then((response) => response.json())
+
+        axios.get(`${process.env.REACT_APP_BASE_BACKEND
+            }/products/${productId}`)
             .then((response) => {
-                setProductData(response[0])
+                setProductData(response.data.results)
             })
             .catch((err) => {
                 console.log("Could not load data");
             })
     }, [productId])
-
+    console.log(productData)
     return (
         productData ?
             <div className={classes.main} >
