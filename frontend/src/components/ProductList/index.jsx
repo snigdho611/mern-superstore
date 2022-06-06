@@ -129,8 +129,6 @@ const ProductList = () => {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                     }
-                }).then((response) => {
-
                 }).catch((error) => {
                     console.log(error)
                 })

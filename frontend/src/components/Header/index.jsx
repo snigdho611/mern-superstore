@@ -5,7 +5,9 @@ import classes from './index.module.css'
 import shopLogo from '../../shop.png'
 
 const Header = () => {
-    const user = getUser();
+    const user = JSON.parse(getUser());
+    const user_type = user && user.type ? user.type : null;
+
     const navigate = useNavigate();
     useEffect(() => {
         if (!user) {
@@ -22,7 +24,7 @@ const Header = () => {
 
             </div>
             <div className={classes.cart_container}>
-                {user ? <Link to="/cart" className={classes.cart_btn}></Link> : null}</div>
+                {user ? user_type === "regular" ? <Link to="/cart" className={classes.cart_btn}></Link> : <div>Admin Mode</div> : null}</div>
         </div>
     )
 }

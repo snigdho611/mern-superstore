@@ -41,7 +41,7 @@ const Cart = () => {
             console.log(error)
         }
 
-    }, [user_id, dispatch])
+    }, [user_id, dispatch, cart.length])
 
 
     const calculateTotal = () => {
@@ -61,7 +61,23 @@ const Cart = () => {
     }
 
     const removeFromCart = (data) => {
-        dispatch({ type: "dec", payLoad: { id: data.id } })
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/cart/remove-product`,
+            {
+                userId: user_id.toString(),
+                productId: data.id
+            },
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        dispatch({
+            type: "dec",
+            payLoad: { id: data.id }
+        })
     }
 
     return (
@@ -76,7 +92,6 @@ const Cart = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {console.log(cart)}
                     {cart.map(element => {
                         return (
                             <tr key={element.id}>
