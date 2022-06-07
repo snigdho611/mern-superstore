@@ -37,19 +37,14 @@ const reducerFn = (state = initialState, action) => {
     case "fill":
       // console.log(action.payLoad.initialCart.itemList);
       let data = [];
-      try {
-        action.payLoad.initialCart.itemList.map((element) => {
-          // console.log(element);
-          return data.push({
-            id: element.productId._id,
-            name: element.productId.name,
-            price: element.productId.price,
-            quantity: element.quantity,
-          });
+      action.payLoad.initialCart.itemList.map((element) => {
+        return data.push({
+          id: element.productId._id,
+          name: element.productId.name,
+          price: element.productId.price,
+          quantity: element.quantity,
         });
-      } catch (error) {
-        console.log(error);
-      }
+      });
       return { ...state, cart: data };
     default: {
       return state;
