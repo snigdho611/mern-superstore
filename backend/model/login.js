@@ -9,9 +9,9 @@ const loginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  type: {
-    type: String,
-    required: true,
+  isAdmin: {
+    type: Boolean,
+    default: false,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
