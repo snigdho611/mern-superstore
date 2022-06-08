@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react'
 import { Link } from 'react-router-dom'
 import getUser from 'util/localStorage/getUser';
@@ -6,7 +5,7 @@ import classes from './index.module.css'
 
 const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
     const user = JSON.parse(getUser());
-    const user_type = user && user.type ? user.type : null;
+    const user_type = user && user.isAdmin ? user.isAdmin : null;
 
 
 
@@ -31,7 +30,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
             <div
                 style={{ display: "flex", flexDirection: 'column', justifyContent: 'center' }}
             >
-                {user_type === "regular" ?
+                {!user_type ?
                     <button
                         onClick={() =>
                             dispatchMethod(
@@ -48,7 +47,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                         Add to Cart
                     </button>
                     : null}
-                {user_type === "admin" ?
+                {user_type ?
                     <button
                         onClick={() => { deleteProduct(data._id) }
                         }
@@ -58,7 +57,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                     </button>
                     : null}
                 {
-                    user_type === "admin" ?
+                    user_type ?
                         <Link
                             to={`/products/edit/${data._id}`}
                             className={classes.card__add}

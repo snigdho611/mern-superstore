@@ -13,6 +13,7 @@ import ProductList from "components/ProductList";
 import Footer from "components/Footer";
 import ChangeProduct from "components/ChangeProduct";
 import AddProduct from "components/AddProduct";
+import VerifyEmail from "components/VerifyEmail";
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
             </>
           }
         />
+        <Route path="/email-verify/:token/:userId" element={<VerifyEmail />} />
       </Routes>
     </BrowserRouter>
   );
