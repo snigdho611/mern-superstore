@@ -7,4 +7,6 @@ router.post("/login", validator.login, authenticateController.login);
 
 router.post("/signup", validator.signup, authenticateController.signup);
 
+router.post("/email-verify", validator.emailVerify, authenticateController.emailVerify);
+
 module.exports = router;

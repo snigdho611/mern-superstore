@@ -75,6 +75,10 @@ const validator = {
     body("userId").notEmpty().withMessage("User ID is required"),
     body("productId").notEmpty().withMessage("Product ID is required"),
   ],
+  emailVerify: [
+    body("userId").notEmpty().withMessage("User ID is required"),
+    body("token").notEmpty().withMessage("Email token is required"),
+  ],
 };
 
 module.exports = validator;

@@ -13,6 +13,18 @@ const loginSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  emailToken: {
+    type: String,
+    default: null,
+  },
+  emailTokenExpire: {
+    type: Date,
+    default: null,
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User,

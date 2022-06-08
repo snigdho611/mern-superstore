@@ -26,13 +26,17 @@ const checkAuth = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  console.log(req.user.isAdmin);
   if (req.user.isAdmin) {
     next();
   } else {
     return res.status(HTTP_STATUS.FORBIDDEN).send(failure("Access is restricted"));
   }
 };
+
+// const isEmailVerified = (req, res, next) => {
+//   if (req.user.isEmailVerified) {
+//   }
+// };
 
 module.exports = {
   checkAuth,
