@@ -65,15 +65,15 @@ const Login = () => {
     return (
         <div className={classes.main}>
             <h3 style={{ textAlign: "center" }}>Please log in to continue</h3>
-            <div className={classes.flex_center}>
-                <div>
-                    <div className={classes.flex__row}>
-                        <div className={classes.flex__row__labelCell}>
-                            <label>Username:</label>
+            <div className={classes.main__container}>
+                <div className={classes.tform}>
+                    <div className={classes.tform__row}>
+                        <div className={classes.tform__row__labelCell}>
+                            Username:
                         </div>
-                        <div className={classes.flex__row__inputCell}>
+                        <div className={classes.tform__row__inputCell}>
                             <input
-                                className={classes.inputBox}
+                                className={classes.tform__row__inputBox}
                                 type="text"
                                 onChange={(e) => {
                                     setEmail(e.target.value)
@@ -82,13 +82,13 @@ const Login = () => {
                             />
                         </div>
                     </div>
-                    <div className={classes.flex__row}>
-                        <div className={classes.flex__row__labelCell}>
-                            <label>Password:</label>
+                    <div className={classes.tform__row}>
+                        <div className={classes.tform__row__labelCell}>
+                            Password:
                         </div>
-                        <div className={classes.flex__row__inputCell}>
+                        <div className={classes.tform__row__inputCell}>
                             <input
-                                className={classes.inputBox}
+                                className={classes.tform__row__inputBox}
                                 type="password"
                                 onChange={(e) => {
                                     setPassword(e.target.value)
@@ -98,7 +98,7 @@ const Login = () => {
                     </div>
                     <div className={classes.main__bottom}>
                         <div style={{ margin: "0 auto" }}>
-                            {!loading ? <button className={classes.loginBtn} onClick={(e) => {
+                            {!loading ? <button className={classes.main__bottom__loginBtn} onClick={(e) => {
                                 handleSubmit(e)
                             }}>Log In</button> : <div className={classes.loader} />}
                         </div>
