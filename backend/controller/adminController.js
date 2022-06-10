@@ -2,21 +2,33 @@ const Product = require("../model/product");
 const { success, failure } = require("../utils/commonResponse");
 const HTTP_STATUS = require("../utils/httpStatus");
 const { validationResult } = require("express-validator");
+const fs = require("fs/promises");
+const path = require("path");
 
-class productController {
+class adminController {
   async addProduct(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      if (!req.file) {
+        validatorResult.errors.push({
+          param: "productImage",
+          msg: "Product Image is required. Only jpeg, jpg and png file is allowed!",
+        });
+      }
+      if (!validatorResult.isEmpty()) {
+        if (req.file) {
+          await fs.unlink(path.join(__dirname, "../files/products", req.file.filename));
+          console.log({ error: "File was deleted due to other validation errors" });
+        }
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", "Invalid inputs", errors.array()));
+          .send(failure("Invalid inputs", validatorResult.array()));
       }
       const product = new Product({
         name: req.body.name,
         price: parseInt(req.body.price),
         weight: req.body.weight,
-        image: req.body.image,
+        image: `\\${req.file.path}`,
         description: req.body.description,
         type: req.body.type,
       });
@@ -36,36 +48,83 @@ class productController {
     }
   }
 
-  async editProduct(req, res, next) {
+  async updateProduct(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      // if (!req.file) {
+      //   validatorResult.errors.push({
+      //     param: "productImage",
+      //     msg: "Product Image is required. Only jpeg, jpg and png file is allowed!",
+      //   });
+      // }
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", errors.array()));
+          .send(failure("Invalid inputs", validatorResult.array()));
       }
-      //   console.log(req.body.productId);
-      const result = await Product.findOneAndUpdate(
-        { _id: req.body.productId },
-        {
-          name: req.body.name,
-          price: parseInt(req.body.price),
-          weight: req.body.weight,
-          image: req.body.image,
-          description: req.body.description,
-          type: req.body.type,
-        },
-        { new: false }
-      ).exec();
-      //   console.log(result);
-      if (result) {
+      const dataToUpdate = {
+        // name: req.body.name,
+        // price: parseInt(req.body.price),
+        // weight: req.body.weight,
+        // description: req.body.description,
+        // type: req.body.type,
+        ...req.body,
+      };
+      // console.log(Object.keys(dataToUpdate).length);
+      // return res.status(HTTP_STATUS.OK).send(success({ message: "Updated product successully!" }));
+      if (Object.keys(dataToUpdate).length === 1) {
+        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("No data sent to update"));
+      }
+      const product = await Product.findOneAndUpdate({ _id: req.body.productId }, dataToUpdate, {
+        new: true,
+      }).exec();
+      if (product) {
         return res
           .status(HTTP_STATUS.OK)
-          .send(success({ message: "Updated product successully!" }, result));
+          .send(success({ message: "Updated product successully!" }, product));
       } else {
         return res.status(HTTP_STATUS.OK).send(failure({ message: "Product update failed!" }));
       }
     } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  async updateImage(req, res, next) {
+    try {
+      const validatorResult = validationResult(req);
+      if (!req.file) {
+        validatorResult.errors.push({
+          param: "productImage",
+          msg: "Product Image is required. Only jpeg, jpg and png file is allowed!",
+        });
+      }
+      console.log("Image format: ok");
+      if (!validatorResult.isEmpty()) {
+        if (req.file) {
+          await fs.unlink(path.join(__dirname, "../files/products", req.file.filename));
+          console.log({ error: "File was deleted due to other validation errors" });
+        }
+        console.log("File removed for request containing other errors");
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Invalid inputs", validatorResult.array()));
+      }
+      const product = await Product.findOneAndUpdate(
+        { _id: req.body.productId },
+        { image: `\\${req.file.path}` }
+      );
+      if (product) {
+        await fs.unlink(path.join(__dirname, "..", product.image));
+        return res
+          .status(HTTP_STATUS.OK)
+          .send(success({ message: "Updated image successully!" }, product));
+      } else {
+        return res.status(HTTP_STATUS.OK).send(failure({ message: "Image update failed!" }));
+      }
+    } catch (error) {
+      //
       console.log(error);
       next(error);
     }
@@ -91,4 +150,4 @@ class productController {
   }
 }
 
-module.exports = new productController();
+module.exports = new adminController();
