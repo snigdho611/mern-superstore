@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+    required: false,
+    default: null,
+  },
   balance: {
     type: Number,
     // required: true,
