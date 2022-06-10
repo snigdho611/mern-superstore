@@ -3,23 +3,60 @@ const Login = require("../model/login");
 
 const validator = {
   addProduct: [
-    body("name").notEmpty().withMessage("Name is required"),
-    body("description").notEmpty().withMessage("Description is required"),
+    body("name")
+      .notEmpty()
+      .withMessage("Product name is required")
+      .isLength({ min: 8 })
+      .withMessage("Product name must be of minimum 8 characters"),
+    body("description")
+      .notEmpty()
+      .withMessage("Description is required")
+      .isLength({ min: 15 })
+      .withMessage("Product description must be of minimum 15 characters"),
     body("weight").notEmpty().withMessage("Weight is required"),
     body("type").notEmpty().withMessage("Type is required"),
-    body("image").notEmpty().withMessage("Image is required"),
-    body("price").notEmpty().withMessage("Price is required"),
+    body("price")
+      .notEmpty()
+      .withMessage("Price is required")
+      .isNumeric()
+      .withMessage("Price must be a number"),
   ],
   updateProduct: [
-    body("productId").notEmpty().withMessage("Product Id required"),
-    body("name").notEmpty().withMessage("Name is required"),
-    body("description").notEmpty().withMessage("Description is required"),
-    body("weight").notEmpty().withMessage("Weight is required"),
-    body("type").notEmpty().withMessage("Type is required"),
-    body("image").notEmpty().withMessage("Image is required"),
-    body("price").notEmpty().withMessage("Price is required"),
+    body("productId")
+      .notEmpty()
+      .withMessage("Product Id is required")
+      .isLength({ min: 24 })
+      .withMessage("Product Id format invalid"),
+    body("name")
+      .if(body("name").notEmpty())
+      .isLength({ min: 8 })
+      .withMessage("Product name must be of minimum 8 characters"),
+    body("description")
+      .if(body("description").notEmpty())
+      .isLength({ min: 15 })
+      .withMessage("Product description must be of minimum 15 characters"),
+    body("price")
+      // .exists({ checkNull: false, checkFalsy: false })
+      .if(body("price").notEmpty())
+      .isNumeric()
+      .withMessage("Price must be a number"),
+  ],
+  updateImage: [
+    body("productId")
+      .notEmpty()
+      .withMessage("Product Id is required")
+      .if(body("productId").notEmpty())
+      .isLength({ min: 24 })
+      .withMessage("Product Id format invalid"),
   ],
   deleteProduct: [body("productId").notEmpty().withMessage("Product Id required")],
+  imageUpdate: [
+    body("productId")
+      .notEmpty()
+      .withMessage("Product Id is required")
+      .isLength({ min: 24 })
+      .withMessage("Product Id format invalid"),
+  ],
   login: [
     body("email").notEmpty().withMessage("Email is required"),
     body("password").notEmpty().withMessage("Password is required"),
