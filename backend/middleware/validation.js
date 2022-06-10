@@ -49,7 +49,14 @@ const validator = {
       .isLength({ min: 24 })
       .withMessage("Product Id format invalid"),
   ],
-  deleteProduct: [body("productId").notEmpty().withMessage("Product Id required")],
+  deleteProduct: [
+    body("productId")
+      .notEmpty()
+      .withMessage("Product Id is required")
+      .if(body("productId").notEmpty())
+      .isLength({ min: 24 })
+      .withMessage("Product Id format invalid"),
+  ],
   imageUpdate: [
     body("productId")
       .notEmpty()
