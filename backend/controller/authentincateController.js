@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 const Login = require("../model/login");
-const User = require("../model/users");
+const User = require("../model/user");
 const { success, failure } = require("../utils/commonResponse");
 const crypto = require("crypto");
 const path = require("path");
@@ -37,7 +37,6 @@ class authenticateController {
         email: login.email,
         isAdmin: login.isAdmin,
       };
-      // console.log(userData);
       const jwtToken = jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
       const resData = {
         access_token: jwtToken,
@@ -158,6 +157,53 @@ class authenticateController {
       console.log(error);
       next(error);
     }
+  }
+  async resetPasswordRequest(req, res, next) {
+    // try {
+    //   const errors = validationResult(req);
+    //   if (!errors.isEmpty()) {
+    //     return res
+    //       .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+    //       .send(failure("Invalid inputs", errors.array()));
+    //   }
+    //   const login = await Login.findOne({
+    //     emailToken: req.body.token,
+    //     _id: req.body.userId,
+    //   });
+    //   if (!login) {
+    //     return res
+    //       .status(HTTP_STATUS.NOT_FOUND)
+    //       .send(failure("User not found", { validation: "Error: user not found" }));
+    //   }
+    //   if (
+    //     login.emailTokenExpire === null ||
+    //     login.isEmailVerified === true ||
+    //     login.emailToken === null
+    //   ) {
+    //     return res
+    //       .status(HTTP_STATUS.NOT_FOUND)
+    //       .send(failure("Email is already validated", { validation: "Already verified" }));
+    //   }
+    //   if (login.emailTokenExpire < Date.now()) {
+    //     return res
+    //       .status(HTTP_STATUS.GONE)
+    //       .send(failure("This link has expired", { validation: "Error: link expired" }));
+    //   }
+    //   login.emailToken = null;
+    //   login.emailTokenExpire = null;
+    //   login.isEmailVerified = true;
+    //   login.save();
+    //   return res
+    //     .status(HTTP_STATUS.OK)
+    //     .send(success("Successfully validated email", { validation: "Validated" }));
+    // } catch (error) {
+    //   console.log(error);
+    //   next(error);
+    // }
+  }
+
+  async resetPassword(req, res, next) {
+    //
   }
 }
 
