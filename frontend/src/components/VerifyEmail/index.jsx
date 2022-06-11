@@ -1,46 +1,47 @@
-import axios from 'axios';
+// import axios from 'axios';
 import Footer from 'components/Footer'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const VerifyEmail = () => {
     const { token } = useParams();
     const { userId } = useParams();
-    const [status, setStatus] = useState(null);
+    // const [status, setStatus] = useState(null);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const status = searchParams.get("status")
 
-    useEffect(() => {
-        axios.post(process.env.REACT_APP_BASE_BACKEND + "/email-verify",
-            JSON.stringify({
-                token: token,
-                userId: userId
-            })
-            ,
-            {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then((response) => {
-                if (response.data.results.validation) {
-                    setStatus(response.data.results.validation);
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-                setStatus(false)
-                // setStatus(error.data.errors.validation)
-            })
-    }, [token, userId])
+    // useEffect(() => {
+    //     console.log(status)
+    // }, [status])
+
+    const generateMessage = (status_) => {
+        if (status_ === "4") {
+            return "Successfully validated";
+        }
+        if (status_ === "1") {
+            return "Failed: user not found, please try again"
+        }
+        if (status_ === "2") {
+            return "Failed: Mail has already been verified"
+        }
+        if (status_ === "3") {
+            return "Failed: Token expired"
+        }
+        if (status_ === "5") {
+            return "Failed: Unknown error occurred"
+        }
+    }
 
     return (
         <>
             <div style={{ textAlign: "center" }}>
 
-                <h1 style={{ fontSize: "20px", fontWeight: "bold", }}>
+                <h1>
                     Please wait while your email gets validated
                 </h1>
-                Email status: {status ? status : "Failed to validate"}
+                <p>
+                    Email status: {generateMessage(status)}
+                </p>
             </div>
             <Footer />
         </>
