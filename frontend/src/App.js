@@ -1,3 +1,4 @@
+import "./index.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import LoginPage from "pages/LoginPage";
@@ -137,7 +138,27 @@ const App = () => {
             </>
           }
         />
-        <Route path="/email-verify/:token/:userId" element={<VerifyEmail />} />
+        <Route
+          path="/email-verify"
+          element={
+            <>
+              {/* <Navbar /> */}
+              <Header />
+              <VerifyEmail />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/reset-email/:token/:userId"
+          element={
+            <>
+              <Header />
+              <VerifyEmail />
+              <Footer />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -2,14 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply font-mono;
-}
+@layer {
+  * {
+    @apply font-mono;
+  }
 
-body {
-  @apply bg-teal-50;
-}
+  body {
+    @apply bg-teal-50;
+  }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  }
 }

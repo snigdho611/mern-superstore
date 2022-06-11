@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 const AddProduct = () => {
     const [success, setSuccess] = useState(false);

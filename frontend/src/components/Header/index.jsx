@@ -10,9 +10,9 @@ const Header = () => {
 
     const navigate = useNavigate();
     useEffect(() => {
-        if (!user) {
-            navigate('/');
-        }
+        // if (!user) {
+        //     navigate('/');
+        // }
     }, [navigate, user])
 
     return (

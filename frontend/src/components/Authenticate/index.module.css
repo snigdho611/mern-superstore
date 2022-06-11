@@ -1,6 +1,6 @@
-@tailwind components;
+@tailwind base;
 
-@layer {
+@layer base {
   .main {
     @apply flex flex-col justify-center text-center;
   }
@@ -68,13 +68,12 @@
   .main__link {
     @apply text-teal-600 text-xl font-extrabold;
   }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
