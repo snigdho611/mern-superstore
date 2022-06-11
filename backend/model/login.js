@@ -25,6 +25,14 @@ const loginSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
+  passwordResetToken: {
+    type: String,
+    default: null,
+  },
+  passwordResetExpire: {
+    type: Date,
+    default: null,
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User,

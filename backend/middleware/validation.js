@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 const Login = require("../model/login");
 
 const validator = {
@@ -120,9 +120,11 @@ const validator = {
     body("productId").notEmpty().withMessage("Product ID is required"),
   ],
   emailVerify: [
-    body("userId").notEmpty().withMessage("User ID is required"),
-    body("token").notEmpty().withMessage("Email token is required"),
+    param("userId").notEmpty().withMessage("User ID is required"),
+    param("token").notEmpty().withMessage("Email token is required"),
   ],
+  resetPasswordEmail: [body("email").trim().isEmail().withMessage("Please enter a valid email")],
+  resetPassword: [],
 };
 
 module.exports = validator;
