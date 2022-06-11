@@ -14,7 +14,9 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
             className={classes.main}
         >
             <div className={classes.main__child}>
-                <img src={data.image ? data.image : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className={classes.image} />
+                {/* {console.log(`${process.env.REACT_APP_BASE_BACKEND}/${data.image}`)} */}
+                {/* {data.image ? console.log(`${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}`) : null} */}
+                <img src={data.image ? `${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className={classes.image} />
             </div>
             <div style={{ display: "flex", justifyContent: 'center', border: "1px solid green" }}>
                 {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}

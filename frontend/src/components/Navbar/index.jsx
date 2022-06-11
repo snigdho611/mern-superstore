@@ -9,9 +9,9 @@ const Navbar = () => {
     const user = JSON.parse(getUser());
 
     useEffect(() => {
-        if (!user) {
-            return navigate("/");
-        }
+        // if (!user) {
+        //     return navigate("/");
+        // }
     }, [user, navigate])
     return (
         <div className={classes.main}>
