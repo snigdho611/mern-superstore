@@ -36,6 +36,7 @@ class authenticateController {
         _id: login._id,
         email: login.email,
         isAdmin: login.isAdmin,
+        isEmailVerified: login.isEmailVerified,
       };
       const jwtToken = jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
       const resData = {
@@ -51,68 +52,72 @@ class authenticateController {
   }
 
   async signup(req, res, nex) {
-    const validatorResult = validationResult(req);
-    if (!validatorResult.isEmpty()) {
-      return res
-        .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-        .send(failure("Invalid inputs", validatorResult.array()));
-    }
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const phone = req.body.phone;
-    const user = new User({ firstName: firstName, lastName: lastName, phone: phone });
-    await user.save();
+    try {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Invalid inputs", validatorResult.array()));
+      }
+      const firstName = req.body.firstName;
+      const lastName = req.body.lastName;
+      const phone = req.body.phone;
+      const user = new User({ firstName: firstName, lastName: lastName, phone: phone });
+      await user.save();
 
-    const email = req.body.email;
-    const password = await bcrypt.hash(req.body.password, 10);
-    const login = new Login({ email: email, password: password, userId: user._id });
+      const email = req.body.email;
+      const password = await bcrypt.hash(req.body.password, 10);
+      const login = new Login({ email: email, password: password, userId: user._id });
 
-    const jwtToken = jwt.sign(
-      {
+      const jwtToken = jwt.sign(
+        {
+          _id: login._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: login.email,
+          isAdmin: login.isAdmin,
+          isEmailVerified: login.isEmailVerified,
+        },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "1h" }
+      );
+
+      const resData = {
+        token: jwtToken,
+        userId: login.userId,
         _id: login._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: login.email,
-        isAdmin: login.isAdmin,
-        isEmailVerified: login.isEmailVerified,
-      },
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
-    );
+      };
 
-    const resData = {
-      token: jwtToken,
-      userId: login.userId,
-      _id: login._id,
-    };
+      const verifyToken = crypto.randomBytes(32).toString("hex");
+      login.emailToken = verifyToken;
+      login.emailTokenExpire = Date.now() + 60 * 60 * 1000;
+      await login.save();
+      console.log(process.env.FRONTEND_BASE_URI, "email-verify", verifyToken, login._id.toString());
+      const emailVerifyUrl = path.join(
+        process.env.BACKEND_BASE_URI,
+        "email-verify",
+        verifyToken,
+        login._id.toString()
+      );
 
-    const verifyToken = crypto.randomBytes(32).toString("hex");
-    login.emailToken = verifyToken;
-    login.emailTokenExpire = Date.now() + 60 * 60 * 1000;
-    await login.save();
-    console.log(process.env.FRONTEND_BASE_URI, "email-verify", verifyToken, login._id.toString());
-    const emailVerifyUrl = path.join(
-      process.env.BACKEND_BASE_URI,
-      "email-verify",
-      verifyToken,
-      login._id.toString()
-    );
+      const htmlStr = await ejsRenderFile(path.join(__dirname, "..", "mails", "VerifyMail.ejs"), {
+        name: user.firstName + " " + user.lastName,
+        emailUrl: emailVerifyUrl,
+      });
 
-    const htmlStr = await ejsRenderFile(path.join(__dirname, "..", "mails", "VerifyMail.ejs"), {
-      name: user.firstName + " " + user.lastName,
-      emailUrl: emailVerifyUrl,
-    });
+      sendMail({
+        from: "ABC Store <mail@abcstore.com>",
+        to: login.email,
+        subject: "Verify your email",
+        html: htmlStr,
+      });
 
-    sendMail({
-      from: "ABC Store <mail@abcstore.com>",
-      to: login.email,
-      subject: "Verify your email",
-      html: htmlStr,
-    });
-
-    return res
-      .status(HTTP_STATUS.OK)
-      .send(success("Successully signed up, please check your email.", resData));
+      return res
+        .status(HTTP_STATUS.OK)
+        .send(success("Successully signed up, please check your email.", resData));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async emailVerify(req, res, next) {
@@ -190,6 +195,9 @@ class authenticateController {
         subject: "Password Reset Request",
         html: htmlStr,
       });
+      return res
+        .status(HTTP_STATUS.OK)
+        .send(success("Successully requested for password, please check your email."));
     } catch (error) {
       console.log(error);
     }
@@ -198,12 +206,28 @@ class authenticateController {
   async resetPassword(req, res, next) {
     try {
       const validatorResult = validationResult(req);
-      if (!validationResult.isEmpty()) {
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure("Invalid inputs", validatorResult.array()));
       }
-      console.log(req.body);
+      // console.log(req.body);
+      const newPassword = req.body.password;
+      const newPasswordConfirm = req.body.confirmPassword;
+      const login = await Login.findById({ _id: req.body.userId }).populate("userId");
+      const passMatch = await bcrypt.compare(newPassword, login.password);
+      if (passMatch) {
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("New password cannot be same as old password"));
+      }
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      // console.log(hashedPassword);
+      login.password = hashedPassword;
+      await login.save();
+      return res
+        .status(HTTP_STATUS.OK)
+        .send(success("Successully updated password, please log in"));
     } catch (error) {
       console.log(error);
     }

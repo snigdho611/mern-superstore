@@ -88,6 +88,7 @@ const validator = {
     body("password")
       .notEmpty()
       .withMessage("Password is required")
+      .if(body("password").notEmpty())
       .isLength({ min: 8 })
       .withMessage("Password must be at least 8 characters")
       .custom(async (value, { req }) => {
@@ -124,7 +125,29 @@ const validator = {
     param("token").notEmpty().withMessage("Email token is required"),
   ],
   resetPasswordEmail: [body("email").trim().isEmail().withMessage("Please enter a valid email")],
-  resetPassword: [],
+  resetPassword: [
+    body("token").trim().isString().withMessage("Token is required and must be string"),
+    body("userId").trim().isString().withMessage("userId is required and must be string"),
+    body("password")
+      .notEmpty()
+      .withMessage("Password is required")
+      .if(body("password").notEmpty())
+      // .withMessage("Password is required")
+      .trim()
+      .isLength({ min: 6 })
+      .withMessage("Passowrd must be at least 6 character"),
+    body("confirmPassword")
+      .notEmpty()
+      .withMessage("Confirm password is required")
+      .if(body("confirmPassword").notEmpty())
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error("Password doesn't match!");
+        }
+        return true;
+      }),
+  ],
 };
 
 module.exports = validator;
