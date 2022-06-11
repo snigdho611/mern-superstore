@@ -1,7 +1,14 @@
 @tailwind components;
 
 @layer {
-  .main,
+  .main {
+    @apply flex flex-col justify-center text-center;
+  }
+
+  .header3 {
+    @apply text-2xl my-10 font-bold;
+  }
+
   .main__container {
     @apply w-1/2 my-0 mx-auto;
   }
@@ -11,7 +18,7 @@
   }
 
   .tform__row__labelCell {
-    @apply w-32 flex align-middle h-12 leading-loose;
+    @apply w-32 flex align-middle h-12 leading-loose text-xl font-bold text-teal-900;
   }
   .tform__row__inputCell {
     @apply w-64;
@@ -20,7 +27,9 @@
     @apply w-full bg-teal-300 border-none rounded px-4 py-2;
     transition: 0.5s color, 0.5s background-color;
   }
-  .tform__row__inputBox:focus {
+
+  .tform__row__inputBox:focus,
+  .tform__row__inputBox:hover {
     @apply outline-none bg-teal-600 text-teal-200;
   }
 
@@ -32,39 +41,33 @@
     justify-content: center;
   }
   .main__bottom__loginBtn {
-    @apply w-32 text-center rounded-lg bg-teal-700 cursor-pointer px-5 py-2 text-teal-100 font-mono font-bold text-lg;
+    @apply w-32 text-center rounded-lg bg-teal-700 cursor-pointer px-5 py-2 text-teal-100 font-mono font-bold text-lg mx-auto;
     transition: 0.5s color, 0.5s background-color;
   }
   .main__bottom__loginBtn:hover {
     @apply bg-teal-500 text-teal-900;
   }
-}
 
-/* 
-.inputBox:focus {
-  outline: none;
-}
+  .main__error {
+    @apply text-red-500 text-center;
+    margin: 10px;
+    text-shadow: 0px 1px 3px crimson;
+  }
 
+  .loader {
+    border-top: 10px solid;
+    border: 10px solid;
+    @apply border-teal-200 border-t-teal-800;
+    border-radius: 50%;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
 
-
-.loginBtn:hover {
-  background-color: #4dbfe2;
-}
-
-.main__error {
-  text-align: center;
-  color: red;
-  margin: 10px;
-  text-shadow: 2px 2px 3px crimson;
-}
-
-.loader {
-  border: 10px solid #f3f3f3;
-  border-top: 10px solid #3498db;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
+  .main__link {
+    @apply text-teal-600 text-xl font-extrabold;
+  }
 }
 
 @keyframes spin {
@@ -74,4 +77,4 @@
   100% {
     transform: rotate(360deg);
   }
-} */
+}

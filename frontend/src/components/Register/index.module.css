@@ -1,0 +1,91 @@
+@tailwind components;
+
+@layer {
+  .main {
+    @apply flex flex-col justify-center text-center;
+  }
+
+  .header3 {
+    @apply text-2xl my-10 font-bold;
+  }
+
+  .main,
+  .main__container {
+    @apply w-1/2 my-0 mx-auto;
+  }
+
+  .tform__row {
+    @apply flex m-6 justify-center h-12;
+  }
+
+  .tform__row__labelCell {
+    @apply w-32 flex align-middle h-12 leading-loose text-xl font-bold text-teal-900;
+  }
+  .tform__row__inputCell {
+    @apply w-64;
+  }
+  .tform__row__inputBox {
+    @apply w-full bg-teal-300 border-none rounded px-4 py-2;
+    transition: 0.5s color, 0.5s background-color;
+  }
+  .tform__row__inputBox:focus,
+  .tform__row__inputBox:hover {
+    @apply outline-none bg-teal-600 text-teal-200;
+  }
+
+  .main__bottom {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+    justify-content: center;
+  }
+  .main__bottom__loginBtn {
+    @apply w-32 text-center rounded-lg bg-teal-700 cursor-pointer px-5 py-2 text-teal-100 font-mono font-bold text-lg mx-auto;
+    transition: 0.5s color, 0.5s background-color;
+  }
+  .main__bottom__loginBtn:hover {
+    @apply bg-teal-500 text-teal-900;
+  }
+
+  .main__error {
+    text-align: center;
+    color: red;
+    margin: 10px;
+    text-shadow: 0px 1px 3px crimson;
+  }
+
+  .loader {
+    border-top: 10px solid;
+    border: 10px solid;
+    @apply border-teal-200 border-t-teal-800;
+    border-radius: 50%;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 
+.inputBox:focus {
+  outline: none;
+}
+
+
+
+.loginBtn:hover {
+  background-color: #4dbfe2;
+}
+
+
+ */
