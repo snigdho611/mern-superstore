@@ -124,11 +124,11 @@ class adminController {
 
   async deleteProduct(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", errors.array()));
+          .send(failure("Invalid inputs", validatorResult.array()));
       }
       // console.log(req.body.productId);
       // await cart.itemList

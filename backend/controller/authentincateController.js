@@ -15,11 +15,11 @@ const ejsRenderFile = promisify(ejs.renderFile);
 class authenticateController {
   async login(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid Inputs", errors.array()));
+          .send(failure("Invalid Inputs", validatorResult.array()));
       }
 
       const login = await Login.findOne({ email: req.body.email }).exec();
@@ -51,11 +51,11 @@ class authenticateController {
   }
 
   async signup(req, res, nex) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    const validatorResult = validationResult(req);
+    if (!validatorResult.isEmpty()) {
       return res
         .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-        .send(failure("Invalid inputs", errors.array()));
+        .send(failure("Invalid inputs", validatorResult.array()));
     }
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -92,7 +92,7 @@ class authenticateController {
     await login.save();
     console.log(process.env.FRONTEND_BASE_URI, "email-verify", verifyToken, login._id.toString());
     const emailVerifyUrl = path.join(
-      process.env.FRONTEND_BASE_URI,
+      process.env.BACKEND_BASE_URI,
       "email-verify",
       verifyToken,
       login._id.toString()
@@ -117,92 +117,96 @@ class authenticateController {
 
   async emailVerify(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", errors.array()));
+          .send(failure("Invalid inputs", validatorResult.array()));
       }
       const login = await Login.findOne({
-        emailToken: req.body.token,
-        _id: req.body.userId,
+        emailToken: req.params.token,
+        _id: req.params.userId,
       });
       if (!login) {
-        return res
-          .status(HTTP_STATUS.NOT_FOUND)
-          .send(failure("User not found", { validation: "Error: user not found" }));
+        // User not found
+        return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=1");
       }
-      if (
-        login.emailTokenExpire === null ||
-        login.isEmailVerified === true ||
-        login.emailToken === null
-      ) {
-        return res
-          .status(HTTP_STATUS.NOT_FOUND)
-          .send(failure("Email is already validated", { validation: "Already verified" }));
+      if (login.isEmailVerified === true) {
+        // Mail already validated
+        return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=2");
       }
       if (login.emailTokenExpire < Date.now()) {
-        return res
-          .status(HTTP_STATUS.GONE)
-          .send(failure("This link has expired", { validation: "Error: link expired" }));
+        // Mail token expired
+        return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=3");
       }
       login.emailToken = null;
       login.emailTokenExpire = null;
       login.isEmailVerified = true;
       login.save();
-      return res
-        .status(HTTP_STATUS.OK)
-        .send(success("Successfully validated email", { validation: "Validated" }));
+      res.status(HTTP_STATUS.OK);
+      return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=4");
     } catch (error) {
       console.log(error);
-      next(error);
+      return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=5");
     }
   }
-  async resetPasswordRequest(req, res, next) {
-    // try {
-    //   const errors = validationResult(req);
-    //   if (!errors.isEmpty()) {
-    //     return res
-    //       .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-    //       .send(failure("Invalid inputs", errors.array()));
-    //   }
-    //   const login = await Login.findOne({
-    //     emailToken: req.body.token,
-    //     _id: req.body.userId,
-    //   });
-    //   if (!login) {
-    //     return res
-    //       .status(HTTP_STATUS.NOT_FOUND)
-    //       .send(failure("User not found", { validation: "Error: user not found" }));
-    //   }
-    //   if (
-    //     login.emailTokenExpire === null ||
-    //     login.isEmailVerified === true ||
-    //     login.emailToken === null
-    //   ) {
-    //     return res
-    //       .status(HTTP_STATUS.NOT_FOUND)
-    //       .send(failure("Email is already validated", { validation: "Already verified" }));
-    //   }
-    //   if (login.emailTokenExpire < Date.now()) {
-    //     return res
-    //       .status(HTTP_STATUS.GONE)
-    //       .send(failure("This link has expired", { validation: "Error: link expired" }));
-    //   }
-    //   login.emailToken = null;
-    //   login.emailTokenExpire = null;
-    //   login.isEmailVerified = true;
-    //   login.save();
-    //   return res
-    //     .status(HTTP_STATUS.OK)
-    //     .send(success("Successfully validated email", { validation: "Validated" }));
-    // } catch (error) {
-    //   console.log(error);
-    //   next(error);
-    // }
+  async requestResetPasswordEmail(req, res, next) {
+    try {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Invalid inputs", validatorResult.array()));
+      }
+      const login = await Login.findOne({ email: req.body.email })
+        .populate("userId")
+        .select("email passwordResetToken passwordResetExpire userId");
+      if (!login) {
+        return res.status(HTTP_STATUS.NOT_FOUND).send(failure("No email found for a user"));
+      }
+      const token = crypto.randomBytes(32).toString("hex");
+      login.passwordResetToken = token;
+      login.passwordResetExpire = Date.now() + 60 * 60 * 1000;
+      await login.save();
+      console.log(login);
+
+      const resetPasswordURL = path.join(
+        process.env.FRONTEND_BASE_URI,
+        "reset-password",
+        token,
+        login._id.toString()
+      );
+      const htmlStr = await ejsRenderFile(
+        path.join(__dirname, "..", "mails", "ResetPassword.ejs"),
+        {
+          name: login.userId.firstName + " " + login.userId.lastName,
+          resetUrl: resetPasswordURL,
+        }
+      );
+
+      sendMail({
+        from: "ABC Store <abc@store.com>",
+        to: req.body.email,
+        subject: "Password Reset Request",
+        html: htmlStr,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async resetPassword(req, res, next) {
+    try {
+      const validatorResult = validationResult(req);
+      if (!validationResult.isEmpty()) {
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Invalid inputs", validatorResult.array()));
+      }
+      console.log(req.body);
+    } catch (error) {
+      console.log(error);
+    }
     //
   }
 }

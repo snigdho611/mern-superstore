@@ -8,11 +8,11 @@ class cartController {
   async getCart(req, res, next) {
     try {
       //
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.NOT_ACCEPTABLE)
-          .send(failure("Invalid inputs", errors.array()));
+          .send(failure("Invalid inputs", validatorResult.array()));
       }
       const cart = await Cart.findOne({ userId: req.body.userId })
         .populate({ path: "itemList.productId" })
@@ -27,11 +27,11 @@ class cartController {
 
   async addProductToCart(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.NOT_ACCEPTABLE)
-          .send(failure("Invalid inputs", errors.array()));
+          .send(failure("Invalid inputs", validatorResult.array()));
       }
       const cart = await Cart.findOne({ userId: req.body.userId })
         .populate({ path: "itemList.productId" })
@@ -62,11 +62,11 @@ class cartController {
 
   async removeProductFromCart(req, res, next) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.NOT_ACCEPTABLE)
-          .send(failure("Invalid inputs", errors.array()));
+          .send(failure("Invalid inputs", validatorResult.array()));
       }
       const cart = await Cart.findOne({ userId: req.body.userId })
         .populate({ path: "itemList.productId" })
