@@ -1,9 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../controller/productController");
+const validator = require("../middleware/validation");
 
 router.get("/all", productController.getAll);
-router.get("/:productId", productController.getOne);
+router.get("/details/:productId", productController.getOne);
+router.get(
+  "/search/:category/:searchParams",
+  validator.searchProduct,
+  productController.searchProduct
+);
 
 // router.post("/add-product", validator.addProduct, productController.addProduct);
 

@@ -9,8 +9,8 @@ const fileUploader = require("../middleware/files");
 
 router.post(
   "/products/add",
-  // checkAuth,
-  // isAdmin,
+  checkAuth,
+  isAdmin,
   fileUploader.single("productImage"),
   validator.addProduct,
   adminController.addProduct
@@ -18,16 +18,16 @@ router.post(
 
 router.put(
   "/products/edit",
-  // checkAuth,
-  // isAdmin,
+  checkAuth,
+  isAdmin,
   validator.updateProduct,
   adminController.updateProduct
 );
 
 router.post(
   "/products/update-image",
-  // checkAuth,
-  // isAdmin,
+  checkAuth,
+  isAdmin,
   fileUploader.single("productImage"),
   validator.updateImage,
   adminController.updateImage
@@ -35,8 +35,8 @@ router.post(
 
 router.delete(
   "/products/delete",
-  // checkAuth,
-  // isAdmin,
+  checkAuth,
+  isAdmin,
   validator.deleteProduct,
   adminController.deleteProduct
 );
