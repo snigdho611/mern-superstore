@@ -1,14 +1,13 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import getUser from 'util/localStorage/getUser';
-import setUser from 'util/localStorage/setUser';
-import classes from './index.module.css';
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { Link, useParams } from 'react-router-dom';
+import classes from './index.module.css'
 
-const Login = () => {
+const ResetPassword = () => {
     const [loading, setLoading] = useState(false);
-    const user = getUser();
+    const { token, userId } = useParams();
+    const [success, setSuccess] = useState(false);
 
     const {
         register,
@@ -18,18 +17,16 @@ const Login = () => {
         formState: { errors }
     } = useForm();
 
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (user) {
-            navigate('/home');
-        }
-    }, [navigate, user])
-
     const onSubmission = formData => {
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/login`,
+        const requestData = {
+            token: token,
+            userId: userId,
+            ...formData
+        }
+        console.log(requestData)
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/reset-password`,
             {
-                email: formData.email,
-                password: formData.password
+                ...requestData
             },
             {
                 headers: {
@@ -37,16 +34,15 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
             })
-            .then((response) => {
-                console.log(response.data.results)
-                setUser(JSON.stringify(response.data.results));
-                return navigate("/home");
+            .then(() => {
+                // console.log(response.data.results)
+                setSuccess(true)
             })
             .catch((err) => {
                 console.log(err)
                 setLoading(true);
                 setTimeout(() => {
-                    setError("connection", { message: err.response.data.message });
+                    setError("response", { message: err.response.data.message });
                     setLoading(false);
                 }, 2000)
                 console.log(err)
@@ -55,26 +51,10 @@ const Login = () => {
 
     return (
         <div className={classes.main}>
-            <h3 className={classes.header3}>Please log in to continue</h3>
+            <h3 className={classes.header3}>Please create a new password</h3>
             <div className={classes.main__container}>
                 <div className={classes.tform}>
                     <form onSubmit={handleSubmit(onSubmission)}>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
-                                Email:
-                            </div>
-                            <div className={classes.tform__row__inputCell}>
-                                <input
-                                    className={classes.tform__row__inputBox}
-                                    type="text"
-                                    style={errors.password ? {
-                                        backgroundColor: "#f0abfc"
-                                    } : null}
-                                    placeholder='Email'
-                                    {...register("email", { required: true })}
-                                />
-                            </div>
-                        </div>
                         <div className={classes.tform__row}>
                             <div className={classes.tform__row__labelCell}>
                                 Password:
@@ -91,31 +71,50 @@ const Login = () => {
                                 />
                             </div>
                         </div>
+                        <div className={classes.tform__row}>
+                            <div className={classes.tform__row__labelCell}>
+                                Confirm:
+                            </div>
+                            <div className={classes.tform__row__inputCell}>
+                                <input
+                                    className={classes.tform__row__inputBox}
+                                    type="password"
+                                    style={errors.password ? {
+                                        backgroundColor: "#f0abfc"
+                                    } : null}
+                                    placeholder='Confirm Password'
+                                    {...register("confirmPassword", { required: true })}
+                                />
+                            </div>
+                        </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             {!loading ? <button className={classes.main__bottom__loginBtn} onClick={() => {
                                 clearErrors()
-
                             }}
-                            >Log In</button> : <div className={classes.loader} />}
+                            >Reset Password</button> : <div className={classes.loader} />}
                             <label className={classes.main__error}>
                                 <p>
                                     {
-                                        errors.email || errors.password ?
+                                        errors.confirmPassword || errors.password ?
                                             "One of the fields is empty"
                                             : null
                                     }
                                 </p>
                                 <p>
                                     {
-                                        errors.connection ? errors.connection.message : null
+                                        errors.response ? errors.response.message : null
+                                    }
+                                </p>
+                            </label>
+                            <label className={classes.main__success}>
+                                <p>
+                                    {
+                                        success ? "Successfully changed password, please log in" : null
                                     }
                                 </p>
                             </label>
                             <div>
-                                <Link to="/reset-password-request" className={classes.main__link}>Forgot Password</Link>
-                            </div>
-                            <div>
-                                <Link to="/register" className={classes.main__link}>Sign Up</Link>
+                                <Link to="/" className={classes.main__link}>Log In</Link>
                             </div>
                         </div>
                     </form>
@@ -126,4 +125,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default ResetPassword

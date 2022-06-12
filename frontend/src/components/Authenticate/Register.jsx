@@ -9,6 +9,14 @@ import { useForm } from "react-hook-form";
 const Login = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const user = getUser();
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (user) {
+            navigate('/home');
+        }
+    }, [navigate, user])
 
     const {
         register,
@@ -50,13 +58,13 @@ const Login = () => {
             })
     };
 
-    const navigate = useNavigate();
-    const user = getUser();
-    useEffect(() => {
-        if (user) {
-            // navigate("/home");
-        }
-    }, [user, navigate])
+    // const navigate = useNavigate();
+    // const user = getUser();
+    // useEffect(() => {
+    //     if (user) {
+    //         // navigate("/home");
+    //     }
+    // }, [user, navigate])
 
     return (
         <div className={classes.main}>

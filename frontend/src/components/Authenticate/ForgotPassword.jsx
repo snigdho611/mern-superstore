@@ -1,14 +1,21 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import getUser from 'util/localStorage/getUser';
-import setUser from 'util/localStorage/setUser';
-import classes from './index.module.css';
-import { useForm } from "react-hook-form";
+import classes from './index.module.css'
 
-const Login = () => {
+const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
     const user = getUser();
+
+    useEffect(() => {
+        if (user) {
+            navigate('/home')
+        }
+    }, [navigate, user])
 
     const {
         register,
@@ -18,18 +25,10 @@ const Login = () => {
         formState: { errors }
     } = useForm();
 
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (user) {
-            navigate('/home');
-        }
-    }, [navigate, user])
-
     const onSubmission = formData => {
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/login`,
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/reset-password-email`,
             {
-                email: formData.email,
-                password: formData.password
+                email: formData.email
             },
             {
                 headers: {
@@ -37,10 +36,11 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
             })
-            .then((response) => {
-                console.log(response.data.results)
-                setUser(JSON.stringify(response.data.results));
-                return navigate("/home");
+            .then(() => {
+                // console.log(response.data.results)
+                // setUser(JSON.stringify(response.data.results));
+                // return navigate("/home");
+                setSuccess(true)
             })
             .catch((err) => {
                 console.log(err)
@@ -55,7 +55,7 @@ const Login = () => {
 
     return (
         <div className={classes.main}>
-            <h3 className={classes.header3}>Please log in to continue</h3>
+            <h3 className={classes.header3}>Please enter your email</h3>
             <div className={classes.main__container}>
                 <div className={classes.tform}>
                     <form onSubmit={handleSubmit(onSubmission)}>
@@ -75,34 +75,23 @@ const Login = () => {
                                 />
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
-                                Password:
-                            </div>
-                            <div className={classes.tform__row__inputCell}>
-                                <input
-                                    className={classes.tform__row__inputBox}
-                                    style={errors.password ? {
-                                        backgroundColor: "#f0abfc"
-                                    } : null}
-                                    type="password"
-                                    placeholder='Password'
-                                    {...register("password", { required: true })}
-                                />
-                            </div>
-                        </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             {!loading ? <button className={classes.main__bottom__loginBtn} onClick={() => {
                                 clearErrors()
 
                             }}
-                            >Log In</button> : <div className={classes.loader} />}
+                            >Submit</button> : <div className={classes.loader} />}
+                            <label className={classes.main__success}>
+                                <p>
+                                    {
+                                        success ? "Please check your email!" : null
+                                    }
+                                </p>
+                            </label>
                             <label className={classes.main__error}>
                                 <p>
                                     {
-                                        errors.email || errors.password ?
-                                            "One of the fields is empty"
-                                            : null
+                                        errors.email ? "Please enter an email" : null
                                     }
                                 </p>
                                 <p>
@@ -112,10 +101,7 @@ const Login = () => {
                                 </p>
                             </label>
                             <div>
-                                <Link to="/reset-password-request" className={classes.main__link}>Forgot Password</Link>
-                            </div>
-                            <div>
-                                <Link to="/register" className={classes.main__link}>Sign Up</Link>
+                                <Link to="/" className={classes.main__link}>Log In</Link>
                             </div>
                         </div>
                     </form>
@@ -126,4 +112,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default ForgotPassword
