@@ -22,6 +22,8 @@ import Home from "components/Home";
 import Login from "components/Authenticate/Login";
 import ProductDetails from "components/ProductDetails";
 import ProductList from "components/ProductList";
+import ResetPassword from "components/Authenticate/ResetPassword";
+import ForgotPassword from "components/Authenticate/ForgotPassword";
 
 const App = () => {
   return (
@@ -150,11 +152,24 @@ const App = () => {
           }
         />
         <Route
-          path="/reset-email/:token/:userId"
+          path="/reset-password/:token/:userId"
           element={
             <>
               <Header />
-              <VerifyEmail />
+              {/* <VerifyEmail /> */}
+              <ResetPassword />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/reset-password-request"
+          element={
+            <>
+              <Header />
+              {/* <VerifyEmail /> */}
+              {/* <ResetPassword /> */}
+              <ForgotPassword />
               <Footer />
             </>
           }
