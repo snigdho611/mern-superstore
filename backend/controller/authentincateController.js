@@ -213,16 +213,20 @@ class authenticateController {
       }
       // console.log(req.body);
       const newPassword = req.body.password;
-      const newPasswordConfirm = req.body.confirmPassword;
       const login = await Login.findById({ _id: req.body.userId }).populate("userId");
       const passMatch = await bcrypt.compare(newPassword, login.password);
+      if (login.passwordResetToken === null) {
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("Link is not available anymore."));
+      }
+      if (login.passwordResetExpire < Date.now()) {
+        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("Link expired"));
+      }
       if (passMatch) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure("New password cannot be same as old password"));
-      }
-      if (login.passwordResetExpire < Date.now()) {
-        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("Link expired"));
       }
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       // console.log(hashedPassword);
