@@ -10,18 +10,18 @@ const ProductList = () => {
     const user_id = user && user.userId ? user.userId._id : null;
 
     // Data
-    const [allData, setAllData] = useState([]);
     const [btnCount, setBtnCount] = useState({
         count: 0,
         range: []
     });
     const [dataToShow, setDataToShow] = useState([]);
+    const [originalData, setOriginalData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingError, setLoadingError] = useState(false);
+    const [noResult, setNoResult] = useState(false);
 
     // Search
     const [search, setSearch] = useState({
-        status: false,
         params: "",
         category: "name"
     })
@@ -32,20 +32,22 @@ const ProductList = () => {
     // Use effect for initial data loading and storing
     useEffect(() => {
         try {
-            axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/all`)
+            axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/all?page=1&limit=8`)
                 .then((response) => {
-                    setAllData(response.data.results);
-                    setBtnCount(prevState => ({
-                        ...prevState,
-                        count: Math.ceil(response.data.results.length / 8),
-                        range: [0, 3]
-                    }));
-                    setDataToShow(response?.data?.results.slice(0, 8));
+                    setDataToShow(response.data.results.products);
+                    setOriginalData(response.data.results.products);
+                    setBtnCount(prevState => (
+                        {
+                            ...prevState,
+                            count: Math.ceil(response.data.results.total / 8),
+                            range: [0, 3]
+                        }))
+                    console.log(response.data.results.products)
                     setLoading(false);
                 })
                 .catch((err) => {
-                    setAllData([]);
-                    setDataToShow([]);
+                    console.log(err)
+                    setLoading(false);
                     setLoadingError(true);
                 });
         } catch (error) {
@@ -53,63 +55,60 @@ const ProductList = () => {
         }
     }, []);
 
-    // Use Effect for searching
-    useLayoutEffect(() => {
-        // const handleSearch = () => {
-        //     const regex = RegExp(search.params);
-        //     const result = allData.filter((e) => {
-        //         return regex.test(e[search.category]);
-        //     });
-        //     if (result === []) {
-        //         console.log("Not found");
-        //         setDataToShow([]);
-        //     } else {
-        //         setDataToShow(result);
-        //     }
-        // };
-        // if (search.status) {
-        //     setTimeout(
-        //         () => {
-        //             setDataToShow([]);
-        //             handleSearch();
-        //         }, 500
-        //     )
-        // } else {
-        //     setDataToShow(allData.slice(0, 8));
-        // }
-    }, [search.params, search.category, search.status, allData]);
-
     // Use Effect for button range changes
     useEffect(() => {
     }, [btnCount.range])
 
-    // const [searchTimeout, setSearchTimeout] = useState(null);
+    // let searchTimeout
+    const [searchTimeout, setSearchTimeout] = useState("");
 
-    let searchTimeout
-
-    const startSearching = (value) => {
-
-        console.log("Initial searchTimeout: " + searchTimeout)
+    // const startSearching = ;
+    useEffect(() => {
         clearTimeout(searchTimeout)
-        clearTimeout(searchTimeout)
-        console.log()
-        if (value === "") return;
+        if (search.params === "") {
+            setDataToShow(originalData)
+            return;
+        }
 
-        searchTimeout = setTimeout(() => {
-            console.log("==>", value);
-        }, 2000)
-        // if (value !== "") {
-        //     setSearch(prevState => ({ ...prevState, status: true }));
-        //     setSearch(prevState => ({ ...prevState, params: value }))
-        //     setDataToShow([]);
-        // } else {
-        //     setSearch(prevState => ({ ...prevState, status: false }))
-        // }
-    };
+        setSearchTimeout(setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/search/${search.category}/${search.params}`)
+                .then((response) => {
+                    setDataToShow(response.data.results)
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setDataToShow([]);
+                });
+        }, 2000))
+    }, [search.params, search.category])
+
 
 
     const paginateChange = (index) => {
-        setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
+        // setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
+        console.log(index);
+        try {
+            setLoading(true)
+            axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/all?page=${index + 1}&limit=8`)
+                .then((response) => {
+                    setDataToShow(response.data.results.products);
+                    setOriginalData(response.data.results.products);
+                    setBtnCount(prevState => (
+                        {
+                            ...prevState,
+                            count: Math.ceil(response.data.results.total / 8),
+                            range: [0, 3]
+                        }))
+                    console.log(response.data.results.products)
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err)
+                    setLoadingError(true);
+                });
+        } catch (error) {
+            console.log("Failed to call products")
+        }
     };
 
     const paginateInc = () => {
@@ -155,13 +154,13 @@ const ProductList = () => {
     }
 
     const deleteProduct = (productId) => {
-        const newData = allData.filter((element) => element._id !== productId)
-        setAllData(newData)
-        axios.delete(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete`, {
-            data: {
-                productId: productId
-            }
-        })
+        // const newData = allData.filter((element) => element._id !== productId)
+        // setAllData(newData)
+        // axios.delete(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete`, {
+        //     data: {
+        //         productId: productId
+        //     }
+        // })
     }
 
     return (
@@ -193,21 +192,23 @@ const ProductList = () => {
                         <input
                             type="text"
                             onChange={(e) => {
-                                startSearching(e.target.value)
+                                setSearch(prevState => ({ ...prevState, params: e.target.value }))
+                                // startSearching()
                             }}
+                            value={search.params}
                             className={classes.main__search__input}
                         />
                     </div>
                 </div>
             </div>
             {!loading ? <div className={classes.list}>
-                {dataToShow.map((element) => {
+                {dataToShow.length ? dataToShow.map((element) => {
                     return <ProductCard key={element._id} name={element.name} price={100} data={element} dispatchMethod={addToCart} deleteProduct={deleteProduct} />;
-                })}
+                }) : <div>No results to show</div>}
             </div> : <div className={classes.loader} />}
             {loadingError ? <div>Error loading data</div> : null}
             {/* Refactor buttons for pagination */}
-            {/* {!search.status && <div className={classes.main__pagination}>
+            <div className={classes.main__pagination}>
                 {<button
                     className={classes.main__pagination__btn}
                     style={btnCount.range[0] !== 0 ? null : { backgroundColor: "gray", color: "azure" }}
@@ -220,7 +221,19 @@ const ProductList = () => {
                     .fill()
                     .map((_, i) => {
                         if (i >= btnCount.range[0] && i < btnCount.range[1]) {
-                            return <button className={classes.main__pagination__btn} key={i} value={i} onClick={() => paginateChange(i)}>{i + 1}</button>;
+                            return (
+                                <button
+                                    className={classes.main__pagination__btn}
+                                    key={i}
+                                    value={i}
+                                    onClick={
+                                        () => {
+                                            paginateChange(i);
+                                        }
+                                    }>
+                                    {i + 1}
+                                </button>
+                            );
                         } else {
                             return null
                         }
@@ -231,7 +244,7 @@ const ProductList = () => {
                     onClick={btnCount.range[1] !== btnCount.count ? () => { paginateDec() } : null}>
                     {">"}
                 </button>
-            </div>} */}
+            </div>
         </div>
     )
 }
