@@ -1,0 +1,52 @@
+@tailwind base;
+
+@layer base {
+  .main {
+    @apply flex flex-row justify-center w-3/4 my-0 mx-auto text-center;
+  }
+  .main__container {
+    @apply flex flex-col w-full;
+  }
+
+  .main__input {
+    @apply w-full bg-teal-300 border-none rounded px-4 py-2;
+    transition: 0.5s color, 0.5s background-color;
+  }
+  .main__input {
+    @apply w-1/2 my-5 bg-teal-300  mx-auto p-5 rounded-xl border-none;
+  }
+
+  .main__input:focus,
+  .main__input:hover {
+    @apply outline-none bg-teal-600 text-teal-200;
+  }
+
+  .main__bottom__loginBtn {
+    @apply w-32 text-center rounded-lg bg-teal-700 cursor-pointer px-5 py-2 text-teal-100 font-mono font-bold text-lg mx-auto;
+    transition: 0.5s color, 0.5s background-color;
+  }
+  .main__bottom__loginBtn:hover {
+    @apply bg-teal-500 text-teal-900;
+  }
+  /* .main__submitButton {
+    @apply bg-teal-700 w-32 text-center rounded-lg cursor-pointer px-5 py-2 text-teal-100 font-mono font-bold text-lg mx-auto;
+    transition: 0.5s color, 0.5s background-color;
+  }
+  .main__submitButton:hover {
+    @apply bg-teal-500 text-teal-900;
+  } */
+  .main__imageInput {
+    @apply w-1/2 my-5 mx-auto p-5 rounded-xl border-none;
+  }
+  .main__error {
+    @apply text-red-500 text-center;
+    margin: 10px;
+    text-shadow: 0px 1px 3px crimson;
+  }
+
+  .main__success {
+    @apply text-green-600 text-center;
+    margin: 10px;
+    text-shadow: 0px 1px 3px lime;
+  }
+}

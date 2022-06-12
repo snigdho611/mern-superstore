@@ -3,22 +3,22 @@ import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import getUser from "util/localStorage/getUser";
+// import { useParams } from "react-router-dom";
 
-const ChangeProduct = () => {
+const AddProduct = () => {
     const [success, setSuccess] = useState(false);
     const { productId } = useParams()
     const [product, setProduct] = useState();
+    const [error, setError] = useState();
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/${productId}`)
-            .then((response) => {
-                setProduct(response.data.results);
-            }).catch((error) => {
-                console.log(error)
-            })
-    }, [productId])
+    const user = getUser();
+
+    const [image, setImage] = useState(null);
+    const [imageURL, setImageURL] = useState(null)
+    const [imageMessage, setImageMessage] = useState("");
     const {
-        register, reset,
+        register,
         handleSubmit,
         formState: { errors },
     } = useForm({
@@ -29,44 +29,82 @@ const ChangeProduct = () => {
             price: "",
             weight: "",
         }
-    });
+    })
 
     useEffect(() => {
-        reset({
-            name: product && product.name ? product.name : "",
-            description: product && product.description ? product.description : "",
-            image: product && product.image ? product.image : "",
-            price: product && product.price ? product.price : "",
-            weight: product && product.weight ? product.weight : "",
-        })
-    }, [product, reset])
+        try {
+            if (image) {
+
+                setImageURL(URL.createObjectURL(image));
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }, [image, product, imageMessage])
 
     const onSubmit = (data) => {
-        const editData = {
-            ...data,
-            productId: productId,
-            type: product.type
+        const extension = image && image.name ? image?.name.split(".")[1] : "";
+
+        if (extension !== "") {
+            if (extension !== "jpg" && extension !== "png" && extension !== "jpeg") {
+                console.log("File is in the wrong format")
+                setImageMessage("File is in the wrong format");
+                return;
+            }
         }
-        axios.put(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/edit`, editData)
+        setSuccess(false)
+        setError("")
+        const addData = {
+            ...data,
+            type: "default",
+            productImage: image
+        }
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/add`,
+            addData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${user.access_token}`
+                }
+            }
+        )
             .then((response) => {
+                setSuccess(true);
                 console.log(response)
             }).catch((error) => {
+                try {
+                    setError(error.response.data.errors[0].msg)
+                } catch (error) {
+
+                    setError("Failed to add")
+                }
                 console.log(error)
             })
-        setSuccess(true);
     };
 
     return (
         <div
-            style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                width: "50%",
-                margin: "0 auto",
-            }}
+            className={classes.main}
         >
-            <form onSubmit={handleSubmit(onSubmit)} className={classes.main}>
+            <form onSubmit={handleSubmit(onSubmit)} className={classes.main__container}>
+                <div className={classes.main__imageInput}>
+                    <div>
+                        <img style={{ margin: "0 auto" }} src={imageURL ? imageURL :
+                            "#"
+                        } alt="No file" className={classes.image} />
+                        {/* {image ? "Ok" : null} */}
+                    </div>
+                    <div>
+                        {imageMessage}
+                    </div>
+                    <input
+                        type="file"
+                        onChange={(e) => {
+                            setImage(e.target.files[0])
+                        }}
+                        alt="Not found"
+                    />
+                </div>
                 <input
                     {...register("name", {
                         required: { value: true, message: "Name is required" },
@@ -119,26 +157,27 @@ const ChangeProduct = () => {
                     placeholder="Weight"
                 />
                 <div style={{ color: "red" }}>{errors.weight ? errors.weight.message : null}</div>
-                <input
-                    {...register("image", {
-                        required: { value: true, message: "Image link is required" },
-                    })}
-                    className={classes.main__input}
-                    type="text"
-                    placeholder="Image"
-                />
+
                 <div style={{ color: "red" }}>{errors.image ? errors.image.message : null}</div>
 
                 <button
-                    className={classes.main__submitBtn}
-                    type="submit"
+                    className={classes.main__bottom__loginBtn}
                 >
                     Submit
                 </button>
-                {success ? <label style={{ margin: "0 auto", color: "green" }}>Success!</label> : null}
+                <label className={classes.main__error}>
+                    <p>
+                        {!error || error !== "" ? error : null}
+                    </p>
+                </label>
+                <label className={classes.main__success}>
+                    <p>
+                        {success ? "Success!" : null}
+                    </p>
+                </label>
             </form>
         </div>
     );
 };
 
-export default ChangeProduct;
+export default AddProduct;

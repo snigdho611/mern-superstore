@@ -2,7 +2,7 @@ import { useState } from "react";
 import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 
-const Form = () => {
+const EditProfile = () => {
     const [success, setSuccess] = useState(false);
     const user = localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"))[0] ? JSON.parse(localStorage.getItem("user"))[0] : {};
 
@@ -106,7 +106,6 @@ const Form = () => {
 
                 <button
                     className={classes.main__submitBtn}
-                    type="submit"
                 >
                     Submit
                 </button>
@@ -116,4 +115,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default EditProfile;
