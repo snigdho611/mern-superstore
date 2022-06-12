@@ -148,6 +148,10 @@ const validator = {
         return true;
       }),
   ],
+  searchProduct: [
+    param("category").notEmpty().withMessage("Parameter is needed for searching"),
+    param("searchParams").notEmpty().withMessage("Parameter is needed for searching"),
+  ],
 };
 
 module.exports = validator;
