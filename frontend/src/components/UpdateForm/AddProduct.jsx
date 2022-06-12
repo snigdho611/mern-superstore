@@ -2,14 +2,11 @@ import { useEffect, useState } from "react";
 import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import getUser from "util/localStorage/getUser";
 // import { useParams } from "react-router-dom";
 
 const AddProduct = () => {
     const [success, setSuccess] = useState(false);
-    const { productId } = useParams()
-    const [product, setProduct] = useState();
     const [error, setError] = useState();
 
     const user = getUser();
@@ -40,7 +37,7 @@ const AddProduct = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [image, product, imageMessage])
+    }, [image, imageMessage])
 
     const onSubmit = (data) => {
         const extension = image && image.name ? image?.name.split(".")[1] : "";
