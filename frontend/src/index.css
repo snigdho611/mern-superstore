@@ -4,7 +4,7 @@
 
 @layer {
   * {
-    @apply font-mono;
+    @apply font-mono text-sm;
   }
 
   body {
