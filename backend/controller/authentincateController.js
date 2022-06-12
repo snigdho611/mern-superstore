@@ -221,9 +221,14 @@ class authenticateController {
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure("New password cannot be same as old password"));
       }
+      if (login.passwordResetExpire < Date.now()) {
+        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("Link expired"));
+      }
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       // console.log(hashedPassword);
       login.password = hashedPassword;
+      login.passwordResetToken = null;
+      login.passwordResetExpire = null;
       await login.save();
       return res
         .status(HTTP_STATUS.OK)
