@@ -19,7 +19,7 @@ const Header = () => {
                     user.isAdmin ?
                         <div>
                             <div>Admin Mode</div>
-                            <Link to="/products/add">Add Product</Link>
+
                         </div>
                         : <div >
                             <Link to="/cart" className={classes.cart__btn}>Cart</Link>

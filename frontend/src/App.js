@@ -11,12 +11,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "components/Header";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
-import ChangeProduct from "components/ChangeProduct";
-import AddProduct from "components/AddProduct";
+import ChangeProduct from "components/UpdateForm/ChangeProduct";
+import AddProduct from "components/UpdateForm/AddProduct";
 import VerifyEmail from "components/VerifyEmail";
 import Register from "components/Authenticate/Register";
 import Cart from "components/Cart";
-import Form from "components/Form";
+import EditProfile from "components/UpdateForm/EditProfile";
 import Deals from "components/Deals";
 import Home from "components/Home";
 import Login from "components/Authenticate/Login";
@@ -90,7 +90,7 @@ const App = () => {
             <>
               <Header />
               <Navbar />
-              <Form />
+              <EditProfile />
               <Footer />
             </>
           }

@@ -10,7 +10,7 @@ const ProductDetails = () => {
     useEffect(() => {
 
         axios.get(`${process.env.REACT_APP_BASE_BACKEND
-            }/products/${productId}`)
+            }/products/details/${productId}`)
             .then((response) => {
                 setProductData(response.data.results)
             })

@@ -92,11 +92,11 @@ const Login = () => {
                             </div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
-                            {!loading ? <button className={classes.main__bottom__loginBtn} onClick={() => {
-                                clearErrors()
-
-                            }}
-                            >Log In</button> : <div className={classes.loader} />}
+                            {!loading ?
+                                <button className={classes.main__bottom__loginBtn} onClick={() => {
+                                    clearErrors()
+                                }}
+                                >Log In</button> : <div className={classes.loader} />}
                             <label className={classes.main__error}>
                                 <p>
                                     {

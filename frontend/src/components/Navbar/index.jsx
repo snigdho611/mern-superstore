@@ -19,7 +19,10 @@ const Navbar = () => {
             <div className={classes.main__child}>
                 <Link className={classes.main_a} to="/home" >Home</Link>
                 <Link className={classes.main_a} to="/products">Products</Link>
-                <Link className={classes.main_a} to="/deals">Deals</Link>
+                {
+                    user.isAdmin ? <Link className={classes.main_a} to="/products/add">Add Product</Link> :
+                        <Link className={classes.main_a} to="/deals">Deals</Link>
+                }
                 <Link className={classes.main_a} to="/change">Change Details</Link>
                 <a href="/#" className={classes.main_a} onClick={() => {
                     removeUser();
