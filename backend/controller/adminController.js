@@ -134,12 +134,15 @@ class adminController {
       // await cart.itemList
       // console.log(cart);
       // return;
-      const product = await Product.findByIdAndDelete(req.body.productId).exec();
+      const product = await Product.findByIdAndDelete(req.params.productId).exec();
       console.log(product);
       if (!product) {
         return res.status(HTTP_STATUS.OK).send(failure({ message: "Product id does not exist!" }));
       }
-      await Cart.updateMany({}, { $pull: { itemList: { productId: req.body.productId } } }).exec();
+      await Cart.updateMany(
+        {},
+        { $pull: { itemList: { productId: req.params.productId } } }
+      ).exec();
       return res.status(HTTP_STATUS.OK).send(success({ message: "Deleted product successully!" }));
     } catch (error) {
       console.log(error);

@@ -10,6 +10,7 @@ router.get(
   validator.searchProduct,
   productController.searchProduct
 );
+// router.get("/checkout/send", )
 
 // router.post("/add-product", validator.addProduct, productController.addProduct);
 

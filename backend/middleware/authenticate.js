@@ -18,6 +18,7 @@ const checkAuth = (req, res, next) => {
       //   console.log(req.user);
       next();
     } catch (error) {
+      console.log(error);
       return res.status(HTTP_STATUS.FORBIDDEN).send(failure(error.message));
     }
   } else {

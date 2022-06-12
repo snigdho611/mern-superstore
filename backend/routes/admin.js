@@ -34,7 +34,7 @@ router.post(
 );
 
 router.delete(
-  "/products/delete",
+  "/products/delete/:productId",
   checkAuth,
   isAdmin,
   validator.deleteProduct,

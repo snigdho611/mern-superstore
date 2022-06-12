@@ -71,7 +71,7 @@ class productController {
         [category]: { $regex: searchParams },
       };
       // console.log(searchQuery);
-      const product = await Product.find(searchQuery);
+      const product = await Product.find(searchQuery).limit(100).exec();
       if (!product.length) {
         return res.status(HTTP_STATUS.NOT_FOUND).send(failure("No result"));
         console.log(product);

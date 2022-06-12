@@ -50,10 +50,10 @@ const validator = {
       .withMessage("Product Id format invalid"),
   ],
   deleteProduct: [
-    body("productId")
+    param("productId")
       .notEmpty()
       .withMessage("Product Id is required")
-      .if(body("productId").notEmpty())
+      .if(param("productId").notEmpty())
       .isLength({ min: 24 })
       .withMessage("Product Id format invalid"),
   ],
