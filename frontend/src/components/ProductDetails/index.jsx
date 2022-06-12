@@ -72,7 +72,7 @@ const ProductDetails = () => {
                     </div>
                 </div>
                 <div className={classes.main__img}>
-                    <img src="https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg" alt="Not found" className={classes.image} />
+                    <img src={productData.image ? `${process.env.REACT_APP_BASE_BACKEND}${productData.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className={classes.image} />
                 </div>
             </div > : null
     )

@@ -7,7 +7,6 @@ import getUser from 'util/localStorage/getUser';
 
 const ProductList = () => {
     const user = getUser();
-    const user_id = user && user.userId ? user.userId._id : null;
 
     // Data
     const [btnCount, setBtnCount] = useState({
@@ -42,7 +41,7 @@ const ProductList = () => {
                             count: Math.ceil(response.data.results.total / 8),
                             range: [0, 3]
                         }))
-                    console.log(response.data.results.products)
+                    // console.log(response.data.results.products)
                     setLoading(false);
                 })
                 .catch((err) => {
@@ -99,7 +98,7 @@ const ProductList = () => {
                             count: Math.ceil(response.data.results.total / 8),
                             range: [0, 3]
                         }))
-                    console.log(response.data.results.products)
+                    // console.log(response.data.results.products)
                     setLoading(false);
                 })
                 .catch((err) => {
@@ -127,13 +126,14 @@ const ProductList = () => {
         try {
             axios.post(`${process.env.REACT_APP_BASE_BACKEND}/cart/add-product`,
                 {
-                    userId: user_id.toString(),
+                    userId: user._id.toString(),
                     productId: data._id
                 },
                 {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${user.access_token}`
                     }
                 }).catch((error) => {
                     console.log(error)
@@ -154,13 +154,24 @@ const ProductList = () => {
     }
 
     const deleteProduct = (productId) => {
-        // const newData = allData.filter((element) => element._id !== productId)
-        // setAllData(newData)
-        // axios.delete(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete`, {
-        //     data: {
-        //         productId: productId
-        //     }
-        // })
+        try {
+            setDataToShow(product => product.filter(element => element._id !== productId))
+            axios.delete(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete/${productId}`,
+                {
+                    headers:
+                    {
+                        "Authorization": `Bearer ${user.access_token}`
+                    }
+                }).then((response) => {
+                    // console.log(response)
+                    console.log(dataToShow)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (

@@ -51,7 +51,7 @@
   .main__error {
     @apply text-red-500 text-center;
     margin: 10px;
-    text-shadow: 0px 1px 3px crimson;
+    text-shadow: 0px 1px 1px crimson;
   }
 
   .main__success {

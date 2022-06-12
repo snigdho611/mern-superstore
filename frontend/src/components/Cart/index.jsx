@@ -9,7 +9,6 @@ const Cart = () => {
     const user = getUser();
     const firstName = user && user.userId && user.userId.firstName ? user.userId.firstName : null;
     const lastName = user && user.userId && user.userId.lastName ? user.userId.lastName : null;
-    const user_id = user && user.userId ? user.userId._id : null;
 
     const cart = useSelector((state) => state.cart);
     const [checkout, setCheckout] = useState(false);
@@ -22,12 +21,13 @@ const Cart = () => {
             axios.post(`${process.env.REACT_APP_BASE_BACKEND
                 }/cart/get`,
                 {
-                    userId: user_id.toString()
+                    userId: user._id.toString()
                 },
                 {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${user.access_token}`
                     }
                 }).then((response) => {
                     // if (cart.length === 0) {
@@ -41,7 +41,7 @@ const Cart = () => {
             console.log(error)
         }
 
-    }, [user_id, dispatch, cart.length])
+    }, [dispatch, cart.length])
 
 
     const calculateTotal = () => {
@@ -63,13 +63,14 @@ const Cart = () => {
     const removeFromCart = (data) => {
         axios.post(`${process.env.REACT_APP_BASE_BACKEND}/cart/remove-product`,
             {
-                userId: user_id.toString(),
+                userId: user._id.toString(),
                 productId: data.id
             },
             {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${user.access_token}`
                 }
             }).catch((error) => {
                 console.log(error)

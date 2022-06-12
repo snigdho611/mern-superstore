@@ -20,7 +20,7 @@ const Navbar = () => {
                 <Link className={classes.main_a} to="/home" >Home</Link>
                 <Link className={classes.main_a} to="/products">Products</Link>
                 {
-                    user.isAdmin ? <Link className={classes.main_a} to="/products/add">Add Product</Link> :
+                    user && user.isAdmin ? <Link className={classes.main_a} to="/products/add">Add Product</Link> :
                         <Link className={classes.main_a} to="/deals">Deals</Link>
                 }
                 <Link className={classes.main_a} to="/change">Change Details</Link>

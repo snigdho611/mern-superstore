@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 const Login = () => {
     const [loading, setLoading] = useState(false);
     const user = getUser();
+    // const [conError, setConError] = useState(false);
 
     const {
         register,
@@ -38,18 +39,18 @@ const Login = () => {
                 },
             })
             .then((response) => {
-                console.log(response.data.results)
+                // console.log(response.data.results)
                 setUser(JSON.stringify(response.data.results));
                 return navigate("/home");
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 setLoading(true);
                 setTimeout(() => {
                     setError("connection", { message: err.response.data.message });
                     setLoading(false);
                 }, 2000)
-                console.log(err)
+                // console.log(err)
             })
     };
 
@@ -111,6 +112,11 @@ const Login = () => {
                                     }
                                 </p>
                             </label>
+                            {/* <label className={classes.main__error}>
+                                <p>
+                                    {conError ? "Error connecting to server" : null}
+                                </p>
+                            </label> */}
                             <div>
                                 <Link to="/reset-password-request" className={classes.main__link}>Forgot Password</Link>
                             </div>

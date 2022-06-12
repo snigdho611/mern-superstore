@@ -83,7 +83,7 @@ const ChangeProduct = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [image, product, imageMessage])
+    }, [image, product, imageMessage, user.access_token])
 
     const onSubmit = (data) => {
         setSuccess(false)
@@ -118,7 +118,7 @@ const ChangeProduct = () => {
             <form onSubmit={handleSubmit(onSubmit)} className={classes.main__container}>
                 <div className={classes.main__imageInput}>
                     <div>
-                        <img style={{ margin: "0 auto" }} src={imageURL ? imageURL :
+                        <img style={{ margin: "0 auto", height: "200px" }} src={imageURL ? imageURL :
                             product && product.image ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
                         } alt="Not found" className={classes.image} />
                         {/* {image ? "Ok" : null} */}

@@ -71,7 +71,7 @@ const ForgotPassword = () => {
                                         backgroundColor: "#f0abfc"
                                     } : null}
                                     placeholder='Email'
-                                    {...register("email", { required: true })}
+                                    {...register("email", { required: true, message: "Please enter your email" })}
                                 />
                             </div>
                         </div>

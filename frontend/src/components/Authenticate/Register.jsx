@@ -26,8 +26,17 @@ const Login = () => {
         formState: { errors }
     } = useForm();
 
+    const [conError, setConError] = useState(false);
+
     const onSubmission = formData => {
         // console.log(formData)
+        if (formData.password !== formData.confirmPassword) {
+            // errors.push()
+            setError("confirmPassword", { type: "custom", message: "Passwords do not match" });
+            return;
+        }
+        setConError(false)
+
         axios.post(`${process.env.REACT_APP_BASE_BACKEND}/signup`,
             {
                 ...formData
@@ -51,11 +60,12 @@ const Login = () => {
                 console.log(err)
                 setLoading(true);
                 setTimeout(() => {
-                    setError("connection", { message: err.response.data.message });
                     setLoading(false);
+                    setConError(true);
                 }, 2000)
                 console.log(err)
             })
+
     };
 
     // const navigate = useNavigate();
@@ -84,8 +94,18 @@ const Login = () => {
                                     } : null}
                                     type="text"
                                     placeholder='First name'
-                                    {...register("firstName", { required: true })}
+                                    {...register("firstName", {
+                                        required: { value: true, message: "First name is required" }, pattern: {
+                                            value: /^[A-Z a-z]+$/i,
+                                            message: "Names must only be alphabetical or contain space"
+                                        }
+                                    })}
                                 />
+
+                                <label className={classes.main__error}>
+                                    {errors.firstName ? errors.firstName.message : null}
+                                </label>
+
                             </div>
                         </div>
                         <div className={classes.tform__row}>
@@ -100,8 +120,17 @@ const Login = () => {
                                     } : null}
                                     type="text"
                                     placeholder='Last name'
-                                    {...register("lastName", { required: true })}
+                                    {...register("lastName", {
+                                        required: { value: true, message: "Last name is required" }, pattern: {
+                                            value: /^[A-Z a-z]+$/i,
+                                            message: "Names must only be alphabetical or contain space"
+                                        }
+                                    })}
                                 />
+                                <label className={classes.main__error}>
+                                    {errors.lastName ? errors.lastName.message : null}
+                                </label>
+
                             </div>
                         </div>
                         <div className={classes.tform__row}>
@@ -116,8 +145,17 @@ const Login = () => {
                                     } : null}
                                     type="text"
                                     placeholder='Phone'
-                                    {...register("phone", { required: true })}
+                                    {...register("phone", {
+                                        required: { value: true, message: "Phone number is required" },
+                                        pattern: {
+                                            value: /(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/,
+                                            message: "Invalid number format"
+                                        }
+                                    })}
                                 />
+                                <label className={classes.main__error}>
+                                    {errors.phone ? errors.phone.message : null}
+                                </label>
                             </div>
                         </div>
                         <div className={classes.tform__row}>
@@ -132,8 +170,17 @@ const Login = () => {
                                     } : null}
                                     type="text"
                                     placeholder='Email'
-                                    {...register("email", { required: true })}
+                                    {...register("email", {
+                                        required: { value: true, message: "Please enter an email" },
+                                        pattern: {
+                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                            message: "invalid email address"
+                                        }
+                                    })}
                                 />
+                                <label className={classes.main__error}>
+                                    {errors.email ? errors.email.message : null}
+                                </label>
                             </div>
                         </div>
                         <div className={classes.tform__row}>
@@ -148,8 +195,17 @@ const Login = () => {
                                     } : null}
                                     type="password"
                                     placeholder='Password'
-                                    {...register("password", { required: true })}
+                                    {...register("password", {
+                                        required: { value: true, message: "Please enter your password" },
+                                        pattern: {
+                                            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/,
+                                            message: "8 characters, a number, a capital and a small"
+                                        }
+                                    })}
                                 />
+                                <label className={classes.main__error}>
+                                    {errors.password ? errors.password.message : null}
+                                </label>
                             </div>
                         </div>
                         <div className={classes.tform__row}>
@@ -164,8 +220,19 @@ const Login = () => {
                                     } : null}
                                     type="confirmPassword"
                                     placeholder='Re-enter Password'
-                                    {...register("confirmPassword", { required: true })}
+                                    {...register("confirmPassword", {
+                                        required: {
+                                            value: true,
+                                            message: "Please enter your password again"
+                                        }, pattern: {
+                                            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/,
+                                            message: "8 characters, a number, a capital and a small"
+                                        }
+                                    })}
                                 />
+                                <label className={classes.main__error}>
+                                    {errors.confirmPassword ? errors.confirmPassword.message : null}
+                                </label>
                             </div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -176,16 +243,9 @@ const Login = () => {
                             >Sign Up</button> : <div className={classes.loader} />}
                             <label className={classes.main__error}>
                                 <p>
-                                    {
-                                        errors.email || errors.password ?
-                                            "One of the fields is empty"
-                                            : null
-                                    }
-                                </p>
-                                <p>
-                                    {
-                                        errors.connection ? errors.connection.message : null
-                                    }
+                                    {/* {errors && Object.keys(errors).length ? errors[Object.keys(errors)[0]].message : null}
+                                    {console.log(errors)} */}
+                                    {conError ? "Error connecting to server" : null}
                                 </p>
                             </label>
                             <label className={classes.main__success}>

@@ -155,8 +155,6 @@ const AddProduct = () => {
                 />
                 <div style={{ color: "red" }}>{errors.weight ? errors.weight.message : null}</div>
 
-                <div style={{ color: "red" }}>{errors.image ? errors.image.message : null}</div>
-
                 <button
                     className={classes.main__bottom__loginBtn}
                 >
