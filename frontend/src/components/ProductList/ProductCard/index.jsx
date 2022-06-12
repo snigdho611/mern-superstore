@@ -7,32 +7,44 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
     const user = getUser();
     const user_type = user && user.isAdmin ? user.isAdmin : null;
 
-
-
     return (
         <div
             className={classes.main}
         >
             <div className={classes.main__child}>
-                {/* {console.log(`${process.env.REACT_APP_BASE_BACKEND}/${data.image}`)} */}
-                {/* {data.image ? console.log(`${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}`) : null} */}
                 <img src={data.image ? `${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className={classes.image} />
             </div>
-            <div style={{ display: "flex", justifyContent: 'center', border: "1px solid green" }}>
+            <div style={{
+                display: "flex",
+                justifyContent: 'center',
+                borderTop: "1px solid green",
+                borderBottom: "1px solid green"
+            }}>
                 {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}
             </div>
-            <div style={{ display: "flex", width: "100%" }}>
-                <div style={{ width: "50%", border: "1px solid green", padding: "5px" }}>
+            <div style={{
+                display: "flex", width: "100%"
+            }}>
+                <div style={{
+                    width: "50%",
+                    borderRight: "1px solid green",
+                    borderBottom: "1px solid green",
+                    padding: "5px"
+                }}>
                     BDT {data.price}
                 </div>
-                <div style={{ width: "50%", border: "1px solid green", padding: "5px" }}>
+                <div style={{
+                    width: "50%",
+                    borderBottom: "1px solid green",
+                    padding: "5px"
+                }}>
                     Wt: {data.weight}
                 </div>
             </div>
             <div
-                style={{ display: "flex", flexDirection: 'column', justifyContent: 'center' }}
+                className={classes.card__btnSection}
             >
-                {!user_type ?
+                {!user.isAdmin ?
                     <button
                         onClick={() =>
                             dispatchMethod(
@@ -49,15 +61,6 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                         Add to Cart
                     </button>
                     : null}
-                {user_type ?
-                    <button
-                        onClick={() => { deleteProduct(data._id) }
-                        }
-                        className={classes.card__add}
-                    >
-                        Delete
-                    </button>
-                    : null}
                 {
                     user_type ?
                         <Link
@@ -66,6 +69,17 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                         >
                             Edit
                         </Link>
+                        : null
+                }
+                {
+                    user.isAdmin ?
+                        <button
+                            onClick={() => { deleteProduct(data._id) }
+                            }
+                            className={classes.card__add}
+                        >
+                            Delete
+                        </button>
                         : null
                 }
                 <Link

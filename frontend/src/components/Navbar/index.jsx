@@ -9,10 +9,11 @@ const Navbar = () => {
     const user = getUser();
 
     useEffect(() => {
-        // if (!user) {
-        //     return navigate("/");
-        // }
+        if (!user) {
+            navigate("/")
+        }
     }, [user, navigate])
+
     return (
         <div className={classes.main}>
             <div className={classes.main__child}>

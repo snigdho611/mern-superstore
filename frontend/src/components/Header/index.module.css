@@ -3,6 +3,7 @@
 @layer base {
   .main {
     @apply flex bg-teal-900 sticky top-0 h-28;
+    box-shadow: 5px 3px 10px rgb(13, 148, 136);
   }
 
   .cart__container {

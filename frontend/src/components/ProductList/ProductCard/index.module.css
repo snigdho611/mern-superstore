@@ -1,9 +1,9 @@
-@tailwind components;
+@tailwind base;
 
-@layer {
+@layer base {
   .main {
-    @apply bg-green-300 w-64 flex flex-col;
-    border: 1px solid;
+    @apply bg-teal-200 rounded-lg w-64 flex flex-col shadow-teal-600;
+    box-shadow: 3px 5px 5px #0d9488;
   }
 
   .main__child {
@@ -12,23 +12,19 @@
 
   img {
     height: 180px;
+    @apply h-48;
+  }
+
+  .card__btnSection {
+    @apply flex flex-col justify-center;
   }
 
   .card__add {
-    width: 110px;
-    height: 40px;
-    background-color: var(--nav_background);
-    border: none;
-    cursor: pointer;
-    color: azure;
-    border-radius: 10px;
+    @apply w-24 h-10 bg-teal-600 border-none cursor-pointer text-teal-100 rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center;
     transition: 0.5s background-color, 0.5s color;
-    margin: 5px auto;
-    text-align: center;
-    padding-top: 5px;
   }
 
   .card__add:hover {
-    @apply bg-green-600 text-lime-300;
+    @apply bg-teal-50 text-teal-600;
   }
 }

@@ -55,49 +55,56 @@ const ProductList = () => {
 
     // Use Effect for searching
     useLayoutEffect(() => {
-        const handleSearch = () => {
-            const regex = RegExp(search.params);
-            const result = allData.filter((e) => {
-                return regex.test(e[search.category]);
-            });
-            // console.log(regex)
-            if (result === []) {
-                console.log("Not found");
-                setDataToShow([]);
-            } else {
-                setDataToShow(result);
-            }
-        };
-        if (search.status) {
-            setTimeout(
-                () => {
-                    setDataToShow([]);
-                    handleSearch();
-                }, 500
-            )
-        } else {
-            setDataToShow(allData.slice(0, 8));
-        }
+        // const handleSearch = () => {
+        //     const regex = RegExp(search.params);
+        //     const result = allData.filter((e) => {
+        //         return regex.test(e[search.category]);
+        //     });
+        //     if (result === []) {
+        //         console.log("Not found");
+        //         setDataToShow([]);
+        //     } else {
+        //         setDataToShow(result);
+        //     }
+        // };
+        // if (search.status) {
+        //     setTimeout(
+        //         () => {
+        //             setDataToShow([]);
+        //             handleSearch();
+        //         }, 500
+        //     )
+        // } else {
+        //     setDataToShow(allData.slice(0, 8));
+        // }
     }, [search.params, search.category, search.status, allData]);
 
     // Use Effect for button range changes
     useEffect(() => {
     }, [btnCount.range])
 
-    // useEffect(() => {
-    //     console.log(allData)
+    // const [searchTimeout, setSearchTimeout] = useState(null);
 
-    // })
-
+    let searchTimeout
 
     const startSearching = (value) => {
-        if (value !== "") {
-            setSearch(prevState => ({ ...prevState, status: true }));
-            setSearch(prevState => ({ ...prevState, params: value }))
-            setDataToShow([]);
-        } else {
-            setSearch(prevState => ({ ...prevState, status: false }))
-        }
+
+        console.log("Initial searchTimeout: " + searchTimeout)
+        clearTimeout(searchTimeout)
+        clearTimeout(searchTimeout)
+        console.log()
+        if (value === "") return;
+
+        searchTimeout = setTimeout(() => {
+            console.log("==>", value);
+        }, 2000)
+        // if (value !== "") {
+        //     setSearch(prevState => ({ ...prevState, status: true }));
+        //     setSearch(prevState => ({ ...prevState, params: value }))
+        //     setDataToShow([]);
+        // } else {
+        //     setSearch(prevState => ({ ...prevState, status: false }))
+        // }
     };
 
 
@@ -199,7 +206,8 @@ const ProductList = () => {
                 })}
             </div> : <div className={classes.loader} />}
             {loadingError ? <div>Error loading data</div> : null}
-            {!search.status && <div className={classes.main__pagination}>
+            {/* Refactor buttons for pagination */}
+            {/* {!search.status && <div className={classes.main__pagination}>
                 {<button
                     className={classes.main__pagination__btn}
                     style={btnCount.range[0] !== 0 ? null : { backgroundColor: "gray", color: "azure" }}
@@ -223,7 +231,7 @@ const ProductList = () => {
                     onClick={btnCount.range[1] !== btnCount.count ? () => { paginateDec() } : null}>
                     {">"}
                 </button>
-            </div>}
+            </div>} */}
         </div>
     )
 }

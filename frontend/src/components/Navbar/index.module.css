@@ -3,8 +3,8 @@
 @layer base {
   .main {
     @apply fixed bg-teal-900;
-    position: fixed;
-    background-color: var(--nav_background);
+    /* position: fixed; */
+    /* background-color: var(--nav_background); */
   }
 
   .main__child {
