@@ -4,7 +4,7 @@ import getUser from 'util/localStorage/getUser';
 import classes from './index.module.css'
 
 const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
-    const user = JSON.parse(getUser());
+    const user = getUser();
     const user_type = user && user.isAdmin ? user.isAdmin : null;
 
 

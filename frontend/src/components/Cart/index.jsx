@@ -6,7 +6,7 @@ import getUser from 'util/localStorage/getUser';
 import classes from './index.module.css'
 
 const Cart = () => {
-    const user = JSON.parse(getUser());
+    const user = getUser();
     const firstName = user && user.userId && user.userId.firstName ? user.userId.firstName : null;
     const lastName = user && user.userId && user.userId.lastName ? user.userId.lastName : null;
     const user_id = user && user.userId ? user.userId._id : null;

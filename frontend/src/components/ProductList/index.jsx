@@ -6,7 +6,7 @@ import axios from 'axios';
 import getUser from 'util/localStorage/getUser';
 
 const ProductList = () => {
-    const user = JSON.parse(getUser());
+    const user = getUser();
     const user_id = user && user.userId ? user.userId._id : null;
 
     // Data

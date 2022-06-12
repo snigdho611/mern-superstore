@@ -6,7 +6,7 @@ import classes from './index.module.css'
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const user = JSON.parse(getUser());
+    const user = getUser();
 
     useEffect(() => {
         // if (!user) {
