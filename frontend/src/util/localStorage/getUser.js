@@ -1,5 +1,10 @@
 const getUser = () => {
-  return localStorage.getItem("user");
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user;
+  } catch (error) {
+    return null;
+  }
 };
 
 export default getUser;
