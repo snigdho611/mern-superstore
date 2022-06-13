@@ -22,7 +22,7 @@ app.use("/products", productRouter);
 app.use("/admin", adminRouter);
 app.use("/cart", cartRouter);
 app.use("/files", imagesRouter);
-app.use("/", authenticateRouter);
+app.use("/auth", authenticateRouter);
 
 databaseConnection(() => {
   app.listen(8000, () => {

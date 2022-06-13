@@ -22,7 +22,7 @@ class authenticateController {
           .send(failure("Invalid Inputs", validatorResult.array()));
       }
 
-      const login = await Login.findOne({ email: req.body.email }).exec();
+      const login = await Login.findOne({ email: req.body.email }).populate("userId").exec();
       if (!login) {
         return res.status(HTTP_STATUS.UNAUTHORIZED).send(failure("User login is not authorized"));
       }
@@ -37,7 +37,11 @@ class authenticateController {
         email: login.email,
         isAdmin: login.isAdmin,
         isEmailVerified: login.isEmailVerified,
+        firstName: login.userId.firstName,
+        userId: login.userId._id,
+        lastName: login.userId.lastName,
       };
+      console.log(login);
       const jwtToken = jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
       const resData = {
         access_token: jwtToken,
@@ -72,11 +76,12 @@ class authenticateController {
       const jwtToken = jwt.sign(
         {
           _id: login._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
+          firstName: firstName,
+          lastName: lastName,
           email: login.email,
           isAdmin: login.isAdmin,
           isEmailVerified: login.isEmailVerified,
+          userId: login.userId,
         },
         process.env.JWT_SECRET_KEY,
         { expiresIn: "1h" }
@@ -85,6 +90,10 @@ class authenticateController {
       const resData = {
         token: jwtToken,
         userId: login.userId,
+        isAdmin: login.isAdmin,
+        isEmailVerified: login.isEmailVerified,
+        firstName: login.userId.firstName,
+        lastName: login.userId.lastName,
         _id: login._id,
       };
 
@@ -95,6 +104,7 @@ class authenticateController {
       console.log(process.env.FRONTEND_BASE_URI, "email-verify", verifyToken, login._id.toString());
       const emailVerifyUrl = path.join(
         process.env.BACKEND_BASE_URI,
+        "auth",
         "email-verify",
         verifyToken,
         login._id.toString()
