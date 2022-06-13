@@ -11,8 +11,9 @@ const Cart = () => {
     // const lastName = user && user.userId && user.userId.lastName ? user.userId.lastName : null;
 
     const cart = useSelector((state) => state.cart);
-    const [checkout, setCheckout] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [displayCheckoutMsg, setDisplayCheckoutMsg] = useState();
+    const [loader, setLoader] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -52,12 +53,34 @@ const Cart = () => {
     }
 
     const proceedCheckout = () => {
-        setDisplayCheckoutMsg(true);
+        // setSuccess(false)
         if (calculateTotal() === 0) {
-            setCheckout(false);
+            setDisplayCheckoutMsg(`Sorry, ${user.firstName} ${user.lastName} san, but you need to select something to buy it`)
         } else {
-            setCheckout(true);
-            // axios.post(`${process.env.REACT_APP_BASE_BACKEND}/`)
+            console.log(user._id)
+            setLoader(true);
+            axios.post(`${process.env.REACT_APP_BASE_BACKEND}/cart/checkout-email`,
+                {
+                    userId: user._id
+                }, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${user.access_token}`
+                }
+            }).then((response) => {
+                setSuccess(true);
+                setTimeout(() => {
+                    setDisplayCheckoutMsg(`Thank you for shopping with us, ${user.firstName} ${user.lastName} san, please wait for a confirmation email`)
+                    setLoader(false);
+                }, 2000)
+            }).catch((error) => {
+                console.log(error)
+                setTimeout(() => {
+                    setSuccess(false)
+                    setDisplayCheckoutMsg("Failed to checkout")
+                }, 2000)
+            })
         }
     }
 
@@ -119,10 +142,12 @@ const Cart = () => {
                     </tr>
                 </tbody>
             </table>
-            {displayCheckoutMsg ?
-                checkout ?
-                    <div className={classes.confirmationMsg}>Thank you for shopping with us, {user.firstName} {user.lastName} san, please wait for a confirmation email</div> :
-                    <div className={classes.errorMsg}>Sorry, {user.firstName} {user.lastName} san, but you need to select something to buy it</div> : null}
+            {
+                loader ? <div className={classes.loader} /> : null
+            }
+            <div className={success ? classes.confirmationMsg : classes.errorMsg}>
+                {displayCheckoutMsg ? displayCheckoutMsg : null}
+            </div>
         </div>
     )
 }
