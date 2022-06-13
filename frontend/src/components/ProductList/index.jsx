@@ -13,11 +13,12 @@ const ProductList = () => {
         count: 0,
         range: []
     });
+    const [currentBtn, setCurrentBtn] = useState(0);
     const [dataToShow, setDataToShow] = useState([]);
     const [originalData, setOriginalData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [loadingError, setLoadingError] = useState(false);
-    const [noResult, setNoResult] = useState(false);
+    const [verifyEmailError, setVerifyEmailError] = useState("");
 
     // Search
     const [search, setSearch] = useState({
@@ -26,7 +27,7 @@ const ProductList = () => {
     })
 
     // Cart
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     // Use effect for initial data loading and storing
     useEffect(() => {
@@ -56,7 +57,7 @@ const ProductList = () => {
 
     // Use Effect for button range changes
     useEffect(() => {
-    }, [btnCount.range])
+    }, [btnCount])
 
     // let searchTimeout
     const [searchTimeout, setSearchTimeout] = useState("");
@@ -79,13 +80,15 @@ const ProductList = () => {
                     setDataToShow([]);
                 });
         }, 2000))
-    }, [search.params, search.category])
+    }, [search.params, search.category, originalData])
 
 
 
     const paginateChange = (index) => {
         // setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
-        console.log(index);
+        if (currentBtn === index) {
+            return
+        };
         try {
             setLoading(true)
             axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/all?page=${index + 1}&limit=8`)
@@ -98,7 +101,6 @@ const ProductList = () => {
                             count: Math.ceil(response.data.results.total / 8),
                             range: [0, 3]
                         }))
-                    // console.log(response.data.results.products)
                     setLoading(false);
                 })
                 .catch((err) => {
@@ -124,6 +126,11 @@ const ProductList = () => {
 
     const addToCart = (data) => {
         try {
+            if (!user.isEmailVerified) {
+                console.log("Cannot add to cart, please verify email");
+                setVerifyEmailError("Cannot add to cart, please verify email");
+                return;
+            }
             axios.post(`${process.env.REACT_APP_BASE_BACKEND}/cart/add-product`,
                 {
                     userId: user._id.toString(),
@@ -138,16 +145,6 @@ const ProductList = () => {
                 }).catch((error) => {
                     console.log(error)
                 })
-            dispatch({
-                type: "add",
-                payLoad: {
-                    id: data._id,
-                    name: data.name,
-                    price: data.price,
-                    quantity: 1
-                }
-            })
-            // axios.post()
         } catch (error) {
             console.log(error)
         }
@@ -204,7 +201,6 @@ const ProductList = () => {
                             type="text"
                             onChange={(e) => {
                                 setSearch(prevState => ({ ...prevState, params: e.target.value }))
-                                // startSearching()
                             }}
                             value={search.params}
                             className={classes.main__search__input}
@@ -212,12 +208,25 @@ const ProductList = () => {
                     </div>
                 </div>
             </div>
-            {!loading ? <div className={classes.list}>
-                {dataToShow.length ? dataToShow.map((element) => {
-                    return <ProductCard key={element._id} name={element.name} price={100} data={element} dispatchMethod={addToCart} deleteProduct={deleteProduct} />;
-                }) : <div>No results to show</div>}
-            </div> : <div className={classes.loader} />}
-            {loadingError ? <div>Error loading data</div> : null}
+            <div style={{ color: "red", textAlign: "center" }}>{verifyEmailError}</div>
+
+            {!loading ?
+                <div className={classes.list}>
+                    {dataToShow.length ? dataToShow.map((element) => {
+                        return (
+                            <ProductCard
+                                key={element._id}
+                                name={element.name}
+                                price={100}
+                                data={element}
+                                dispatchMethod={addToCart}
+                                deleteProduct={deleteProduct}
+                            />
+                        );
+                    }) : <div>No results to show</div>}
+                </div>
+                : <div className={classes.loader} />}
+            {loadingError ? <div style={{ textAlign: "center" }}>Error loading data</div> : null}
             {/* Refactor buttons for pagination */}
             <div className={classes.main__pagination}>
                 {<button
@@ -239,6 +248,7 @@ const ProductList = () => {
                                     value={i}
                                     onClick={
                                         () => {
+                                            setCurrentBtn(i);
                                             paginateChange(i);
                                         }
                                     }>

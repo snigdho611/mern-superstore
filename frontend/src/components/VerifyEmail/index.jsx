@@ -4,8 +4,6 @@ import React, { useEffect } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom';
 
 const VerifyEmail = () => {
-    const { token } = useParams();
-    const { userId } = useParams();
     // const [status, setStatus] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
     const status = searchParams.get("status")

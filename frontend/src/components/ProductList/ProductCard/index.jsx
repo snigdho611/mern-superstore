@@ -45,21 +45,24 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                 className={classes.card__btnSection}
             >
                 {!user.isAdmin ?
-                    <button
-                        onClick={() =>
-                            dispatchMethod(
-                                {
-                                    _id: data._id,
-                                    name: data.name,
-                                    price: data.price,
-                                    quantity: data.quantity
-                                }
-                            )
-                        }
-                        className={classes.card__add}
-                    >
-                        Add to Cart
-                    </button>
+                    <>
+                        <button
+                            onClick={() =>
+                                dispatchMethod(
+                                    {
+                                        _id: data._id,
+                                        name: data.name,
+                                        price: data.price,
+                                        quantity: data.quantity
+                                    }
+                                )
+                            }
+                            className={classes.card__add}
+                        >
+                            Add to Cart
+                        </button>
+
+                    </>
                     : null}
                 {
                     user_type ?

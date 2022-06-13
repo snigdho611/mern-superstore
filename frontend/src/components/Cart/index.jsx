@@ -7,8 +7,8 @@ import classes from './index.module.css'
 
 const Cart = () => {
     const user = getUser();
-    const firstName = user && user.userId && user.userId.firstName ? user.userId.firstName : null;
-    const lastName = user && user.userId && user.userId.lastName ? user.userId.lastName : null;
+    // const firstName = user && user.userId && user.userId.firstName ? user.userId.firstName : null;
+    // const lastName = user && user.userId && user.userId.lastName ? user.userId.lastName : null;
 
     const cart = useSelector((state) => state.cart);
     const [checkout, setCheckout] = useState(false);
@@ -57,6 +57,7 @@ const Cart = () => {
             setCheckout(false);
         } else {
             setCheckout(true);
+            // axios.post(`${process.env.REACT_APP_BASE_BACKEND}/`)
         }
     }
 
@@ -120,8 +121,8 @@ const Cart = () => {
             </table>
             {displayCheckoutMsg ?
                 checkout ?
-                    <div className={classes.confirmationMsg}>Thank you for shopping with us, {firstName} {lastName} san, please wait for a confirmation email</div> :
-                    <div className={classes.errorMsg}>Sorry, {firstName} {lastName} san, but you need to select something to buy it</div> : null}
+                    <div className={classes.confirmationMsg}>Thank you for shopping with us, {user.firstName} {user.lastName} san, please wait for a confirmation email</div> :
+                    <div className={classes.errorMsg}>Sorry, {user.firstName} {user.lastName} san, but you need to select something to buy it</div> : null}
         </div>
     )
 }

@@ -85,17 +85,6 @@ const App = () => {
           }
         />
         <Route
-          path="/change"
-          element={
-            <>
-              <Header />
-              <Navbar />
-              <EditProfile />
-              <Footer />
-            </>
-          }
-        />
-        <Route
           path="/cart"
           element={
             <>
