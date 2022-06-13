@@ -18,13 +18,20 @@ const ResetPassword = () => {
     } = useForm();
 
     const onSubmission = formData => {
+        if (formData.password !== formData.confirmPassword) {
+            // errors.push()
+            setError("confirmPassword", { type: "custom", message: "Passwords do not match" });
+            return;
+        }
+        setSuccess(false)
+        setLoading(true)
         const requestData = {
             token: token,
             userId: userId,
             ...formData
         }
         console.log(requestData)
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/reset-password`,
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/auth/reset-password`,
             {
                 ...requestData
             },
@@ -37,6 +44,7 @@ const ResetPassword = () => {
             .then(() => {
                 // console.log(response.data.results)
                 setSuccess(true)
+                setLoading(false)
             })
             .catch((err) => {
                 console.log(err)
@@ -67,7 +75,13 @@ const ResetPassword = () => {
                                     } : null}
                                     type="password"
                                     placeholder='Password'
-                                    {...register("password", { required: true })}
+                                    {...register("password", {
+                                        required: { value: true, message: "Please enter your password" },
+                                        pattern: {
+                                            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/,
+                                            message: "8 characters, a number, a capital and a small"
+                                        }
+                                    })}
                                 />
                             </div>
                         </div>
@@ -83,7 +97,15 @@ const ResetPassword = () => {
                                         backgroundColor: "#f0abfc"
                                     } : null}
                                     placeholder='Confirm Password'
-                                    {...register("confirmPassword", { required: true })}
+                                    {...register("confirmPassword", {
+                                        required: {
+                                            value: true,
+                                            message: "Please enter your password again"
+                                        }, pattern: {
+                                            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/,
+                                            message: "8 characters, a number, a capital and a small"
+                                        }
+                                    })}
                                 />
                             </div>
                         </div>

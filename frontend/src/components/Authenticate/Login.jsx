@@ -27,7 +27,7 @@ const Login = () => {
     }, [navigate, user])
 
     const onSubmission = formData => {
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/login`,
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/auth/login`,
             {
                 email: formData.email,
                 password: formData.password

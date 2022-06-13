@@ -26,7 +26,8 @@ const ForgotPassword = () => {
     } = useForm();
 
     const onSubmission = formData => {
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/reset-password-email`,
+        setLoading(true)
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/auth/reset-password-email`,
             {
                 email: formData.email
             },
@@ -41,6 +42,7 @@ const ForgotPassword = () => {
                 // setUser(JSON.stringify(response.data.results));
                 // return navigate("/home");
                 setSuccess(true)
+                setLoading(false)
             })
             .catch((err) => {
                 console.log(err)
@@ -66,12 +68,18 @@ const ForgotPassword = () => {
                             <div className={classes.tform__row__inputCell}>
                                 <input
                                     className={classes.tform__row__inputBox}
-                                    type="text"
+                                    type="email"
                                     style={errors.password ? {
                                         backgroundColor: "#f0abfc"
                                     } : null}
                                     placeholder='Email'
-                                    {...register("email", { required: true, message: "Please enter your email" })}
+                                    {...register("email", {
+                                        required: { value: true, message: "Please enter an email" },
+                                        pattern: {
+                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                            message: "invalid email address"
+                                        }
+                                    })}
                                 />
                             </div>
                         </div>

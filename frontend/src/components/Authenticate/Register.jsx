@@ -29,15 +29,15 @@ const Login = () => {
     const [conError, setConError] = useState(false);
 
     const onSubmission = formData => {
-        // console.log(formData)
+        console.log(formData)
         if (formData.password !== formData.confirmPassword) {
             // errors.push()
             setError("confirmPassword", { type: "custom", message: "Passwords do not match" });
             return;
         }
-        setConError(false)
+        setLoading(true)
 
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/signup`,
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/auth/signup`,
             {
                 ...formData
             },
@@ -90,7 +90,7 @@ const Login = () => {
                                 <input
                                     className={classes.tform__row__inputBox}
                                     style={errors.firstName ? {
-                                        backgroundColor: "#f0abfc"
+                                        backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
                                     type="text"
                                     placeholder='First name'
@@ -116,7 +116,7 @@ const Login = () => {
                                 <input
                                     className={classes.tform__row__inputBox}
                                     style={errors.lastName ? {
-                                        backgroundColor: "#f0abfc"
+                                        backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
                                     type="text"
                                     placeholder='Last name'
@@ -141,7 +141,7 @@ const Login = () => {
                                 <input
                                     className={classes.tform__row__inputBox}
                                     style={errors.phone ? {
-                                        backgroundColor: "#f0abfc"
+                                        backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
                                     type="text"
                                     placeholder='Phone'
@@ -166,7 +166,7 @@ const Login = () => {
                                 <input
                                     className={classes.tform__row__inputBox}
                                     style={errors.email ? {
-                                        backgroundColor: "#f0abfc"
+                                        backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
                                     type="text"
                                     placeholder='Email'
@@ -191,7 +191,7 @@ const Login = () => {
                                 <input
                                     className={classes.tform__row__inputBox}
                                     style={errors.password ? {
-                                        backgroundColor: "#f0abfc"
+                                        backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
                                     type="password"
                                     placeholder='Password'
@@ -216,9 +216,9 @@ const Login = () => {
                                 <input
                                     className={classes.tform__row__inputBox}
                                     style={errors.confirmPassword ? {
-                                        backgroundColor: "#f0abfc"
+                                        backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
-                                    type="confirmPassword"
+                                    type="password"
                                     placeholder='Re-enter Password'
                                     {...register("confirmPassword", {
                                         required: {
@@ -238,7 +238,6 @@ const Login = () => {
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             {!loading ? <button className={classes.main__bottom__loginBtn} onClick={() => {
                                 clearErrors()
-
                             }}
                             >Sign Up</button> : <div className={classes.loader} />}
                             <label className={classes.main__error}>
