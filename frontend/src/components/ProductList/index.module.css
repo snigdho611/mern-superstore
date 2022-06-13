@@ -2,13 +2,11 @@
 
 @layer base {
   .main {
-    margin-left: 300px;
-    z-index: 1;
+    @apply ml-64 z-10;
   }
 
   .main__child {
-    display: flex;
-    justify-content: center;
+    @apply flex justify-center;
   }
 
   .main__search {
@@ -43,19 +41,16 @@
   }
 
   .list {
-    gap: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 40px 0px;
+    @apply gap-7 flex flex-row justify-center flex-wrap mx-auto mt-8 mb-16;
   }
+
   .main__search__input {
     @apply w-64 bg-teal-300 border-none rounded px-4 py-2 mt-4;
     transition: 0.5s color, 0.5s background-color;
   }
 
-  .main__search__input:focus {
+  .main__search__input:focus,
+  .main__search__input:hover {
     @apply outline-none bg-teal-600 text-teal-200;
   }
 

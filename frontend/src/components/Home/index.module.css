@@ -7,3 +7,9 @@
   cursor: pointer;
   font-weight: bold;
 }
+
+p {
+  font-size: 19px;
+  font-weight: bold;
+  /* color: navy; */
+}
