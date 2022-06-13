@@ -4,6 +4,11 @@ const HTTP_STATUS = require("../utils/httpStatus");
 const { validationResult } = require("express-validator");
 const Cart = require("../model/cart");
 const Login = require("../model/login");
+const path = require("path");
+const ejs = require("ejs");
+const { promisify } = require("util");
+const sendMail = require("../config/mail");
+const ejsRenderFile = promisify(ejs.renderFile);
 
 class cartController {
   async getCart(req, res, next) {
@@ -105,11 +110,12 @@ class cartController {
           .send(failure("Invalid inputs", validatorResult.array()));
       }
 
-      const cart = await Cart.findOne({ userId: req.body.userId }).populate("userId").exec();
-      const login = await Login.findOne({ userId: req.body.userId }).exec();
-      if (cart && login) {
+      // const cart = await Cart.findOne({ userId: req.body.userId }).populate("userId").exec();
+      const login = await Login.findOne({ _id: req.body.userId }).populate("userId").exec();
+      // if (cart) {
+      if (login) {
         const htmlStr = await ejsRenderFile(path.join(__dirname, "..", "mails", "Checkout.ejs"), {
-          name: `${cart.userId.firstName} ${cart.userId.lastName}`,
+          name: `${login.userId.firstName} ${login.userId.lastName}`,
         });
 
         sendMail({
@@ -118,6 +124,9 @@ class cartController {
           subject: "Thank you for purchasing",
           html: htmlStr,
         });
+        return res.status(HTTP_STATUS.OK).send(success("Successfully requested for email"));
+      } else {
+        return res.status(HTTP_STATUS.NOT_ACCEPTABLE).send(failure("Failed to find user"));
       }
     } catch (error) {
       console.log(error);
