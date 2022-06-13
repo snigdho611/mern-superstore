@@ -3,6 +3,7 @@ const { success, failure } = require("../utils/commonResponse");
 const HTTP_STATUS = require("../utils/httpStatus");
 const { validationResult } = require("express-validator");
 const Cart = require("../model/cart");
+const Login = require("../model/login");
 
 class cartController {
   async getCart(req, res, next) {
@@ -44,7 +45,8 @@ class cartController {
           return res.status(HTTP_STATUS.OK).send(success("Incremented product to cart"));
         } else {
           console.log("User doesn't have a cart");
-          const newCart = new Cart({ userId: req.user.id, itemList: [], total: 0 });
+          // console.log(req.user._id)
+          const newCart = new Cart({ userId: req.user._id, itemList: [], total: 0 });
           await newCart.save();
           await newCart.addToCart(product._id);
           return res.status(HTTP_STATUS.OK).send(success("Created new cart for user"));
@@ -85,6 +87,37 @@ class cartController {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure("No product of such ID exists"));
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  // Needs Refactoring
+  // Send email when customer is checking out
+  async sendCheckoutEmail(req, res, next) {
+    try {
+      const validatorResult = validationResult(req);
+      if (!validatorResult.isEmpty()) {
+        return res
+          .status(HTTP_STATUS.NOT_ACCEPTABLE)
+          .send(failure("Invalid inputs", validatorResult.array()));
+      }
+
+      const cart = await Cart.findOne({ userId: req.body.userId }).populate("userId").exec();
+      const login = await Login.findOne({ userId: req.body.userId }).exec();
+      if (cart && login) {
+        const htmlStr = await ejsRenderFile(path.join(__dirname, "..", "mails", "Checkout.ejs"), {
+          name: `${cart.userId.firstName} ${cart.userId.lastName}`,
+        });
+
+        sendMail({
+          from: "ABC Store <mail@abcstore.com>",
+          to: login.email,
+          subject: "Thank you for purchasing",
+          html: htmlStr,
+        });
       }
     } catch (error) {
       console.log(error);

@@ -152,6 +152,7 @@ const validator = {
     param("category").notEmpty().withMessage("Parameter is needed for searching"),
     param("searchParams").notEmpty().withMessage("Parameter is needed for searching"),
   ],
+  sendCheckoutEmail: [body("userId").notEmpty().withMessage("User ID is required")],
 };
 
 module.exports = validator;

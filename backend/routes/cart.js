@@ -18,6 +18,12 @@ router.post(
 router.post("/delete", (req, res) => {
   console.log(req);
 });
+router.post(
+  "/checkout-email",
+  checkAuth,
+  validator.sendCheckoutEmail,
+  cartController.sendCheckoutEmail
+);
 
 router.delete("/");
 
