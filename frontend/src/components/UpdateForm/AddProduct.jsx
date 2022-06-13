@@ -3,6 +3,7 @@ import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import getUser from "util/localStorage/getUser";
+import { useNavigate } from "react-router-dom";
 // import { useParams } from "react-router-dom";
 
 const AddProduct = () => {
@@ -10,6 +11,7 @@ const AddProduct = () => {
     const [error, setError] = useState();
 
     const user = getUser();
+    const navigate = useNavigate();
 
     const [image, setImage] = useState(null);
     const [imageURL, setImageURL] = useState(null)
@@ -27,6 +29,12 @@ const AddProduct = () => {
             weight: "",
         }
     })
+
+    useEffect(() => {
+        if (!user.isAdmin) {
+            return navigate("/");
+        }
+    }, [])
 
     useEffect(() => {
         try {
@@ -86,7 +94,7 @@ const AddProduct = () => {
             <form onSubmit={handleSubmit(onSubmit)} className={classes.main__container}>
                 <div className={classes.main__imageInput}>
                     <div>
-                        <img style={{ margin: "0 auto" }} src={imageURL ? imageURL :
+                        <img style={{ margin: "0 auto", height: "200px" }} src={imageURL ? imageURL :
                             "#"
                         } alt="No file" className={classes.image} />
                         {/* {image ? "Ok" : null} */}
@@ -114,7 +122,9 @@ const AddProduct = () => {
                     type="text"
                     placeholder="Name"
                 />
-                <div style={{ color: "red" }}>{errors.name ? errors.name.message : null}</div>
+                <label className={classes.main__error}>
+                    {errors.name ? errors.name.message : null}
+                </label>
                 <input
                     {...register("description", {
                         required: { value: true, message: "Description is required" },
@@ -127,7 +137,9 @@ const AddProduct = () => {
                     type="text"
                     placeholder="Description"
                 />
-                <div style={{ color: "red" }}>{errors.description ? errors.description.message : null}</div>
+                <label className={classes.main__error}>
+                    {errors.description ? errors.description.message : null}
+                </label>
                 <input
                     {...register("price", {
                         required: { value: true, message: "Price is required" },
@@ -140,7 +152,9 @@ const AddProduct = () => {
                     type="text"
                     placeholder="Price"
                 />
-                <div style={{ color: "red" }}>{errors.price ? errors.price.message : null}</div>
+                <label className={classes.main__error}>
+                    {errors.price ? errors.price.message : null}
+                </label>
                 <input
                     {...register("weight", {
                         required: { value: true, message: "Weight is required" },
@@ -153,7 +167,9 @@ const AddProduct = () => {
                     type="text"
                     placeholder="Weight"
                 />
-                <div style={{ color: "red" }}>{errors.weight ? errors.weight.message : null}</div>
+                <label className={classes.main__error}>
+                    {errors.weight ? errors.weight.message : null}
+                </label>
 
                 <button
                     className={classes.main__bottom__loginBtn}

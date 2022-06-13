@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getUser from "util/localStorage/getUser";
 
 const ChangeProduct = () => {
@@ -16,6 +16,12 @@ const ChangeProduct = () => {
     const [imageMessage, setImageMessage] = useState("");
 
     const user = getUser();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!user.isAdmin) {
+            return navigate("/");
+        }
+    }, [])
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_BASE_BACKEND}/products/details/${productId}`)
@@ -146,7 +152,9 @@ const ChangeProduct = () => {
                     type="text"
                     placeholder="Name"
                 />
-                <div style={{ color: "red" }}>{errors.name ? errors.name.message : null}</div>
+                <label className={classes.main__error}>
+                    {errors.name ? errors.name.message : null}
+                </label>
                 <input
                     {...register("description", {
                         required: { value: true, message: "Description is required" },
@@ -159,7 +167,9 @@ const ChangeProduct = () => {
                     type="text"
                     placeholder="Description"
                 />
-                <div style={{ color: "red" }}>{errors.description ? errors.description.message : null}</div>
+                <label className={classes.main__error}>
+                    {errors.description ? errors.description.message : null}
+                </label>
                 <input
                     {...register("price", {
                         required: { value: true, message: "Price is required" },
@@ -172,7 +182,9 @@ const ChangeProduct = () => {
                     type="text"
                     placeholder="Price"
                 />
-                <div style={{ color: "red" }}>{errors.price ? errors.price.message : null}</div>
+                <label className={classes.main__error}>
+                    {errors.price ? errors.price.message : null}
+                </label>
                 <input
                     {...register("weight", {
                         required: { value: true, message: "Weight is required" },
@@ -185,10 +197,9 @@ const ChangeProduct = () => {
                     type="text"
                     placeholder="Weight"
                 />
-                <div style={{ color: "red" }}>{errors.weight ? errors.weight.message : null}</div>
-
-                <div style={{ color: "red" }}>{errors.image ? errors.image.message : null}</div>
-
+                <label className={classes.main__error}>
+                    {errors.weight ? errors.weight.message : null}
+                </label>
                 <button
                     className={classes.main__bottom__loginBtn}
                 >
