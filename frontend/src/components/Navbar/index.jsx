@@ -15,15 +15,15 @@ const Navbar = () => {
     }, [user, navigate])
 
     return (
-        <div className={classes.main}>
-            <div className={classes.main__child}>
-                <Link className={classes.main_a} to="/home" >Home</Link>
-                <Link className={classes.main_a} to="/products">Products</Link>
+        <div className={classes.Nav}>
+            <div className={classes.Nav__container}>
+                <Link className={classes.Nav__link} to="/home" >Home</Link>
+                <Link className={classes.Nav__link} to="/products">Products</Link>
                 {
-                    user && user.isAdmin ? <Link className={classes.main_a} to="/products/add">Add Product</Link> :
-                        <Link className={classes.main_a} to="/deals">Deals</Link>
+                    user && user.isAdmin ? <Link className={classes.Nav__link} to="/products/add">Add Product</Link> :
+                        <Link className={classes.Nav__link} to="/deals">Deals</Link>
                 }
-                <a href="/#" className={classes.main_a} onClick={() => {
+                <a href="/#" className={classes.Nav__link} onClick={() => {
                     removeUser();
                     navigate("/");
                 }}>Log Out</a>

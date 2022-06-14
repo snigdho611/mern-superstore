@@ -3,41 +3,41 @@
   /* margin: 0 auto; */
 }
 
-.main {
+.ProductDetails {
   margin-left: 300px;
   width: 70%;
   display: flex;
   border: 1px solid green;
 }
 
-.main__data {
+.ProductDetails__data {
   display: flex;
   flex-direction: column;
   width: 50%;
   /* padding-top: 50px; */
 }
 
-.main__img {
+.ProductDetails__img {
   display: flex;
   justify-content: center;
   width: 50%;
 }
 
-.dataCell {
+.ProductDetails__dataCell {
   display: flex;
   flex-direction: row;
 }
 
-.dataCell__left,
-.dataCell__right {
+.ProductDetails__dataCell__left,
+.ProductDetails__dataCell__right {
   padding: 10px 0px;
   border: 1px solid green;
 }
 
-.dataCell__left {
+.ProductDetails__dataCell__left {
   width: 30%;
 }
 
-.dataCell__right {
+.ProductDetails__dataCell__right {
   width: 70%;
 }

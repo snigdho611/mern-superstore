@@ -20,58 +20,58 @@ const ProductDetails = () => {
     }, [productId])
     return (
         productData ?
-            <div className={classes.main} >
-                <div className={classes.main__data}>
-                    <div className={classes.dataCell}>
-                        <div className={classes.dataCell__left}>
+            <div className={classes.ProductDetails} >
+                <div className={classes.ProductDetails__data}>
+                    <div className={classes.ProductDetails__dataCell}>
+                        <div className={classes.ProductDetails__dataCell__left}>
                             ID:
                         </div>
-                        <div className={classes.dataCell__right}>
+                        <div className={classes.ProductDetails__dataCell__right}>
                             #{productData.id}
                         </div>
                     </div>
-                    <div className={classes.dataCell}>
-                        <div className={classes.dataCell__left}>
+                    <div className={classes.ProductDetails__dataCell}>
+                        <div className={classes.ProductDetails__dataCell__left}>
                             NAME:
                         </div>
-                        <div className={classes.dataCell__right}>
+                        <div className={classes.ProductDetails__dataCell__right}>
                             {productData.name}
                         </div>
                     </div>
-                    <div className={classes.dataCell}>
-                        <div className={classes.dataCell__left}>
+                    <div className={classes.ProductDetails__dataCell}>
+                        <div className={classes.ProductDetails__dataCell__left}>
                             WEIGHT:
                         </div>
-                        <div className={classes.dataCell__right}>
+                        <div className={classes.ProductDetails__dataCell__right}>
                             {productData.weight}
                         </div>
                     </div>
-                    <div className={classes.dataCell}>
-                        <div className={classes.dataCell__left}>
+                    <div className={classes.ProductDetails__dataCell}>
+                        <div className={classes.ProductDetails__dataCell__left}>
                             PRICE:
                         </div>
-                        <div className={classes.dataCell__right}>
+                        <div className={classes.ProductDetails__dataCell__right}>
                             {productData.price} BDT
                         </div>
                     </div>
-                    <div className={classes.dataCell}>
-                        <div className={classes.dataCell__left}>
+                    <div className={classes.ProductDetails__dataCell}>
+                        <div className={classes.ProductDetails__dataCell__left}>
                             TYPE:
                         </div>
-                        <div className={classes.dataCell__right}>
+                        <div className={classes.ProductDetails__dataCell__right}>
                             {productData.type}
                         </div>
                     </div>
-                    <div className={classes.dataCell}>
-                        <div className={classes.dataCell__left}>
+                    <div className={classes.ProductDetails__dataCell}>
+                        <div className={classes.ProductDetails__dataCell__left}>
                             DESCRIPTION:
                         </div>
-                        <div className={classes.dataCell__right}>
+                        <div className={classes.ProductDetails__dataCell__right}>
                             {productData.description}
                         </div>
                     </div>
                 </div>
-                <div className={classes.main__img}>
+                <div className={classes.ProductDetails__img}>
                     <img src={productData.image ? `${process.env.REACT_APP_BASE_BACKEND}${productData.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className={classes.image} />
                 </div>
             </div > : null

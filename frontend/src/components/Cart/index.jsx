@@ -106,25 +106,25 @@ const Cart = () => {
     }
 
     return (
-        <div className={classes.main}>
+        <div className={classes.Cart}>
             <table style={{ width: "100%" }}>
                 <thead>
                     <tr>
-                        <th className={classes.dataHead} style={{ width: "10%" }}>#</th>
-                        <th className={classes.dataHead} style={{ width: "40%" }}>Name</th>
-                        <th className={classes.dataHead} style={{ width: "20%" }}>Qty</th>
-                        <th className={classes.dataHead} style={{ width: "30%" }}>Price</th>
+                        <th className={classes.Cart__dataHead} style={{ width: "10%" }}>#</th>
+                        <th className={classes.Cart__dataHead} style={{ width: "40%" }}>Name</th>
+                        <th className={classes.Cart__dataHead} style={{ width: "20%" }}>Qty</th>
+                        <th className={classes.Cart__dataHead} style={{ width: "30%" }}>Price</th>
                     </tr>
                 </thead>
                 <tbody>
                     {cart.map(element => {
                         return (
                             <tr key={element.id}>
-                                <td className={classes.dataCell}>{element.id.slice(-2)}</td>
-                                <td className={classes.dataCell}>{element.name}</td>
-                                <td className={classes.dataCell}>{element.quantity}</td>
-                                <td className={classes.dataCell}>{element.price}x{element.quantity} = {element.price * element.quantity}</td>
-                                <td ><button className={classes.cart__crossBtn} onClick={() => { removeFromCart(element) }}>x</button></td>
+                                <td className={classes.Cart__dataCell}>{element.id.slice(-2)}</td>
+                                <td className={classes.Cart__dataCell}>{element.name}</td>
+                                <td className={classes.Cart__dataCell}>{element.quantity}</td>
+                                <td className={classes.Cart__dataCell}>{element.price}x{element.quantity} = {element.price * element.quantity}</td>
+                                <td ><button className={classes.Cart__crossBtn} onClick={() => { removeFromCart(element) }}>x</button></td>
                             </tr>
                         )
                     })}
@@ -132,20 +132,20 @@ const Cart = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td className={classes.dataCell}>Total: <label style={{ fontWeight: "bold" }}>{calculateTotal()}</label></td>
+                        <td className={classes.Cart__dataCell}>Total: <label style={{ fontWeight: "bold" }}>{calculateTotal()}</label></td>
                     </tr>
                     <tr>
-                        <td><Link className={classes.cart_goback_btn} to="/products">{"<="}</Link></td>
+                        <td><Link className={classes.Cart__goBackBtn} to="/products">{"<="}</Link></td>
                         <td></td>
                         <td></td>
-                        <td><button className={classes.cart_checkout_btn} onClick={() => proceedCheckout()}>Checkout</button></td>
+                        <td><button className={classes.Cart_checkOutBtn} onClick={() => proceedCheckout()}>Checkout</button></td>
                     </tr>
                 </tbody>
             </table>
             {
                 loader ? <div className={classes.loader} /> : null
             }
-            <div className={success ? classes.confirmationMsg : classes.errorMsg}>
+            <div className={success ? classes.Cart__confirmationMsg : classes.Cart__errorMsg}>
                 {displayCheckoutMsg ? displayCheckoutMsg : null}
             </div>
         </div>

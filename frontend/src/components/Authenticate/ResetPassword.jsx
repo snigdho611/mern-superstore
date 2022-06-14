@@ -58,18 +58,18 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className={classes.main}>
-            <h3 className={classes.header3}>Please create a new password</h3>
-            <div className={classes.main__container}>
-                <div className={classes.tform}>
+        <div className={classes.Form}>
+            <h3 className={classes.Form__header3}>Please create a new password</h3>
+            <div className={classes.Form__container}>
+                <div className={classes.Form__container__grid}>
                     <form onSubmit={handleSubmit(onSubmission)}>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Password:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.password ? {
                                         backgroundColor: "#f0abfc"
                                     } : null}
@@ -85,13 +85,13 @@ const ResetPassword = () => {
                                 />
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Confirm:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     type="password"
                                     style={errors.password ? {
                                         backgroundColor: "#f0abfc"
@@ -110,11 +110,11 @@ const ResetPassword = () => {
                             </div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
-                            {!loading ? <button className={classes.main__bottom__loginBtn} onClick={() => {
+                            {!loading ? <button className={classes.Form__bottom__loginBtn} onClick={() => {
                                 clearErrors()
                             }}
                             >Reset Password</button> : <div className={classes.loader} />}
-                            <label className={classes.main__error}>
+                            <label className={classes.Form__error}>
                                 <p>
                                     {
                                         errors.confirmPassword || errors.password ?
@@ -128,7 +128,7 @@ const ResetPassword = () => {
                                     }
                                 </p>
                             </label>
-                            <label className={classes.main__success}>
+                            <label className={classes.Form__success}>
                                 <p>
                                     {
                                         success ? "Successfully changed password, please log in" : null
@@ -136,7 +136,7 @@ const ResetPassword = () => {
                                 </p>
                             </label>
                             <div>
-                                <Link to="/" className={classes.main__link}>Log In</Link>
+                                <Link to="/" className={classes.Form__link}>Log In</Link>
                             </div>
                         </div>
                     </form>

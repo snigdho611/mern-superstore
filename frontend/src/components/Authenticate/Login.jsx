@@ -2,12 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import getUser from 'util/localStorage/getUser';
-import setUser from 'util/localStorage/setUser';
+// import setUser from 'util/localStorage/setUser';
 import classes from './index.module.css';
 import { useForm } from "react-hook-form";
+import localSetUser from 'util/localStorage/setUser';
+import sessionSetUser from 'util/sessionStorage/setUser';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [userData, setUserData] = useState(null);
     const user = getUser();
     // const [conError, setConError] = useState(false);
 
@@ -39,34 +43,47 @@ const Login = () => {
                 },
             })
             .then((response) => {
-                // console.log(response.data.results)
-                setUser(JSON.stringify(response.data.results));
-                return navigate("/home");
+                console.log(response.data.results)
+                setSuccess(true);
+                setUserData(JSON.stringify(response.data.results));
+                // setUser();
             })
             .catch((err) => {
-                // console.log(err)
                 setLoading(true);
+                if (err.code === "ERR_NETWORK") {
+                    setError("connection", { message: "Could not connect to network" });
+                    setLoading(false);
+                    return;
+                }
                 setTimeout(() => {
                     setError("connection", { message: err.response.data.message });
                     setLoading(false);
                 }, 2000)
-                // console.log(err)
             })
     };
 
+    const saveAndRedirect = (storageType) => {
+        if (storageType === "local") {
+            localSetUser(userData);
+        } else {
+            sessionSetUser(userData);
+        }
+        return navigate("/home");
+    }
+
     return (
-        <div className={classes.main}>
-            <h3 className={classes.header3}>Please log in to continue</h3>
-            <div className={classes.main__container}>
-                <div className={classes.tform}>
+        <div className={classes.Form}>
+            <h3 className={classes.Form__header3}>Please log in to continue</h3>
+            <div className={classes.Form__container}>
+                <div className={classes.Form__container__grid}>
                     <form onSubmit={handleSubmit(onSubmission)}>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Email:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     type="text"
                                     style={errors.password ? {
                                         backgroundColor: "#f0abfc"
@@ -76,13 +93,13 @@ const Login = () => {
                                 />
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Password:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.password ? {
                                         backgroundColor: "#f0abfc"
                                     } : null}
@@ -94,11 +111,11 @@ const Login = () => {
                         </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             {!loading ?
-                                <button className={classes.main__bottom__loginBtn} onClick={() => {
+                                <button className={classes.Form__bottom__loginBtn} onClick={() => {
                                     clearErrors()
                                 }}
                                 >Log In</button> : <div className={classes.loader} />}
-                            <label className={classes.main__error}>
+                            <label className={classes.Form__error}>
                                 <p>
                                     {
                                         errors.email || errors.password ?
@@ -112,16 +129,32 @@ const Login = () => {
                                     }
                                 </p>
                             </label>
-                            {/* <label className={classes.main__error}>
-                                <p>
-                                    {conError ? "Error connecting to server" : null}
-                                </p>
-                            </label> */}
+                            {success ?
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="storage"
+                                        value="session"
+                                        onChange={(e) => {
+                                            console.log(e.target.value)
+                                            saveAndRedirect(e.target.value);
+                                        }}
+                                    />Session
+                                    <input
+                                        type="radio"
+                                        name="storage"
+                                        value="local"
+                                        onChange={(e) => {
+                                            console.log(e.target.value)
+                                            saveAndRedirect(e.target.value);
+                                        }} />Local
+                                </div>
+                                : null}
                             <div>
-                                <Link to="/reset-password-request" className={classes.main__link}>Forgot Password</Link>
+                                <Link to="/reset-password-request" className={classes.Form__link}>Forgot Password</Link>
                             </div>
                             <div>
-                                <Link to="/register" className={classes.main__link}>Sign Up</Link>
+                                <Link to="/register" className={classes.Form__link}>Sign Up</Link>
                             </div>
                         </div>
                     </form>

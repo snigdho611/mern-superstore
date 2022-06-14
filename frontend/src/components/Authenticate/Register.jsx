@@ -77,18 +77,18 @@ const Login = () => {
     // }, [user, navigate])
 
     return (
-        <div className={classes.main}>
-            <h3 className={classes.header3}>Please sign up to continue</h3>
-            <div className={classes.main__container}>
-                <div className={classes.tform}>
+        <div className={classes.Form}>
+            <h3 className={classes.Form__header3}>Please sign up to continue</h3>
+            <div className={classes.Form__container}>
+                <div className={classes.Form__container__grid}>
                     <form onSubmit={handleSubmit(onSubmission)}>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 First name:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.firstName ? {
                                         backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
@@ -102,19 +102,19 @@ const Login = () => {
                                     })}
                                 />
 
-                                <label className={classes.main__error}>
+                                <label className={classes.Form__error}>
                                     {errors.firstName ? errors.firstName.message : null}
                                 </label>
 
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Last name:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.lastName ? {
                                         backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
@@ -127,19 +127,19 @@ const Login = () => {
                                         }
                                     })}
                                 />
-                                <label className={classes.main__error}>
+                                <label className={classes.Form__error}>
                                     {errors.lastName ? errors.lastName.message : null}
                                 </label>
 
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Phone:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.phone ? {
                                         backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
@@ -153,18 +153,18 @@ const Login = () => {
                                         }
                                     })}
                                 />
-                                <label className={classes.main__error}>
+                                <label className={classes.Form__error}>
                                     {errors.phone ? errors.phone.message : null}
                                 </label>
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Email:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.email ? {
                                         backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
@@ -178,18 +178,18 @@ const Login = () => {
                                         }
                                     })}
                                 />
-                                <label className={classes.main__error}>
+                                <label className={classes.Form__error}>
                                     {errors.email ? errors.email.message : null}
                                 </label>
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Password:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.password ? {
                                         backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
@@ -203,18 +203,18 @@ const Login = () => {
                                         }
                                     })}
                                 />
-                                <label className={classes.main__error}>
+                                <label className={classes.Form__error}>
                                     {errors.password ? errors.password.message : null}
                                 </label>
                             </div>
                         </div>
-                        <div className={classes.tform__row}>
-                            <div className={classes.tform__row__labelCell}>
+                        <div className={classes.Form__container__grid__row}>
+                            <div className={classes.Form__container__grid__row__labelCell}>
                                 Confirm Password:
                             </div>
-                            <div className={classes.tform__row__inputCell}>
+                            <div className={classes.Form__container__grid__row__inputCell}>
                                 <input
-                                    className={classes.tform__row__inputBox}
+                                    className={classes.Form__container__grid__row__inputBox}
                                     style={errors.confirmPassword ? {
                                         backgroundColor: "#f0abfc", color: "#134e4a"
                                     } : null}
@@ -230,24 +230,24 @@ const Login = () => {
                                         }
                                     })}
                                 />
-                                <label className={classes.main__error}>
+                                <label className={classes.Form__error}>
                                     {errors.confirmPassword ? errors.confirmPassword.message : null}
                                 </label>
                             </div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
-                            {!loading ? <button className={classes.main__bottom__loginBtn} onClick={() => {
+                            {!loading ? <button className={classes.Form__bottom__loginBtn} onClick={() => {
                                 clearErrors()
                             }}
                             >Sign Up</button> : <div className={classes.loader} />}
-                            <label className={classes.main__error}>
+                            <label className={classes.Form__error}>
                                 <p>
                                     {/* {errors && Object.keys(errors).length ? errors[Object.keys(errors)[0]].message : null}
                                     {console.log(errors)} */}
                                     {conError ? "Error connecting to server" : null}
                                 </p>
                             </label>
-                            <label className={classes.main__success}>
+                            <label className={classes.Form__success}>
                                 <p>
                                     {
                                         success ? "Successfully signed up, please check your email" : null
@@ -260,7 +260,7 @@ const Login = () => {
                                 </p>
                             </label>
                             <div>
-                                <Link to="/" className={classes.main__link}>Log In</Link>
+                                <Link to="/" className={classes.Form__link}>Log In</Link>
                             </div>
                         </div>
                     </form>

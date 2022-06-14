@@ -1,37 +1,37 @@
 @tailwind base;
 
 @layer base {
-  .main {
+  .Cart {
     @apply w-2/3 mx-80 mt-28;
   }
 
-  .dataCell {
+  .Cart__dataCell {
     border: 1px solid;
     @apply text-center bg-teal-300 border-teal-900;
   }
 
-  .dataHead {
+  .Cart__dataHead {
     @apply bg-teal-700 text-teal-100 text-lg;
   }
 
-  .cart_checkout_btn {
+  .Cart_checkOutBtn {
     width: 100%;
     height: 40px;
     @apply cursor-pointer bg-teal-800 font-bold text-teal-100 rounded-xl;
     transition: 0.25s background-color, 0.25s color;
   }
 
-  .cart_checkout_btn:hover {
+  .Cart_checkOutBtn:hover {
     @apply bg-teal-400 text-teal-800;
   }
 
-  .cart_goback_btn {
+  .Cart__goBackBtn {
     width: 100%;
     @apply cursor-pointer bg-teal-800 font-bold text-teal-100 rounded-xl p-3;
     transition: 0.25s background-color;
   }
 
-  .cart_goback_btn:hover {
+  .Cart__goBackBtn:hover {
     @apply bg-teal-400 text-teal-800;
   }
 
@@ -40,25 +40,25 @@
     color: azure;
   }
 
-  .confirmationMsg,
-  .errorMsg {
+  .Cart__confirmationMsg,
+  .Cart__errorMsg {
     text-align: center;
     font-weight: bold;
   }
-  .confirmationMsg {
+  .Cart__confirmationMsg {
     color: green;
   }
 
-  .errorMsg {
+  .Cart__errorMsg {
     color: red;
   }
 
-  .cart__crossBtn {
+  .Cart__crossBtn {
     transition: 0.25s background-color, 0.25s color;
     @apply text-teal-100 bg-red-600 cursor-pointer px-4 py-2;
   }
 
-  .cart__crossBtn:hover {
+  .Cart__crossBtn:hover {
     color: green;
     background-color: pink;
   }
