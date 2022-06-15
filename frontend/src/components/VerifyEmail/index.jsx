@@ -1,16 +1,12 @@
 // import axios from 'axios';
 import Footer from 'components/Footer'
-import React, { useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom';
+import React from 'react'
+import { useSearchParams } from 'react-router-dom';
 
 const VerifyEmail = () => {
-    // const [status, setStatus] = useState(null);
+    // eslint-disable-next-line 
     const [searchParams, setSearchParams] = useSearchParams();
     const status = searchParams.get("status")
-
-    // useEffect(() => {
-    //     console.log(status)
-    // }, [status])
 
     const generateMessage = (status_) => {
         if (status_ === "4") {

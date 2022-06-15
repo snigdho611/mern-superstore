@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import sessionGetUser from 'util/sessionStorage/getUser';
 import localGetUser from 'util/localStorage/getUser';
 import classes from './index.module.css'
 

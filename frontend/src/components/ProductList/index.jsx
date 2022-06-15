@@ -1,7 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard';
 import classes from './index.module.css'
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import getUser from 'util/localStorage/getUser';
 
@@ -80,6 +79,7 @@ const ProductList = () => {
                     setDataToShow([]);
                 });
         }, 2000))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search.params, search.category, originalData])
 
 

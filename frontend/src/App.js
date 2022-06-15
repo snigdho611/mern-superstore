@@ -1,13 +1,6 @@
 import "./index.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import LoginPage from "pages/LoginPage";
-// import HomePage from "pages/HomePage";
-// import ProductsPage from "pages/ProductsPage";
-// import ProductsIdPage from "pages/ProductsIdPage";
-// import DealsPage from "pages/Deals";
-// import ChangePage from "pages/ChangePage";
-// import CartPage from "pages/CartPage";
 import Header from "components/Header";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
@@ -16,7 +9,6 @@ import AddProduct from "components/UpdateForm/AddProduct";
 import VerifyEmail from "components/VerifyEmail";
 import Register from "components/Authenticate/Register";
 import Cart from "components/Cart";
-import EditProfile from "components/UpdateForm/EditProfile";
 import Deals from "components/Deals";
 import Home from "components/Home";
 import Login from "components/Authenticate/Login";
@@ -56,7 +48,6 @@ const App = () => {
             <>
               <Header />
               <Navbar />
-              {/* <ProductDetails /> */}
               <ProductList />
               <Footer />
             </>
@@ -122,8 +113,6 @@ const App = () => {
           element={
             <>
               <Header />
-              {/* <Navbar /> */}
-              {/* <AddProduct /> */}
               <Register />
               <Footer />
             </>
@@ -133,7 +122,6 @@ const App = () => {
           path="/email-verify"
           element={
             <>
-              {/* <Navbar /> */}
               <Header />
               <VerifyEmail />
               <Footer />
@@ -145,7 +133,6 @@ const App = () => {
           element={
             <>
               <Header />
-              {/* <VerifyEmail /> */}
               <ResetPassword />
               <Footer />
             </>
@@ -156,8 +143,6 @@ const App = () => {
           element={
             <>
               <Header />
-              {/* <VerifyEmail /> */}
-              {/* <ResetPassword /> */}
               <ForgotPassword />
               <Footer />
             </>

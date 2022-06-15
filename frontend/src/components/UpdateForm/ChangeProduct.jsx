@@ -21,6 +21,7 @@ const ChangeProduct = () => {
         if (!user.isAdmin) {
             return navigate("/");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -119,10 +120,10 @@ const ChangeProduct = () => {
 
     return (
         <div
-            className={classes.main}
+            className={classes.Form}
         >
-            <form onSubmit={handleSubmit(onSubmit)} className={classes.main__container}>
-                <div className={classes.main__imageInput}>
+            <form onSubmit={handleSubmit(onSubmit)} className={classes.Form__container}>
+                <div className={classes.Form__imageInput}>
                     <div>
                         <img style={{ margin: "0 auto", height: "200px" }} src={imageURL ? imageURL :
                             product && product.image ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
@@ -148,11 +149,11 @@ const ChangeProduct = () => {
                             message: "Only alphabetical characters or spaces are allowed",
                         },
                     })}
-                    className={classes.main__input}
+                    className={classes.Form__input}
                     type="text"
                     placeholder="Name"
                 />
-                <label className={classes.main__error}>
+                <label className={classes.Form__error}>
                     {errors.name ? errors.name.message : null}
                 </label>
                 <input
@@ -163,11 +164,11 @@ const ChangeProduct = () => {
                             message: "Only alphabetical characters or spaces are allowed",
                         },
                     })}
-                    className={classes.main__input}
+                    className={classes.Form__input}
                     type="text"
                     placeholder="Description"
                 />
-                <label className={classes.main__error}>
+                <label className={classes.Form__error}>
                     {errors.description ? errors.description.message : null}
                 </label>
                 <input
@@ -178,11 +179,11 @@ const ChangeProduct = () => {
                             message: "Price must be numeric",
                         },
                     })}
-                    className={classes.main__input}
+                    className={classes.Form__input}
                     type="text"
                     placeholder="Price"
                 />
-                <label className={classes.main__error}>
+                <label className={classes.Form__error}>
                     {errors.price ? errors.price.message : null}
                 </label>
                 <input
@@ -193,24 +194,24 @@ const ChangeProduct = () => {
                             message: "Only alphabetical characters or spaces are allowed",
                         },
                     })}
-                    className={classes.main__input}
+                    className={classes.Form__input}
                     type="text"
                     placeholder="Weight"
                 />
-                <label className={classes.main__error}>
+                <label className={classes.Form__error}>
                     {errors.weight ? errors.weight.message : null}
                 </label>
                 <button
-                    className={classes.main__bottom__loginBtn}
+                    className={classes.Form__loginBtn}
                 >
                     Submit
                 </button>
-                <label className={classes.main__error}>
+                <label className={classes.Form__error}>
                     <p>
                         {!error || error !== "" ? error : null}
                     </p>
                 </label>
-                <label className={classes.main__success}>
+                <label className={classes.Form__success}>
                     <p>
                         {success ? "Success!" : null}
                     </p>
