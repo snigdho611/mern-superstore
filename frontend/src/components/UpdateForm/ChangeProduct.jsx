@@ -3,7 +3,7 @@ import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import getUser from "util/localStorage/getUser";
+import getUser from "util/local/getUser";
 
 const ChangeProduct = () => {
     const [success, setSuccess] = useState(false);

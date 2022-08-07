@@ -118,7 +118,7 @@ const ResetPassword = () => {
                                 <p>
                                     {
                                         errors.confirmPassword || errors.password ?
-                                            "One of the fields is empty"
+                                            errors.confirmPassword
                                             : null
                                     }
                                 </p>

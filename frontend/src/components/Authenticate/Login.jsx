@@ -1,19 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import getUser from 'util/localStorage/getUser';
-// import setUser from 'util/localStorage/setUser';
+import getUser from 'util/local/getUser';
 import classes from './index.module.css';
 import { useForm } from "react-hook-form";
-import localSetUser from 'util/localStorage/setUser';
-import sessionSetUser from 'util/sessionStorage/setUser';
+import { setUser } from 'util/local';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const [userData, setUserData] = useState(null);
     const user = getUser();
-    // const [conError, setConError] = useState(false);
 
     const {
         register,
@@ -44,8 +39,10 @@ const Login = () => {
             })
             .then((response) => {
                 console.log(response.data.results)
-                setSuccess(true);
-                setUserData(JSON.stringify(response.data.results));
+                // setSuccess(true);
+                // setUserData(JSON.stringify(response.data.results));
+                setUser(JSON.stringify(response.data.results))
+                saveAndRedirect()
                 // setUser();
             })
             .catch((err) => {
@@ -62,13 +59,8 @@ const Login = () => {
             })
     };
 
-    const saveAndRedirect = (storageType) => {
-        if (storageType === "local") {
-            localSetUser(userData);
-        } else {
-            sessionSetUser(userData);
-        }
-        return navigate("/home");
+    const saveAndRedirect = () => {
+        navigate("/home");
     }
 
     return (
@@ -129,27 +121,6 @@ const Login = () => {
                                     }
                                 </p>
                             </label>
-                            {success ?
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="storage"
-                                        value="session"
-                                        onChange={(e) => {
-                                            console.log(e.target.value)
-                                            saveAndRedirect(e.target.value);
-                                        }}
-                                    />Session
-                                    <input
-                                        type="radio"
-                                        name="storage"
-                                        value="local"
-                                        onChange={(e) => {
-                                            console.log(e.target.value)
-                                            saveAndRedirect(e.target.value);
-                                        }} />Local
-                                </div>
-                                : null}
                             <div>
                                 <Link to="/reset-password-request" className={classes.Form__link}>Forgot Password</Link>
                             </div>

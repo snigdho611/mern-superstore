@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import getUser from 'util/localStorage/getUser';
+import getUser from 'util/local/getUser';
 import classes from './index.module.css'
 import shopLogo from '../../shop.png'
 

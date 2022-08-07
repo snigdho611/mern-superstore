@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import classes from "./index.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import getUser from "util/localStorage/getUser";
+import getUser from "util/local/getUser";
 import { useNavigate } from "react-router-dom";
 // import { useParams } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import localGetUser from 'util/localStorage/getUser';
+import localGetUser from 'util/local/getUser';
 import classes from './index.module.css'
 
 const Home = () => {

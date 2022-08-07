@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import getUser from 'util/localStorage/getUser';
-import setUser from 'util/localStorage/setUser';
+import getUser from 'util/local/getUser';
+import setUser from 'util/local/setUser';
 import classes from './index.module.css';
 import { useForm } from "react-hook-form";
 

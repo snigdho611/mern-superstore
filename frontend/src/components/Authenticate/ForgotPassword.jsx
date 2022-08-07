@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import getUser from 'util/localStorage/getUser';
+import getUser from 'util/local/getUser';
 import classes from './index.module.css'
 
 const ForgotPassword = () => {
