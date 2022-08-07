@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import getUser from 'util/local/getUser';
 import removeUser from 'util/local/removeUser';
-import classes from './index.module.css'
+import './index.css'
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -15,18 +15,24 @@ const Navbar = () => {
     }, [user, navigate])
 
     return (
-        <div className={classes.Nav}>
-            <div className={classes.Nav__container}>
-                <Link className={classes.Nav__link} to="/home" >Home</Link>
-                <Link className={classes.Nav__link} to="/products">Products</Link>
+        <div className="nav">
+            <div className="nav__container">
+                <Link className="nav__link" to="/home" >Home</Link>
+                <Link className="nav__link" to="/products">Products</Link>
                 {
-                    user && user.isAdmin ? <Link className={classes.Nav__link} to="/products/add">Add Product</Link> :
-                        <Link className={classes.Nav__link} to="/deals">Deals</Link>
+                    user && user.isAdmin ? <Link className="nav__link" to="/products/add">Add Product</Link> :
+                        <Link className="nav__link" to="/deals">Deals</Link>
                 }
-                <a href="/#" className={classes.Nav__link} onClick={() => {
-                    removeUser();
-                    navigate("/");
-                }}>Log Out</a>
+                <a
+                    href="/#"
+                    className="nav__link"
+                    onClick={() => {
+                        removeUser();
+                        navigate("/");
+                    }}
+                >
+                    Log Out
+                </a>
             </div>
         </div>
     )

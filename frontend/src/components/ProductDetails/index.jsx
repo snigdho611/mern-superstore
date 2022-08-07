@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import classes from './index.module.css'
+import './index.css'
 
 const ProductDetails = () => {
     const { productId } = useParams()
@@ -20,59 +20,59 @@ const ProductDetails = () => {
     }, [productId])
     return (
         productData ?
-            <div className={classes.ProductDetails} >
-                <div className={classes.ProductDetails__data}>
-                    <div className={classes.ProductDetails__dataCell}>
-                        <div className={classes.ProductDetails__dataCell__left}>
+            <div className="main">
+                <div className="main__data">
+                    <div className="main__dataCell">
+                        <div className="main__dataCell__left">
                             ID:
                         </div>
-                        <div className={classes.ProductDetails__dataCell__right}>
+                        <div className="main__dataCell__right">
                             #{productData.id}
                         </div>
                     </div>
-                    <div className={classes.ProductDetails__dataCell}>
-                        <div className={classes.ProductDetails__dataCell__left}>
+                    <div className="main__dataCell">
+                        <div className="main__dataCell__left">
                             NAME:
                         </div>
-                        <div className={classes.ProductDetails__dataCell__right}>
+                        <div className="main__dataCell__right">
                             {productData.name}
                         </div>
                     </div>
-                    <div className={classes.ProductDetails__dataCell}>
-                        <div className={classes.ProductDetails__dataCell__left}>
+                    <div className="main__dataCell">
+                        <div className="main__dataCell__left">
                             WEIGHT:
                         </div>
-                        <div className={classes.ProductDetails__dataCell__right}>
+                        <div className="main__dataCell__right">
                             {productData.weight}
                         </div>
                     </div>
-                    <div className={classes.ProductDetails__dataCell}>
-                        <div className={classes.ProductDetails__dataCell__left}>
+                    <div className="main__dataCell">
+                        <div className="main__dataCell__left">
                             PRICE:
                         </div>
-                        <div className={classes.ProductDetails__dataCell__right}>
+                        <div className="main__dataCell__right">
                             {productData.price} BDT
                         </div>
                     </div>
-                    <div className={classes.ProductDetails__dataCell}>
-                        <div className={classes.ProductDetails__dataCell__left}>
+                    <div className="main__dataCell">
+                        <div className="main__dataCell__left">
                             TYPE:
                         </div>
-                        <div className={classes.ProductDetails__dataCell__right}>
+                        <div className="main__dataCell__right">
                             {productData.type}
                         </div>
                     </div>
-                    <div className={classes.ProductDetails__dataCell}>
-                        <div className={classes.ProductDetails__dataCell__left}>
+                    <div className="main__dataCell">
+                        <div className="main__dataCell__left">
                             DESCRIPTION:
                         </div>
-                        <div className={classes.ProductDetails__dataCell__right}>
+                        <div className="main__dataCell__right">
                             {productData.description}
                         </div>
                     </div>
                 </div>
-                <div className={classes.ProductDetails__img}>
-                    <img src={productData.image ? `${process.env.REACT_APP_BASE_BACKEND}${productData.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className={classes.image} />
+                <div className="main__img">
+                    <img src={productData.image ? `${process.env.REACT_APP_BASE_BACKEND}${productData.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className="image" />
                 </div>
             </div > : null
     )
