@@ -1,0 +1,16 @@
+.header {
+  box-shadow: 5px 3px 10px rgb(13, 148, 136);
+}
+
+.header__btn {
+  min-width: 50px;
+  border: 2px solid azure;
+}
+
+.header__btn:hover {
+  @apply bg-teal-50;
+}
+
+.image {
+  height: 80px;
+}/*# sourceMappingURL=index.css.map */

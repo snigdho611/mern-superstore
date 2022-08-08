@@ -1,8 +1,7 @@
-.main {
+.home {
   margin-left: 300px;
 }
-
-.main__link {
+.home__link {
   color: limegreen;
   cursor: pointer;
   font-weight: bold;
@@ -12,4 +11,4 @@ p {
   font-size: 19px;
   font-weight: bold;
   /* color: navy; */
-}
+}/*# sourceMappingURL=index.css.map */

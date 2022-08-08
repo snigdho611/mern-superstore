@@ -1,0 +1,15 @@
+.home {
+  margin-left: 300px;
+  &__link {
+    color: limegreen;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
+
+
+p {
+  font-size: 19px;
+  font-weight: bold;
+  /* color: navy; */
+}

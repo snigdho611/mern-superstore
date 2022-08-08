@@ -8,7 +8,7 @@ const Header = () => {
     let user = getUser();
 
     return (
-        <div className={classes.main}>
+        <div className="header">
             <div className={classes.image__container}>
                 <Link to={user ? "/home" : "/"}>
                     <img className={classes.image} src={shopLogo} alt="" />
@@ -19,7 +19,6 @@ const Header = () => {
                     user.isAdmin ?
                         <div>
                             <div>Admin Mode</div>
-
                         </div>
                         : <div >
                             <Link to="/cart" className={classes.cart__btn}>Cart</Link>
