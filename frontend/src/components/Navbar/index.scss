@@ -2,27 +2,28 @@
 
 .nav {
     position: fixed; 
-    background-color: colors.$teal-medium; 
+    background-color: colors.$teal-dark; 
+    width: 15rem;
     &__container {
       top: 0;
       display: flex;
       flex-direction: column;
       height: 100vh;
-      width: 250px;
+      // width: 250px;
     }
   
     &__link {
       text-align: center;
       text-decoration: none;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 1.25rem;
       color: azure;
       transition: 0.5s background-color, 0.5s color;
       padding: 10px 0px;
     }
   
     &__link:hover {
-      color: var(--font_color_basic);
-      background-color: var(--nav_background_secondary);
+      color: colors.$blue-dark;
+      background-color: colors.$teal-medium;
     }
   }

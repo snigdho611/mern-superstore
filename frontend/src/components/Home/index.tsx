@@ -11,13 +11,13 @@ const Home: React.FC = () => {
         Welcome to ABC Store {` ${user?.firstName} ${user?.lastName} `}san
       </h2>
       <p>
-        Find our best deals at
+        Find our best deals at{" "}
         <Link className="home__link" to="/deals">
           here
         </Link>
       </p>
       <p>
-        Or find products that you want to buy over
+        Or find products that you want to buy over{" "}
         <Link className="home__link" to="/products">
           here
         </Link>
