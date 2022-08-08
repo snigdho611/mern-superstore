@@ -5,9 +5,11 @@ import getUser from 'util/local/getUser';
 import classes from './index.module.css';
 import { useForm } from "react-hook-form";
 import { setUser } from 'util/local';
+import Loader from 'components/Loader';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
+    const [response, setResponse] = useState({ success: false, loading: false, message: null })
     const user = getUser();
 
     const {
@@ -26,36 +28,37 @@ const Login = () => {
     }, [navigate, user])
 
     const onSubmission = formData => {
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND}/auth/login`,
+        setResponse({ ...response, loading: true, message: null })
+        // console.log({
+        //     email: formData.email,
+        //     password: formData.password
+        // })
+        fetch(`${process.env.REACT_APP_BASE_BACKEND}/auth/login`,
             {
-                email: formData.email,
-                password: formData.password
-            },
-            {
+                method: "POST",
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password
+                }),
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
             })
+            .then((response) => response.json())
             .then((response) => {
-                console.log(response.data.results)
-                // setSuccess(true);
-                // setUserData(JSON.stringify(response.data.results));
-                setUser(JSON.stringify(response.data.results))
-                saveAndRedirect()
-                // setUser();
+                console.log(response)
+                if (response.success) {
+                    setUser(JSON.stringify(response.results))
+                    setResponse({ ...response, loading: false })
+                    saveAndRedirect()
+                } else {
+                    setResponse({ ...response, loading: false, message: "Username or password doesn't match" })
+                }
             })
             .catch((err) => {
-                setLoading(true);
-                if (err.code === "ERR_NETWORK") {
-                    setError("connection", { message: "Could not connect to network" });
-                    setLoading(false);
-                    return;
-                }
-                setTimeout(() => {
-                    setError("connection", { message: err.response.data.message });
-                    setLoading(false);
-                }, 2000)
+                console.log(err)
+                setResponse({ ...response, success: false, message: "An unexpected error occured", loading: false })
             })
     };
 
@@ -102,11 +105,12 @@ const Login = () => {
                             </div>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column" }}>
-                            {!loading ?
+                            {!response.loading ?
                                 <button className={classes.Form__bottom__loginBtn} onClick={() => {
                                     clearErrors()
                                 }}
-                                >Log In</button> : <div className={classes.loader} />}
+                                >Log In</button> : <Loader />}
+                            {/* <Loader /> */}
                             <label className={classes.Form__error}>
                                 <p>
                                     {
@@ -116,9 +120,7 @@ const Login = () => {
                                     }
                                 </p>
                                 <p>
-                                    {
-                                        errors.connection ? errors.connection.message : null
-                                    }
+                                    {response.message}
                                 </p>
                             </label>
                             <div>

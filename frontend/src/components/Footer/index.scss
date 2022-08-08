@@ -5,9 +5,7 @@
   justify-content: right;
   bottom: 0;
   z-index: -1;
-}
-
-.footer__img {
-  /* style={{ height: "80px" }} */
-  height: 80px;
+  &__img {
+    height: 80px;
+  }
 }

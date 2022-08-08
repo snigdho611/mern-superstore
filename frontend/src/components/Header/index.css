@@ -1,16 +1,22 @@
 .header {
+  background-color: #0f766e;
+  position: -webkit-sticky;
+  position: sticky;
+  display: flex;
+  top: 0;
+  height: 12vh;
   box-shadow: 5px 3px 10px rgb(13, 148, 136);
+}
+.header__col {
+  width: 50%;
+  display: flex;
+  justify-content: end;
+}
+.header__col__image {
+  height: 70px;
 }
 
 .header__btn {
   min-width: 50px;
   border: 2px solid azure;
-}
-
-.header__btn:hover {
-  @apply bg-teal-50;
-}
-
-.image {
-  height: 80px;
 }/*# sourceMappingURL=index.css.map */
