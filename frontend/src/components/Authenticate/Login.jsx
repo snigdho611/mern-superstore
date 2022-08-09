@@ -6,6 +6,7 @@ import classes from './index.module.css';
 import { useForm } from "react-hook-form";
 import { setUser } from 'util/local';
 import Loader from 'components/Loader';
+import Input from 'components/Form/Input';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -72,45 +73,27 @@ const Login = () => {
             <div className={classes.Form__container}>
                 <div className={classes.Form__container__grid}>
                     <form onSubmit={handleSubmit(onSubmission)}>
-                        <div className={classes.Form__container__grid__row}>
-                            <div className={classes.Form__container__grid__row__labelCell}>
-                                Email:
-                            </div>
-                            <div className={classes.Form__container__grid__row__inputCell}>
-                                <input
-                                    className={classes.Form__container__grid__row__inputBox}
-                                    type="text"
-                                    style={errors.password ? {
-                                        backgroundColor: "#f0abfc"
-                                    } : null}
-                                    placeholder='Email'
-                                    {...register("email", { required: true })}
-                                />
-                            </div>
-                        </div>
-                        <div className={classes.Form__container__grid__row}>
-                            <div className={classes.Form__container__grid__row__labelCell}>
-                                Password:
-                            </div>
-                            <div className={classes.Form__container__grid__row__inputCell}>
-                                <input
-                                    className={classes.Form__container__grid__row__inputBox}
-                                    style={errors.password ? {
-                                        backgroundColor: "#f0abfc"
-                                    } : null}
-                                    type="password"
-                                    placeholder='Password'
-                                    {...register("password", { required: true })}
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            label="Email"
+                            name="email"
+                            register={register}
+                            errors={errors}
+                            required={true}
+                        />
+                        <Input
+                            label="password"
+                            name="password"
+                            type="password"
+                            register={register}
+                            errors={errors}
+                            required={true}
+                        />
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             {!response.loading ?
                                 <button className={classes.Form__bottom__loginBtn} onClick={() => {
                                     clearErrors()
                                 }}
                                 >Log In</button> : <Loader />}
-                            {/* <Loader /> */}
                             <label className={classes.Form__error}>
                                 <p>
                                     {
@@ -133,8 +116,8 @@ const Login = () => {
                     </form>
 
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
