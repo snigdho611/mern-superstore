@@ -21,12 +21,13 @@
   align-items: center;
 }
 .form__row__labelCell {
-  width: 30%;
+  width: 20%;
   display: flex;
   justify-content: flex-end;
+  white-space: nowrap;
 }
 .form__row__inputCell {
-  width: 70%;
+  width: 80%;
 }
 .form__row__inputCell__inputBox {
   width: 100%;

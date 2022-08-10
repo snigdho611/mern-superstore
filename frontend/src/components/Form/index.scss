@@ -24,13 +24,14 @@
   }
 
   &__row__labelCell {
-    width: 30%;
+    width: 20%;
     display: flex;
     // height: 1.5rem;
     justify-content: flex-end;
+    white-space: nowrap;
   }
   &__row__inputCell {
-    width: 70%;
+    width: 80%;
   }
   &__row__inputCell__inputBox {
     width: 100%;

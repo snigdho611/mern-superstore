@@ -2,6 +2,12 @@ import React from "react";
 import "components/Form/index.css";
 import Loader from "components/Loader";
 
+export interface Response {
+  success: boolean;
+  loading: boolean;
+  message: string | null;
+}
+
 interface FormProps {
   children: React.ReactNode;
   handleSubmit: any;
@@ -51,11 +57,15 @@ const InputRow: React.FC<InputRowProps> = ({
                   }
                 : null
             }
-            placeholder={name}
+            // placeholder={name}
             {...register(`${name}`, {
               required: {
                 value: required ? true : false,
                 message: `Please enter ${name}`,
+              },
+              pattern: {
+                value: pattern !== "" ? pattern : null,
+                message: `Pattern of ${name} does not match`,
               },
             })}
           />

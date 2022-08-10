@@ -4,13 +4,7 @@ import getUser from "util/local/getUser";
 import "./index.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { setUser } from "util/local";
-import { Form, InputRow, InputSubmit } from "components/Form";
-
-interface Response {
-  success: boolean;
-  loading: boolean;
-  message: string | null;
-}
+import { Form, InputRow, InputSubmit, Response } from "components/Form";
 
 const Login: React.FC = () => {
   const [response, setResponse] = useState<Response>({
@@ -79,11 +73,6 @@ const Login: React.FC = () => {
   return (
     <div className="Form">
       <h3 className="Form__header3">Please log in to continue</h3>
-      {/* <div className="Form__container">
-        <form onSubmit={handleSubmit(onSubmission)}>
-          
-        </form>
-      </div> */}
       <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
         <InputRow label="Email" name="email" register={register} errors={errors} required={true} />
         <InputRow
