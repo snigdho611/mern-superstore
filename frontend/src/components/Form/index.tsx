@@ -1,21 +1,24 @@
 import React from "react";
-import "components/Form/Input/index.css";
+import "components/Form/index.css";
+import Loader from "components/Loader";
 
-interface InputProps {
+interface InputRowProps {
   label: string;
   name: string;
   register: any;
   errors: any;
   required: boolean;
-  pattern: string;
+  type?: string;
+  pattern?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+const InputRow: React.FC<InputRowProps> = ({
   label,
   name,
   register,
   errors,
   required = false,
+  type = "text",
   pattern = "",
 }) => {
   console.log(errors);
@@ -26,7 +29,7 @@ const Input: React.FC<InputProps> = ({
         <div className="form__row__inputCell">
           <input
             className="form__row__inputCell__inputBox"
-            type="text"
+            type={type}
             style={
               errors[name]
                 ? {
@@ -49,4 +52,29 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+interface InputSubmitProps {
+  loading: boolean;
+  message: string | null;
+}
+
+const InputSubmit: React.FC<InputSubmitProps> = ({ loading, message }) => {
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      {!loading ? (
+        <button
+          className="form__bottom__btn"
+          //   onClick={() => {
+          //     clearErrors();
+          //   }}
+        >
+          Log In
+        </button>
+      ) : (
+        <Loader />
+      )}
+      <div>{message}</div>
+    </div>
+  );
+};
+
+export { InputRow, InputSubmit };

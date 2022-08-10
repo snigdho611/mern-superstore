@@ -4,24 +4,20 @@
   align-items: center;
   font-size: 1.25rem;
 }
-
 .form__row__main {
   display: flex;
   gap: 1.25rem;
   width: 60%;
+  align-items: center;
 }
-
 .form__row__labelCell {
-  width: 20%;
+  width: 30%;
   display: flex;
-  height: 1.5rem;
   justify-content: flex-end;
 }
-
 .form__row__inputCell {
-  width: 80%;
+  width: 70%;
 }
-
 .form__row__inputCell__inputBox {
   width: 100%;
   background-color: #99f6e4;
@@ -30,14 +26,30 @@
   border-radius: 0.35rem;
   transition: 0.5s color, 0.5s background-color;
 }
-
-.form__row__inputCell__inputBox:focus,
-.form__row__inputCell__inputBox:hover {
+.form__row__inputCell__inputBox:focus, .form__row__inputCell__inputBox:hover {
   outline: none;
   background-color: #14b8a6;
 }
-
 .form__row__errors {
   height: 1.35rem;
   font-size: 0.75rem;
+}
+
+.form__bottom__btn {
+  width: 5rem;
+  margin: 0.25rem auto;
+  text-align: center;
+  border-radius: 0.35rem;
+  background-color: #0f766e;
+  color: #99f6e4;
+  font-size: 1.15rem;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  transition: 0.5s color, 0.5s background-color;
+}
+.form__bottom__btn:hover {
+  background-color: #14b8a6;
 }/*# sourceMappingURL=index.css.map */
