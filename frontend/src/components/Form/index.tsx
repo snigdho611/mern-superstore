@@ -29,7 +29,7 @@ interface InputRowProps {
   errors: any;
   required: boolean;
   type?: string;
-  pattern?: string;
+  pattern?: RegExp | null;
 }
 
 const InputRow: React.FC<InputRowProps> = ({
@@ -39,7 +39,7 @@ const InputRow: React.FC<InputRowProps> = ({
   errors,
   required = false,
   type = "text",
-  pattern = "",
+  pattern = null,
 }) => {
   console.log(errors);
   return (
@@ -64,7 +64,7 @@ const InputRow: React.FC<InputRowProps> = ({
                 message: `Please enter ${name}`,
               },
               pattern: {
-                value: pattern !== "" ? pattern : null,
+                value: pattern ? pattern : null,
                 message: `Pattern of ${name} does not match`,
               },
             })}
