@@ -2,6 +2,20 @@ import React from "react";
 import "components/Form/index.css";
 import Loader from "components/Loader";
 
+interface FormProps {
+  children: React.ReactNode;
+  handleSubmit: any;
+  onSubmission: any;
+}
+
+const Form: React.FC<FormProps> = ({ children, handleSubmit, onSubmission }) => {
+  return (
+    <div className="form__container">
+      <form onSubmit={handleSubmit(onSubmission)}>{children}</form>
+    </div>
+  );
+};
+
 interface InputRowProps {
   label: string;
   name: string;
@@ -60,21 +74,10 @@ interface InputSubmitProps {
 const InputSubmit: React.FC<InputSubmitProps> = ({ loading, message }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      {!loading ? (
-        <button
-          className="form__bottom__btn"
-          //   onClick={() => {
-          //     clearErrors();
-          //   }}
-        >
-          Log In
-        </button>
-      ) : (
-        <Loader />
-      )}
+      {!loading ? <button className="form__bottom__btn">Log In</button> : <Loader />}
       <div>{message}</div>
     </div>
   );
 };
 
-export { InputRow, InputSubmit };
+export { InputRow, InputSubmit, Form };

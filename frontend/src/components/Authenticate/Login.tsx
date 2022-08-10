@@ -4,7 +4,7 @@ import getUser from "util/local/getUser";
 import "./index.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { setUser } from "util/local";
-import { InputRow, InputSubmit } from "components/Form";
+import { Form, InputRow, InputSubmit } from "components/Form";
 
 interface Response {
   success: boolean;
@@ -79,35 +79,32 @@ const Login: React.FC = () => {
   return (
     <div className="Form">
       <h3 className="Form__header3">Please log in to continue</h3>
-      <div className="Form__container">
+      {/* <div className="Form__container">
         <form onSubmit={handleSubmit(onSubmission)}>
-          <InputRow
-            label="Email"
-            name="email"
-            register={register}
-            errors={errors}
-            required={true}
-          />
-          <InputRow
-            label="Password"
-            name="password"
-            type="password"
-            register={register}
-            errors={errors}
-            required={true}
-          />
-          <InputSubmit loading={response.loading} message={response.message} />
+          
         </form>
-        <div>
-          <Link to="/reset-password-request" className="Form__link">
-            Forgot Password
-          </Link>
-        </div>
-        <div>
-          <Link to="/register" className="Form__link">
-            Sign Up
-          </Link>
-        </div>
+      </div> */}
+      <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
+        <InputRow label="Email" name="email" register={register} errors={errors} required={true} />
+        <InputRow
+          label="Password"
+          name="password"
+          type="password"
+          register={register}
+          errors={errors}
+          required={true}
+        />
+        <InputSubmit loading={response.loading} message={response.message} />
+      </Form>
+      <div>
+        <Link to="/reset-password-request" className="Form__link">
+          Forgot Password
+        </Link>
+      </div>
+      <div>
+        <Link to="/register" className="Form__link">
+          Sign Up
+        </Link>
       </div>
     </div>
   );
