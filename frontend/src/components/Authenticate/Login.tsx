@@ -83,7 +83,11 @@ const Login: React.FC = () => {
           errors={errors}
           required={true}
         />
-        <InputSubmit loading={response.loading} message={response.message} />
+        <InputSubmit
+          success={response.success}
+          loading={response.loading}
+          message={response.message}
+        />
       </Form>
       <div>
         <Link to="/reset-password-request" className="Form__link">

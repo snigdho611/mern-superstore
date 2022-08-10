@@ -79,13 +79,14 @@ const InputRow: React.FC<InputRowProps> = ({
 interface InputSubmitProps {
   loading: boolean;
   message: string | null;
+  success: boolean;
 }
 
-const InputSubmit: React.FC<InputSubmitProps> = ({ loading, message }) => {
+const InputSubmit: React.FC<InputSubmitProps> = ({ loading, message, success }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {!loading ? <button className="form__bottom__btn">Log In</button> : <Loader />}
-      <div>{message}</div>
+      <div style={success ? { color: "lime" } : { color: "red" }}>{message}</div>
     </div>
   );
 };
