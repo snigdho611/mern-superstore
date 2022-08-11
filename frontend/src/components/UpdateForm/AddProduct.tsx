@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
-// import "./index.css";
+import "./index.css";
 import { FieldValues, useForm } from "react-hook-form";
-import axios from "axios";
 import { getUser } from "util/local/index";
 import { useNavigate } from "react-router-dom";
-import { Response } from "components/Form";
+import { Form, InputRow, InputSubmit, Response } from "components/Form";
 // import { useParams } from "react-router-dom";
 
 const AddProduct = () => {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState();
   const [response, setResponse] = useState<Response>({
     success: false,
     loading: false,
@@ -46,15 +43,15 @@ const AddProduct = () => {
     try {
       if (image) {
         setImageURL(URL.createObjectURL(image));
+        console.log(URL.createObjectURL(image));
       }
     } catch (error) {
       console.log(error);
     }
   }, [image, imageMessage]);
 
-  const onSubmit = (formData: FieldValues) => {
+  const onSubmission = (formData: FieldValues) => {
     const extension = image && image.name ? image?.name.split(".")[1] : "";
-
     if (extension !== "") {
       if (extension !== "jpg" && extension !== "png" && extension !== "jpeg") {
         console.log("File is in the wrong format");
@@ -62,37 +59,54 @@ const AddProduct = () => {
         return;
       }
     }
-    // setSuccess(false);
-    // setError("");
-    const addData = {
-      ...formData,
-      type: "default",
-      productImage: image,
-    };
-    axios
-      .post(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/add`, addData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user.access_token}`,
-        },
-      })
-      .then((response) => {
-        setSuccess(true);
-        console.log(response);
+    setResponse({ ...response, success: false, loading: true, message: null });
+    const bodyData = new FormData();
+    bodyData.append("description", formData.description);
+    bodyData.append("weight", formData.weight);
+    bodyData.append("name", formData.name);
+    // bodyData.append("image", (imageURL as string).replace("blob:", ""));
+    bodyData.append("type", formData.type ? formData.type : "default");
+    bodyData.append("price", formData.price);
+    bodyData.append("productImage", image as Blob);
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/add`, {
+      method: "POST",
+      body: bodyData,
+      headers: {
+        // "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${user.access_token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          setResponse({
+            ...response,
+            success: true,
+            loading: false,
+            message: "Successfully added product",
+          });
+        } else {
+          setResponse({
+            ...response,
+            success: false,
+            loading: false,
+            message: "Unable to add product",
+          });
+        }
       })
       .catch((error) => {
-        try {
-          setError(error.response.data.errors[0].msg);
-        } catch (error) {
-          //   setError("Failed to add");
-        }
-        console.log(error);
+        setResponse({
+          ...response,
+          success: false,
+          loading: false,
+          message: "An unknown error has occured",
+        });
       });
   };
 
   return (
     <div className="Form">
-      <form onSubmit={handleSubmit(onSubmit)} className="Form__container">
+      <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
         <div className="Form__imageInput">
           <div>
             <img
@@ -101,81 +115,56 @@ const AddProduct = () => {
               alt="No file"
               className="image"
             />
-            {/* {image ? "Ok" : null} */}
           </div>
           <div>{imageMessage}</div>
           <input
             type="file"
             onChange={(e) => {
-              // console.log(e.target.files && e.target.files[0]);
               setImage(e.target.files && e.target.files[0]);
             }}
             alt="Not found"
           />
         </div>
-        <input
-          {...register("name", {
-            required: { value: true, message: "Name is required" },
-            pattern: {
-              value: /^[A-Z a-z0-9±()]+$/i,
-              message: "Only alphabetical characters or spaces are allowed",
-            },
-          })}
-          className="Form__input"
-          type="text"
-          placeholder="Name"
+        <InputRow
+          label="Name"
+          name="name"
+          required={true}
+          pattern={/^[A-Z a-z0-9±()]+$/i}
+          register={register}
+          errors={errors}
         />
-        <label className="Form__error">{errors.name ? errors.name.message : null}</label>
-        <input
-          {...register("description", {
-            required: { value: true, message: "Description is required" },
-            pattern: {
-              value: /^[A-Z a-z.0-9,]+$/i,
-              message: "Only alphabetical characters or spaces are allowed",
-            },
-          })}
-          className="Form__input"
-          type="text"
-          placeholder="Description"
+        <InputRow
+          label="Description"
+          name="description"
+          required={true}
+          pattern={/^[A-Z a-z0-9±()]+$/i}
+          register={register}
+          errors={errors}
         />
-        <label className="Form__error">
-          {errors.description ? errors.description.message : null}
-        </label>
-        <input
-          {...register("price", {
-            required: { value: true, message: "Price is required" },
-            pattern: {
-              value: /^[0-9]+$/i,
-              message: "Price must be numeric",
-            },
-          })}
-          className="Form__input"
-          type="text"
-          placeholder="Price"
+        <InputRow
+          label="Price"
+          name="price"
+          required={true}
+          type={"number"}
+          //   pattern={/^[A-Z a-z0-9±()]+$/i}
+          register={register}
+          errors={errors}
         />
-        <label className="Form__error">{errors.price ? errors.price.message : null}</label>
-        <input
-          {...register("weight", {
-            required: { value: true, message: "Weight is required" },
-            pattern: {
-              value: /^[A-Z a-z0-9]+$/i,
-              message: "Only alphabetical characters or spaces are allowed",
-            },
-          })}
-          className="Form__input"
-          type="text"
-          placeholder="Weight"
+        <InputRow
+          label="Weight"
+          name="weight"
+          required={true}
+          pattern={/^[A-Z a-z0-9]+$/i}
+          register={register}
+          errors={errors}
         />
-        <label className="Form__error">{errors.weight ? errors.weight.message : null}</label>
-
-        <button className="Form__loginBtn">Submit</button>
-        <label className="Form__error">
-          <p>{!error || error !== "" ? error : null}</p>
-        </label>
-        <label className="Form__success">
-          <p>{success ? "Success!" : null}</p>
-        </label>
-      </form>
+        <InputSubmit
+          text="Add"
+          success={response.success}
+          loading={response.loading}
+          message={response.message}
+        />
+      </Form>
     </div>
   );
 };
