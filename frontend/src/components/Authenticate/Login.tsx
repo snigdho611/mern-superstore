@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import getUser from "util/local/getUser";
+import { getUser } from "util/local/index";
 import "./index.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { setUser } from "util/local";

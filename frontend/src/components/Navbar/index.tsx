@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import getUser from "util/local/getUser";
-import removeUser from "util/local/removeUser";
+import { getUser, removeUser } from "util/local/index";
+// import removeUser from "util/local/removeUser";
 import "./index.css";
 
 const Navbar: React.FC = () => {

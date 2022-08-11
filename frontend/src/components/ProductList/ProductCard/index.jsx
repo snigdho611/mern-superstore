@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import getUser from 'util/local/getUser';
+import { getUser } from 'util/local/index';
 import classes from './index.module.css'
 
 const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {

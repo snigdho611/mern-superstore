@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import getUser from 'util/local/getUser';
+import { getUser } from 'util/local/index';
 import classes from './index.module.css'
 
 const Cart = () => {

@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import localGetUser from "util/local/getUser";
+import { getUser } from "util/local/index";
 import "./index.css";
 
 const Home: React.FC = () => {
-  const user = localGetUser();
+  const user = getUser();
   return (
     <div className="home">
       <h2 style={{ fontSize: "24px" }}>

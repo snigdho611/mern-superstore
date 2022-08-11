@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import getUser from "util/local/getUser";
-import setUser from "util/local/setUser";
+import { getUser, setUser } from "util/local/index";
+// import setUser from "util/local/setUser";
 import "./index.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { Form, InputRow, InputSubmit, Response } from "components/Form";

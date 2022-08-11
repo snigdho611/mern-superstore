@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard';
 import classes from './index.module.css'
 import axios from 'axios';
-import getUser from 'util/local/getUser';
+import { getUser } from 'util/local/index';
 
 const ProductList = () => {
     const user = getUser();
