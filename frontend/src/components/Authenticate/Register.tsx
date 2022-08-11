@@ -128,6 +128,7 @@ const Login = () => {
           pattern={/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/}
         />
         <InputSubmit
+          text="Confirm"
           success={response.success}
           loading={response.loading}
           message={response.message}

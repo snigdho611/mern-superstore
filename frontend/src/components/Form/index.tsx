@@ -41,7 +41,7 @@ const InputRow: React.FC<InputRowProps> = ({
   type = "text",
   pattern = null,
 }) => {
-  console.log(errors);
+  // console.log(errors);
   return (
     <div className="form__row">
       <div className="form__row__main">
@@ -77,15 +77,16 @@ const InputRow: React.FC<InputRowProps> = ({
 };
 
 interface InputSubmitProps {
+  text: string;
   loading: boolean;
   message: string | null;
   success: boolean;
 }
 
-const InputSubmit: React.FC<InputSubmitProps> = ({ loading, message, success }) => {
+const InputSubmit: React.FC<InputSubmitProps> = ({ text, loading, message, success }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      {!loading ? <button className="form__bottom__btn">Log In</button> : <Loader />}
+      {!loading ? <button className="form__bottom__btn">{text}</button> : <Loader />}
       <div style={success ? { color: "lime" } : { color: "red" }}>{message}</div>
     </div>
   );

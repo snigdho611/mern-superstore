@@ -52,7 +52,7 @@ const ResetPassword = () => {
           setResponse({
             success: false,
             loading: false,
-            message: "Could not update your password",
+            message: res.message,
           });
         }
       })
@@ -74,6 +74,7 @@ const ResetPassword = () => {
         <InputRow
           label="New Password"
           name="password"
+          type="password"
           register={register}
           errors={errors}
           required={true}
@@ -81,11 +82,13 @@ const ResetPassword = () => {
         <InputRow
           label="Confirm Password"
           name="confirmPassword"
+          type="password"
           register={register}
           errors={errors}
           required={true}
         />
         <InputSubmit
+          text="Reset"
           success={response.success}
           loading={response.loading}
           message={response.message}

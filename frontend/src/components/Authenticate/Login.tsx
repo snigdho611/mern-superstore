@@ -84,6 +84,7 @@ const Login: React.FC = () => {
           required={true}
         />
         <InputSubmit
+          text="Add"
           success={response.success}
           loading={response.loading}
           message={response.message}
