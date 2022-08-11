@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { createStore } from "redux";
 
 const initialState = {
   cart: [],
@@ -52,5 +52,5 @@ const reducerFn = (state = initialState, action) => {
   }
 };
 
-const store = configureStore(reducerFn);
+const store = createStore(reducerFn);
 export default store;
