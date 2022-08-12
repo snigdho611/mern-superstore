@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard";
 import "./index.css";
 import axios from "axios";
 import { getUser } from "util/local/index";
+import { Product } from "types";
 
 interface search {
   count: number;
@@ -12,29 +13,23 @@ interface search {
 const ProductList = () => {
   const user = getUser();
 
-  // Data
   const [btnCount, setBtnCount] = useState<search>({
     count: 0,
     range: [],
   });
   const [currentBtn, setCurrentBtn] = useState(0);
-  const [dataToShow, setDataToShow] = useState([]);
+  const [dataToShow, setDataToShow] = useState<Product[]>([]);
   const [originalData, setOriginalData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
   const [verifyEmailError, setVerifyEmailError] = useState("");
 
-  // Search
   const [search, setSearch] = useState({
     params: "",
     category: "name",
     range: [],
   });
 
-  // Cart
-  // const dispatch = useDispatch();
-
-  // Use effect for initial data loading and storing
   useEffect(() => {
     try {
       axios
@@ -63,11 +58,7 @@ const ProductList = () => {
   // Use Effect for button range changes
   useEffect(() => {}, [btnCount]);
 
-  // let searchTimeout
-  const [searchTimeout, setSearchTimeout] = useState(
-    // <string>
-    ""
-  );
+  const [searchTimeout, setSearchTimeout] = useState<any>("");
 
   // const startSearching = ;
   useEffect(() => {
@@ -95,7 +86,7 @@ const ProductList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search.params, search.category, originalData]);
 
-  const paginateChange = (index) => {
+  const paginateChange = (index: number) => {
     // setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
     if (currentBtn === index) {
       return;
@@ -141,7 +132,7 @@ const ProductList = () => {
     }
   };
 
-  const addToCart = (data) => {
+  const addToCart = (data: any) => {
     try {
       if (!user.isEmailVerified) {
         console.log("Cannot add to cart, please verify email");
@@ -238,8 +229,8 @@ const ProductList = () => {
               return (
                 <ProductCard
                   key={element._id}
-                  name={element.name}
-                  price={100}
+                  // name={element.name}
+                  // price={100}
                   data={element}
                   dispatchMethod={addToCart}
                   deleteProduct={deleteProduct}
@@ -259,20 +250,22 @@ const ProductList = () => {
         {
           <button
             className="main__pagination__btn"
-            style={btnCount.range[0] !== 0 ? null : { backgroundColor: "gray", color: "azure" }}
+            style={
+              btnCount.range[0] !== 0 ? undefined : { backgroundColor: "gray", color: "azure" }
+            }
             onClick={
               btnCount.range[0] !== 0
                 ? () => {
                     paginateInc();
                   }
-                : null
+                : undefined
             }
           >
             {"<"}
           </button>
         }
         {Array(btnCount.count)
-          .fill()
+          .fill(undefined)
           .map((_, i) => {
             if (i >= btnCount.range[0] && i < btnCount.range[1]) {
               return (
@@ -296,7 +289,7 @@ const ProductList = () => {
           className="main__pagination__btn"
           style={
             btnCount.range[1] !== btnCount.count
-              ? null
+              ? undefined
               : { backgroundColor: "gray", color: "azure" }
           }
           onClick={
@@ -304,7 +297,7 @@ const ProductList = () => {
               ? () => {
                   paginateDec();
                 }
-              : null
+              : undefined
           }
         >
           {">"}

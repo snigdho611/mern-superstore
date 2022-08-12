@@ -47,7 +47,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                 {!user.isAdmin ?
                     <>
                         <button
-                            onClick={() =>
+                            onClick={() => {
                                 dispatchMethod(
                                     {
                                         _id: data._id,
@@ -56,6 +56,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                                         quantity: data.quantity
                                     }
                                 )
+                            }
                             }
                             className={classes.card__add}
                         >
