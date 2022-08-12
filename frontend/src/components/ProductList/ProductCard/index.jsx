@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom'
 import { getUser } from 'util/local/index';
 import classes from './index.module.css'
 
+// interface ProductCardProps {
+//     data: any;
+//     dispatchMethod: any;
+//     deleteProduct: any;
+// }
 const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
     const user = getUser();
     const user_type = user && user.isAdmin ? user.isAdmin : null;

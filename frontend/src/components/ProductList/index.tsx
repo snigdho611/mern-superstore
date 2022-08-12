@@ -184,10 +184,10 @@ const ProductList = () => {
   };
 
   return (
-    <div className="main">
-      <div className="main__child">
-        <div className="main__search">
-          <div className="search_radio">
+    <div className="productlist">
+      <div className="productlist__child">
+        <div className="productlist__child__search">
+          <div className="productlist__child__search__radio">
             <input
               type="radio"
               value="name"
@@ -208,22 +208,20 @@ const ProductList = () => {
             />
             Type
           </div>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => {
-                setSearch((prevState) => ({ ...prevState, params: e.target.value }));
-              }}
-              value={search.params}
-              className="main__search__input"
-            />
-          </div>
+          <input
+            type="text"
+            onChange={(e) => {
+              setSearch((prevState) => ({ ...prevState, params: e.target.value }));
+            }}
+            value={search.params}
+            className="productlist__search__input"
+          />
         </div>
       </div>
       <div style={{ color: "red", textAlign: "center" }}>{verifyEmailError}</div>
 
       {!loading ? (
-        <div className="list">
+        <div className="product__list">
           {dataToShow.length ? (
             dataToShow.map((element) => {
               return (
@@ -246,10 +244,10 @@ const ProductList = () => {
       )}
       {loadingError ? <div style={{ textAlign: "center" }}>Error loading data</div> : null}
       {/* Refactor buttons for pagination */}
-      <div className="main__pagination">
+      <div className="productlist__pagination">
         {
           <button
-            className="main__pagination__btn"
+            className="productlist__pagination__btn"
             style={
               btnCount.range[0] !== 0 ? undefined : { backgroundColor: "gray", color: "azure" }
             }
@@ -270,7 +268,7 @@ const ProductList = () => {
             if (i >= btnCount.range[0] && i < btnCount.range[1]) {
               return (
                 <button
-                  className="main__pagination__btn"
+                  className="productlist__pagination__btn"
                   key={i}
                   value={i}
                   onClick={() => {
@@ -286,7 +284,7 @@ const ProductList = () => {
             }
           })}
         <button
-          className="main__pagination__btn"
+          className="productlist__pagination__btn"
           style={
             btnCount.range[1] !== btnCount.count
               ? undefined

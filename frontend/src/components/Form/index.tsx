@@ -1,6 +1,7 @@
 import React from "react";
 import "components/Form/index.css";
 import Loader from "components/Loader";
+import { FieldValues, UseFormHandleSubmit } from "react-hook-form";
 
 export interface Response {
   success: boolean;
@@ -10,8 +11,8 @@ export interface Response {
 
 interface FormProps {
   children: React.ReactNode;
-  handleSubmit: any;
-  onSubmission: any;
+  handleSubmit: UseFormHandleSubmit<FieldValues>;
+  onSubmission: (formData: FieldValues) => void;
 }
 
 const Form: React.FC<FormProps> = ({ children, handleSubmit, onSubmission }) => {
