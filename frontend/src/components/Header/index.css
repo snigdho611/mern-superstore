@@ -10,7 +10,7 @@
 .header__col {
   width: 50%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .header__col__image {
   height: 70px;

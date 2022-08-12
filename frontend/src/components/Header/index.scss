@@ -1,7 +1,7 @@
 @use "../../styles/colors";
 
 .header {
-  background-color: colors.$teal-dark; 
+  background-color: colors.$teal-dark;
   position: sticky;
   display: flex;
   top: 0;
@@ -13,17 +13,15 @@
     // @apply w-1/2 flex justify-end;
     width: 50%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
-  &__col__image{
+  &__col__image {
     height: 70px;
     // float: inline-end;
     // right: 0;
   }
-
 }
-
 
 .header__btn {
   // @apply transition-colors bg-teal-400 text-teal-900 flex items-center justify-center w-5 h-12 no-underline text-center m-5 rounded-3xl bg-cover bg-center;
