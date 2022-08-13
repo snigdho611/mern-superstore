@@ -4,6 +4,7 @@
   position: fixed;
   background-color: colors.$teal-dark;
   width: 15rem;
+  z-index: 10;
   &__container {
     top: 0;
     display: flex;

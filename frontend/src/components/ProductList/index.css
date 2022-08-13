@@ -1,6 +1,7 @@
 .productlist {
   z-index: 10;
   margin-left: 15%;
+  width: 80%;
 }
 .productlist__child {
   display: flex;
@@ -10,74 +11,59 @@
   display: flex;
   flex-direction: row;
 }
+.productlist__child__search__input {
+  height: 2.5rem;
+  width: 90%;
+  background-color: #99f6e4;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  transition: 0.5s color, 0.5s background-color;
+  margin-top: 0.75rem;
+}
+.productlist__child__search__input:focus, .productlist__child__search__input:hover {
+  outline: none;
+  background-color: #14b8a6;
+  color: #99f6e4;
+}
 .productlist__child__search__radio {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.productlist__list {
+  gap: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2rem auto 4rem auto;
+  z-index: 8;
 }
 .productlist__pagination {
-  position: flex;
+  position: fixed;
+  background-color: rgba(49, 49, 49, 0.507);
+  border-radius: 0.25rem;
+  width: 75%;
+  z-index: 5;
   display: flex;
+  justify-content: center;
   bottom: 0;
   flex-direction: row;
-  left: 50%;
-  bottom: 3%;
+  bottom: 1%;
 }
-
-.main__pagination__btn {
+.productlist__pagination__btn {
   font-size: 18px;
   padding: 10px 15px;
   margin: 0px 5px;
   border: none;
-  background-color: var(--nav_background);
+  background-color: #0f766e;
   color: azure;
   cursor: pointer;
   transition: 0.5s color, 0.5s background-color;
   border-radius: 8px;
 }
-
-.pagination_btn:hover {
+.productlist__pagination__btn:hover {
   background-color: var(--nav_background_secondary);
   color: var(--font_color_basic);
-}
-
-.product__list {
-  @apply gap-7 flex flex-row justify-center flex-wrap mx-auto mt-8 mb-16;
-}
-
-.main__search__input {
-  @apply w-64 bg-teal-300 border-none rounded px-4 py-2 mt-4;
-  transition: 0.5s color, 0.5s background-color;
-}
-
-.main__search__input:focus,
-.main__search__input:hover {
-  @apply outline-none bg-teal-600 text-teal-200;
-}
-
-.loader {
-  border: 10px solid #f3f3f3; /* Light grey */
-  border-top: 10px solid var(--nav_background); /* Blue */
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-  margin: 0 auto;
-}
-
-@-webkit-keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} /*# sourceMappingURL=index.css.map */
+}/*# sourceMappingURL=index.css.map */

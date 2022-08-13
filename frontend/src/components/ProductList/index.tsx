@@ -4,16 +4,16 @@ import "./index.css";
 import axios from "axios";
 import { getUser } from "util/local/index";
 import { Product } from "types";
+import Loader from "components/Loader";
 
-interface search {
+interface PaginateBtns {
   count: number;
   range: number[];
 }
 
 const ProductList = () => {
   const user = getUser();
-
-  const [btnCount, setBtnCount] = useState<search>({
+  const [btnCount, setBtnCount] = useState<PaginateBtns>({
     count: 0,
     range: [],
   });
@@ -23,7 +23,6 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(false);
   const [verifyEmailError, setVerifyEmailError] = useState("");
-
   const [search, setSearch] = useState({
     params: "",
     category: "name",
@@ -42,7 +41,6 @@ const ProductList = () => {
             count: Math.ceil(response.data.results.total / 8),
             range: [0, 3],
           }));
-          // console.log(response.data.results.products)
           setLoading(false);
         })
         .catch((err) => {
@@ -87,7 +85,6 @@ const ProductList = () => {
   }, [search.params, search.category, originalData]);
 
   const paginateChange = (index: number) => {
-    // setDataToShow(allData.slice((index + 1) * 8 - 8, (index + 1) * 8));
     if (currentBtn === index) {
       return;
     }
@@ -172,7 +169,7 @@ const ProductList = () => {
           },
         })
         .then((response) => {
-          // console.log(response)
+          // console.log(response);
           console.log(dataToShow);
         })
         .catch((error) => {
@@ -214,21 +211,19 @@ const ProductList = () => {
               setSearch((prevState) => ({ ...prevState, params: e.target.value }));
             }}
             value={search.params}
-            className="productlist__search__input"
+            className="productlist__child__search__input"
           />
         </div>
       </div>
       <div style={{ color: "red", textAlign: "center" }}>{verifyEmailError}</div>
 
       {!loading ? (
-        <div className="product__list">
+        <div className="productlist__list">
           {dataToShow.length ? (
             dataToShow.map((element) => {
               return (
                 <ProductCard
                   key={element._id}
-                  // name={element.name}
-                  // price={100}
                   data={element}
                   dispatchMethod={addToCart}
                   deleteProduct={deleteProduct}
@@ -240,7 +235,7 @@ const ProductList = () => {
           )}
         </div>
       ) : (
-        <div className="loader" />
+        <Loader />
       )}
       {loadingError ? <div style={{ textAlign: "center" }}>Error loading data</div> : null}
       {/* Refactor buttons for pagination */}
