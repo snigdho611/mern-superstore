@@ -5,6 +5,7 @@ import axios from "axios";
 import { getUser } from "util/local/index";
 import { Product } from "types";
 import Loader from "components/Loader";
+import { Response } from "components/Form";
 
 interface PaginateBtns {
   count: number;
@@ -20,8 +21,11 @@ const ProductList = () => {
   const [currentBtn, setCurrentBtn] = useState(0);
   const [dataToShow, setDataToShow] = useState<Product[]>([]);
   const [originalData, setOriginalData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [loadingError, setLoadingError] = useState(false);
+  const [response, setResponse] = useState<Response>({
+    success: false,
+    loading: false,
+    message: "",
+  });
   const [verifyEmailError, setVerifyEmailError] = useState("");
   const [search, setSearch] = useState({
     params: "",
@@ -33,25 +37,27 @@ const ProductList = () => {
     try {
       axios
         .get(`${process.env.REACT_APP_BASE_BACKEND}/products/all?page=1&limit=8`)
-        .then((response) => {
-          setDataToShow(response.data.results.products);
-          setOriginalData(response.data.results.products);
+        .then((res) => {
+          setDataToShow(res.data.results.products);
+          setOriginalData(res.data.results.products);
           setBtnCount((prevState) => ({
             ...prevState,
-            count: Math.ceil(response.data.results.total / 8),
+            count: Math.ceil(res.data.results.total / 8),
             range: [0, 3],
           }));
-          setLoading(false);
+          // setLoading(false);
+          setResponse({ ...response, loading: false });
         })
         .catch((err) => {
           console.log(err);
-          setLoading(false);
-          setLoadingError(true);
+          setResponse({ ...response, loading: false });
+          // setLoading(false);
+          // setLoadingError(true);
         });
     } catch (error) {
       console.log("Failed to call products");
     }
-  }, []);
+  }, [response]);
 
   // Use Effect for button range changes
   useEffect(() => {}, [btnCount]);
@@ -89,22 +95,24 @@ const ProductList = () => {
       return;
     }
     try {
-      setLoading(true);
+      // setLoading(true);
+      setResponse({ ...response, loading: true });
       axios
         .get(`${process.env.REACT_APP_BASE_BACKEND}/products/all?page=${index + 1}&limit=8`)
-        .then((response) => {
-          setDataToShow(response.data.results.products);
-          setOriginalData(response.data.results.products);
+        .then((res) => {
+          setDataToShow(res.data.results.products);
+          setOriginalData(res.data.results.products);
           setBtnCount((prevState) => ({
             ...prevState,
-            count: Math.ceil(response.data.results.total / 8),
+            count: Math.ceil(res.data.results.total / 8),
             range: [0, 3],
           }));
-          setLoading(false);
+          setResponse({ ...response, loading: false });
         })
         .catch((err) => {
           console.log(err);
-          setLoadingError(true);
+          // setLoadingError(true);
+          setResponse({ ...response, loading: false });
         });
     } catch (error) {
       console.log("Failed to call products");
@@ -217,7 +225,7 @@ const ProductList = () => {
       </div>
       <div style={{ color: "red", textAlign: "center" }}>{verifyEmailError}</div>
 
-      {!loading ? (
+      {!response.loading ? (
         <div className="productlist__list">
           {dataToShow.length ? (
             dataToShow.map((element) => {
@@ -231,13 +239,14 @@ const ProductList = () => {
               );
             })
           ) : (
-            <div>No results to show</div>
+            <Loader />
           )}
         </div>
       ) : (
-        <Loader />
+        // <Loader />
+        <div>No results</div>
       )}
-      {loadingError ? <div style={{ textAlign: "center" }}>Error loading data</div> : null}
+      {/* {response.success ? <div style={{ textAlign: "center" }}>Error loading data</div> : null} */}
       {/* Refactor buttons for pagination */}
       <div className="productlist__pagination">
         {
