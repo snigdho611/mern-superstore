@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from "express";
+
 const Product = require("../model/product");
 const { success, failure } = require("../utils/commonResponse");
 const HTTP_STATUS = require("../utils/httpStatus");
@@ -5,7 +7,7 @@ const { validationResult } = require("express-validator");
 const getPagination = require("../utils/pagination");
 
 class productController {
-  async getAll(req, res, next) {
+  async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const page = req.query.page ? req.query.page : 0;
       const itemsPerPage = req.query.limit ? req.query.limit : 0;
@@ -45,7 +47,7 @@ class productController {
     }
   }
 
-  async getOne(req, res, next) {
+  async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const product = await Product.findById(req.params.productId).exec();
       if (product) {
@@ -61,7 +63,7 @@ class productController {
     }
   }
 
-  async searchProduct(req, res, next) {
+  async searchProduct(req: Request, res: Response, next: NextFunction) {
     try {
       //
       // console.log(req.params.searchParams);

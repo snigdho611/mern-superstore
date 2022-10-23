@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 const productController = require("../controller/productController");
 const validator = require("../middleware/validation");
