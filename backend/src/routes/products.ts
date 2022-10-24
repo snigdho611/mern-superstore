@@ -1,5 +1,5 @@
-import express from "express";
-const router = express.Router();
+import express, { Router } from "express";
+const router: Router = express.Router();
 const productController = require("../controller/productController");
 const validator = require("../middleware/validation");
 
@@ -14,4 +14,4 @@ router.get(
 
 // router.post("/add-product", validator.addProduct, productController.addProduct);
 
-module.exports = router;
+export default router;

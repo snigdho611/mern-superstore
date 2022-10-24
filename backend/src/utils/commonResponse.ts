@@ -1,0 +1,17 @@
+import { FailureProps, FailureResponse, SuccessProps, SuccessResponse } from "types/commmon";
+
+export const success = ({ message, data = [] }: SuccessProps): SuccessResponse => {
+  return {
+    success: true,
+    message: message,
+    results: data,
+  };
+};
+
+export const failure = ({ message, error }: FailureProps): FailureResponse => {
+  return {
+    success: false,
+    message: message,
+    errors: error,
+  };
+};

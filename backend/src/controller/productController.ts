@@ -1,20 +1,20 @@
 import { NextFunction, Request, Response } from "express";
-
-const Product = require("../model/product");
+import { IProduct } from "types/database";
+import { Product } from "../model/product";
 const { success, failure } = require("../utils/commonResponse");
-const HTTP_STATUS = require("../utils/httpStatus");
+import { HTTP_STATUS } from "../utils/httpStatus";
 const { validationResult } = require("express-validator");
 const getPagination = require("../utils/pagination");
 
 class productController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const page = req.query.page ? req.query.page : 0;
-      const itemsPerPage = req.query.limit ? req.query.limit : 0;
+      const page: string | number = req.query.page as string ? req.query.page as string : 0;
+      const itemsPerPage: string | number = req.query.limit as string ? req.query.limit as string : 0;
       const { skip, limit } = getPagination(page, itemsPerPage);
 
-      let products;
-      let total;
+      let products: IProduct[];
+      let total: number;
 
       // If no page or limit is provided, return all data
       // if (page === null || limit === null) {
@@ -24,7 +24,7 @@ class productController {
       products = await Product.find().skip(skip).limit(limit).exec();
       total = await Product.count().exec();
       // }
-
+      console.log(products);
       if (products.length > 0) {
         return res
           .status(HTTP_STATUS.OK)

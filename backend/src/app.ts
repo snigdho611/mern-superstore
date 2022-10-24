@@ -1,9 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-// const databaseConnection = require("./config/database");
+import databaseConnection from "./config/database";
 // const path = require("path");
-const productRouter = require("./routes/products");
+// const productRouter = require("@routes/products");
+import productRouter from "./routes/products";
+// import productRouter from "./routes/products";
+
 // const adminRouter = require("./routes/admin");
 // const authenticateRouter = require("./routes/authenticate");
 // const cartRouter = require("./routes/cart");
@@ -24,8 +27,8 @@ app.use("/products", productRouter);
 // app.use("/files", imagesRouter);
 // app.use("/auth", authenticateRouter);
 
-// databaseConnection(() => {
-app.listen(8000, () => {
-  console.log("Application is running on 8000");
+databaseConnection(() => {
+  app.listen(8000, () => {
+    console.log("Application is running on 8000");
+  });
 });
-// });
