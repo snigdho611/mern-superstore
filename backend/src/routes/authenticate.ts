@@ -1,6 +1,6 @@
-const { application } = require("express");
-const express = require("express");
-const authenticateController = require("../controller/authentincateController");
+import express from "express";
+import authenticateController from "../controller/authenticateController";
+// const authenticateController = require("../controller/authentincateController");
 const validator = require("../middleware/validation");
 const router = express.Router();
 

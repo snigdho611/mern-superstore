@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -20,11 +20,8 @@ const userSchema = new mongoose.Schema({
   },
   balance: {
     type: Number,
-    // required: true,
     default: 0,
   },
 });
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+export const User = mongoose.model("User", userSchema);

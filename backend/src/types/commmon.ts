@@ -6,7 +6,7 @@ export interface SuccessResponse {
 
 export interface SuccessProps {
     message: string;
-    data: any[];
+    data?: any;
 }
 
 export interface FailureResponse {
@@ -17,5 +17,5 @@ export interface FailureResponse {
 
 export interface FailureProps {
     message: string;
-    error: [];
+    error?: [];
 }

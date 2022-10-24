@@ -4,7 +4,7 @@ export const success = ({ message, data = [] }: SuccessProps): SuccessResponse =
   return {
     success: true,
     message: message,
-    results: data,
+    results: data ? data : [],
   };
 };
 
@@ -12,6 +12,6 @@ export const failure = ({ message, error }: FailureProps): FailureResponse => {
   return {
     success: false,
     message: message,
-    errors: error,
+    errors: error ? error : [],
   };
 };

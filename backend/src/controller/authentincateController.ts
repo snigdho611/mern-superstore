@@ -1,5 +1,9 @@
+import { Request, Response, NextFunction } from "express";
+import { ILogin } from "types/database";
+
 const { validationResult } = require("express-validator");
-const Login = require("../model/login");
+// const Login = require("../model/login");
+import { Login } from "../model/login";
 const User = require("../model/user");
 const { success, failure } = require("../utils/commonResponse");
 const crypto = require("crypto");
@@ -13,7 +17,7 @@ const { promisify } = require("util");
 const ejsRenderFile = promisify(ejs.renderFile);
 
 class authenticateController {
-  async login(req, res, next) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -22,7 +26,7 @@ class authenticateController {
           .send(failure("Invalid Inputs", validatorResult.array()));
       }
 
-      const login = await Login.findOne({ email: req.body.email }).populate("userId").exec();
+      const login: ILogin | null = await Login.findOne({ email: req.body.email }).populate("userId").exec();
       if (!login) {
         return res.status(HTTP_STATUS.UNAUTHORIZED).send(failure("User login is not authorized"));
       }
@@ -55,7 +59,7 @@ class authenticateController {
     }
   }
 
-  async signup(req, res, nex) {
+  async signup(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -66,12 +70,12 @@ class authenticateController {
       const firstName = req.body.firstName;
       const lastName = req.body.lastName;
       const phone = req.body.phone;
-      const user = new User({ firstName: firstName, lastName: lastName, phone: phone });
+      const user: IUser = new User({ firstName: firstName, lastName: lastName, phone: phone });
       await user.save();
 
-      const email = req.body.email;
-      const password = await bcrypt.hash(req.body.password, 10);
-      const login = new Login({ email: email, password: password, userId: user._id });
+      const email: string = req.body.email;
+      const password: string = await bcrypt.hash(req.body.password, 10);
+      const login: ILogin = new Login({ email: email, password: password, userId: user._id });
 
       const jwtToken = jwt.sign(
         {
@@ -130,7 +134,7 @@ class authenticateController {
     }
   }
 
-  async emailVerify(req, res, next) {
+  async emailVerify(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -165,7 +169,7 @@ class authenticateController {
       return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=5");
     }
   }
-  async requestResetPasswordEmail(req, res, next) {
+  async requestResetPasswordEmail(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -213,7 +217,7 @@ class authenticateController {
     }
   }
 
-  async resetPassword(req, res, next) {
+  async resetPassword(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
