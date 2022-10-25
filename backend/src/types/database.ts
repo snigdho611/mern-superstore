@@ -23,9 +23,9 @@ export interface ILogin extends Document {
     password: string;
     isAdmin?: boolean;
     isEmailVerified?: boolean;
-    emailToken?: string;
-    emailTokenExpire?: Date;
-    passwordResetToken?: string;
-    passwordResetExpire?: Date;
-    userId: IUser;
+    emailToken?: string | null;
+    emailTokenExpire?: Date | null;
+    passwordResetToken?: string | null;
+    passwordResetExpire?: Date | null;
+    userId: IUser | ObjectId;
 }

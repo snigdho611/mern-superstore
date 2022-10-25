@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ILogin } from "types/database";
+import { ILogin, IUser } from "types/database";
 
 const { validationResult } = require("express-validator");
 // const Login = require("../model/login");
@@ -41,9 +41,9 @@ class authenticateController {
         email: login.email,
         isAdmin: login.isAdmin,
         isEmailVerified: login.isEmailVerified,
-        firstName: login.userId.firstName,
-        userId: login.userId._id,
-        lastName: login.userId.lastName,
+        firstName: (login.userId as IUser).firstName,
+        userId: (login.userId as IUser)._id,
+        lastName: (login.userId as IUser).lastName,
       };
       console.log(login);
       const jwtToken = jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
@@ -96,14 +96,14 @@ class authenticateController {
         userId: login.userId,
         isAdmin: login.isAdmin,
         isEmailVerified: login.isEmailVerified,
-        firstName: login.userId.firstName,
-        lastName: login.userId.lastName,
+        firstName: (login.userId as IUser).firstName,
+        lastName: (login.userId as IUser).lastName,
         _id: login._id,
       };
 
       const verifyToken = crypto.randomBytes(32).toString("hex");
       login.emailToken = verifyToken;
-      login.emailTokenExpire = Date.now() + 60 * 60 * 1000;
+      login.emailTokenExpire = new Date(Date.now() + 60 * 60 * 1000);
       await login.save();
       console.log(process.env.FRONTEND_BASE_URI, "email-verify", verifyToken, login._id.toString());
       const emailVerifyUrl = path.join(
@@ -142,7 +142,7 @@ class authenticateController {
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure("Invalid inputs", validatorResult.array()));
       }
-      const login = await Login.findOne({
+      const login: ILogin | null = await Login.findOne({
         emailToken: req.params.token,
         _id: req.params.userId,
       });
@@ -154,7 +154,7 @@ class authenticateController {
         // Mail already validated
         return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=2");
       }
-      if (login.emailTokenExpire < Date.now()) {
+      if (login.emailTokenExpire && login.emailTokenExpire < new Date(Date.now())) {
         // Mail token expired
         return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=3");
       }
@@ -177,7 +177,7 @@ class authenticateController {
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure("Invalid inputs", validatorResult.array()));
       }
-      const login = await Login.findOne({ email: req.body.email })
+      const login: ILogin | null = await Login.findOne({ email: req.body.email })
         .populate("userId")
         .select("email passwordResetToken passwordResetExpire userId");
       if (!login) {
@@ -185,7 +185,7 @@ class authenticateController {
       }
       const token = crypto.randomBytes(32).toString("hex");
       login.passwordResetToken = token;
-      login.passwordResetExpire = Date.now() + 60 * 60 * 1000;
+      login.passwordResetExpire = new Date(Date.now() + 60 * 60 * 1000);
       await login.save();
       console.log(login);
 
@@ -198,7 +198,7 @@ class authenticateController {
       const htmlStr = await ejsRenderFile(
         path.join(__dirname, "..", "mails", "ResetPassword.ejs"),
         {
-          name: login.userId.firstName + " " + login.userId.lastName,
+          name: (login.userId as IUser).firstName + " " + (login.userId as IUser).lastName,
           resetUrl: resetPasswordURL,
         }
       );
@@ -227,14 +227,19 @@ class authenticateController {
       }
       // console.log(req.body);
       const newPassword = req.body.password;
-      const login = await Login.findById({ _id: req.body.userId }).populate("userId");
+      const login: ILogin | null = await Login.findById({ _id: req.body.userId }).populate("userId");
+      if (!login) {
+        return res
+          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+          .send(failure("User not found."));
+      }
       const passMatch = await bcrypt.compare(newPassword, login.password);
       if (login.passwordResetToken === null) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure("Link is not available anymore."));
       }
-      if (login.passwordResetExpire < Date.now()) {
+      if (login.passwordResetExpire && login.passwordResetExpire < new Date(Date.now())) {
         return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("Link expired"));
       }
       if (passMatch) {
