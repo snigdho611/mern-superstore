@@ -1,5 +1,7 @@
-const Product = require("../model/product");
-const { success, failure } = require("../utils/commonResponse");
+import { NextFunction, Request, Response } from "express";
+import { IProduct, MulterRequest } from "types/database";
+import { Product } from "../model/product";
+import { success, failure } from "../utils/commonResponse";
 const HTTP_STATUS = require("../utils/httpStatus");
 const { validationResult } = require("express-validator");
 const fs = require("fs/promises");
@@ -7,7 +9,7 @@ const path = require("path");
 const Cart = require("../model/cart");
 
 class adminController {
-  async addProduct(req, res, next) {
+  async addProduct(req: MulterRequest, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!req.file) {
@@ -23,9 +25,9 @@ class adminController {
         }
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", validatorResult.array()));
+          .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
-      const product = new Product({
+      const product: IProduct = new Product({
         name: req.body.name,
         price: parseInt(req.body.price),
         weight: req.body.weight,
@@ -41,7 +43,7 @@ class adminController {
         console.log("Successfully added product");
         return res
           .status(HTTP_STATUS.OK)
-          .send(success({ message: "Successfully added product" }, result));
+          .send(success({ message: "Successfully added product" }));
       });
     } catch (error) {
       console.log(error);
@@ -49,19 +51,19 @@ class adminController {
     }
   }
 
-  async updateProduct(req, res, next) {
+  async updateProduct(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", validatorResult.array()));
+          .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
       const dataToUpdate = {
         ...req.body,
       };
       if (Object.keys(dataToUpdate).length === 1) {
-        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure("No data sent to update"));
+        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure({ message: "No data sent to update" }));
       }
       const product = await Product.findOneAndUpdate({ _id: req.body.productId }, dataToUpdate, {
         new: true,
@@ -69,7 +71,7 @@ class adminController {
       if (product) {
         return res
           .status(HTTP_STATUS.OK)
-          .send(success({ message: "Updated product successully!" }, product));
+          .send(success({ message: "Updated product successully!" }));
       } else {
         return res.status(HTTP_STATUS.OK).send(failure({ message: "Product update failed!" }));
       }
@@ -79,7 +81,7 @@ class adminController {
     }
   }
 
-  async updateImage(req, res, next) {
+  async updateImage(req: MulterRequest, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!req.file) {
@@ -97,9 +99,9 @@ class adminController {
         console.log("File removed for request containing other errors");
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", validatorResult.array()));
+          .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
-      const product = await Product.findById(req.body.productId).exec();
+      const product: IProduct | null = await Product.findById(req.body.productId).exec();
       if (product) {
         try {
           await fs.unlink(path.join(__dirname, "..", product.image));
@@ -110,7 +112,7 @@ class adminController {
         product.save();
         return res
           .status(HTTP_STATUS.OK)
-          .send(success({ message: "Updated image successully!" }, product));
+          .send(success({ message: "Updated image successully!" }));
       } else {
         await fs.unlink(path.join(__dirname, "..", req.file.path));
 
@@ -122,13 +124,13 @@ class adminController {
     }
   }
 
-  async deleteProduct(req, res, next) {
+  async deleteProduct(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure("Invalid inputs", validatorResult.array()));
+          .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
       // console.log(req.body.productId);
       // await cart.itemList
@@ -150,5 +152,5 @@ class adminController {
     }
   }
 }
-
-module.exports = new adminController();
+const AdminController = new adminController();
+export default AdminController;

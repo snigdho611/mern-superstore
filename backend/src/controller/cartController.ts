@@ -1,3 +1,6 @@
+import { Request, NextFunction, Response } from "express";
+import { IProduct } from "types/database";
+
 const Product = require("../model/product");
 const { success, failure } = require("../utils/commonResponse");
 const HTTP_STATUS = require("../utils/httpStatus");
@@ -11,7 +14,7 @@ const sendMail = require("../config/mail");
 const ejsRenderFile = promisify(ejs.renderFile);
 
 class cartController {
-  async getCart(req, res, next) {
+  async getCart(req: Request, res: Response, next: NextFunction) {
     try {
       //
       const validatorResult = validationResult(req);
@@ -31,7 +34,7 @@ class cartController {
     }
   }
 
-  async addProductToCart(req, res, next) {
+  async addProductToCart(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -42,7 +45,7 @@ class cartController {
       const cart = await Cart.findOne({ userId: req.body.userId })
         .populate({ path: "itemList.productId" })
         .exec();
-      const product = await Product.findOne({ _id: req.body.productId });
+      const product: IProduct | null = await Product.findOne({ _id: req.body.productId });
       if (product) {
         if (cart) {
           console.log("User already has a cart");
@@ -67,7 +70,7 @@ class cartController {
     }
   }
 
-  async removeProductFromCart(req, res, next) {
+  async removeProductFromCart(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -101,7 +104,7 @@ class cartController {
 
   // Needs Refactoring
   // Send email when customer is checking out
-  async sendCheckoutEmail(req, res, next) {
+  async sendCheckoutEmail(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -134,7 +137,7 @@ class cartController {
     }
   }
 
-  async deleteCart(req, res, next) {
+  async deleteCart(req: Request, res: Response, next: NextFunction) {
     try {
       //
       // const u

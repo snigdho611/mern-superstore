@@ -74,4 +74,5 @@ class productController {
   }
 }
 
-module.exports = new productController();
+const ProductController = new productController();
+export default ProductController;

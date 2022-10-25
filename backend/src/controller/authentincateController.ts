@@ -263,4 +263,5 @@ class authenticateController {
   }
 }
 
-module.exports = new authenticateController();
+const AuthenticateController = new authenticateController();
+export default AuthenticateController;

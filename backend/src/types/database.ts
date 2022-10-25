@@ -1,3 +1,4 @@
+import { Request } from "express";
 import { ObjectId, Document } from "mongoose";
 
 export interface IProduct extends Document {
@@ -28,4 +29,8 @@ export interface ILogin extends Document {
     passwordResetToken?: string | null;
     passwordResetExpire?: Date | null;
     userId: IUser | ObjectId;
+}
+
+export interface MulterRequest extends Request {
+    file: any;
 }
