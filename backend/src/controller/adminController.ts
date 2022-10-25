@@ -2,16 +2,16 @@ import { NextFunction, Request, Response } from "express";
 import { IProduct, MulterRequest } from "types/database";
 import { Product } from "../model/product";
 import { success, failure } from "../utils/commonResponse";
-const HTTP_STATUS = require("../utils/httpStatus");
-const { validationResult } = require("express-validator");
-const fs = require("fs/promises");
-const path = require("path");
-const Cart = require("../model/cart");
+import { HTTP_STATUS } from "utils/httpStatus";
+import { Result, ValidationError, validationResult } from "express-validator";
+import fs from "fs/promises";
+import path from "path";
+import Cart from "../model/cart";
 
 class adminController {
   async addProduct(req: MulterRequest, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!req.file) {
         validatorResult.errors.push({
           param: "productImage",
@@ -132,10 +132,6 @@ class adminController {
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
-      // console.log(req.body.productId);
-      // await cart.itemList
-      // console.log(cart);
-      // return;
       const product = await Product.findByIdAndDelete(req.params.productId).exec();
       console.log(product);
       if (!product) {

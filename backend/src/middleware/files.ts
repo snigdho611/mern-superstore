@@ -1,10 +1,5 @@
-// const express = require("express");
-// const router = express.Router();
-// const adminController = require("../controller/adminController");
-// const validator = require("../middleware/validation");
-// const { checkAuth, isAdmin } = require("../middleware/authenticate");
-const multer = require("multer");
-const path = require("path");
+import multer from "multer";
+import path from "path";
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -15,9 +10,7 @@ const fileStorage = multer.diskStorage({
       ) {
         callback(null, "files/products");
       } else if (req.originalUrl === "/admin/products/add") {
-        // callback(null, "files/products");
       }
-      // console.log(req.originalUrl);
     } else {
       callback("No file is found", null);
     }
@@ -27,8 +20,8 @@ const fileStorage = multer.diskStorage({
       callback(
         null,
         file.originalname.split(".")[0].replace(/\ /g, "") +
-          Date.now() +
-          path.extname(file.originalname)
+        Date.now() +
+        path.extname(file.originalname)
       );
       return;
     } else {

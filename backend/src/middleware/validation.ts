@@ -1,5 +1,5 @@
-const { body, param } = require("express-validator");
-const Login = require("../model/login");
+import { body, param } from "express-validator";
+import { Login } from "../model/login";
 
 const validator = {
   addProduct: [

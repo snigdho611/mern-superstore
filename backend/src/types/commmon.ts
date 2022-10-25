@@ -17,5 +17,5 @@ export interface FailureResponse {
 
 export interface FailureProps {
     message: string;
-    error?: [];
+    error?: any[];
 }

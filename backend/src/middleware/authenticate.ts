@@ -1,8 +1,10 @@
+import { NextFunction, Request, Response } from "express";
+
 const jwt = require("jsonwebtoken");
 const { failure } = require("../utils/commonResponse");
 const HTTP_STATUS = require("../utils/httpStatus");
 
-const checkAuth = (req, res, next) => {
+const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   if (req.get("authorization")) {
     // const token = req.headers.authorization.split(' ')[1];
     const token = req.get("authorization").split(" ")[1];
@@ -17,16 +19,16 @@ const checkAuth = (req, res, next) => {
       };
       //   console.log(req.user);
       next();
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      return res.status(HTTP_STATUS.FORBIDDEN).send(failure(error.message));
+      return res.status(HTTP_STATUS.FORBIDDEN).send(failure({ message: error.message }));
     }
   } else {
     return res.status(HTTP_STATUS.UNAUTHORIZED).send(failure("Request is not authorized"));
   }
 };
 
-const isAdmin = (req, res, next) => {
+const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (req.user.isAdmin) {
     next();
   } else {
@@ -34,7 +36,7 @@ const isAdmin = (req, res, next) => {
   }
 };
 
-// const isEmailVerified = (req, res, next) => {
+// const isEmailVerified = (req: Request, res:Response, next:NextFunction) => {
 //   if (req.user.isEmailVerified) {
 //   }
 // };
