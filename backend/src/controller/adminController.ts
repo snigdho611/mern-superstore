@@ -13,10 +13,7 @@ class adminController {
     try {
       const validatorResult: Result<ValidationError> = validationResult(req);
       if (!req.file) {
-        validatorResult.errors.push({
-          param: "productImage",
-          msg: "Product Image is required. Only jpeg, jpg and png file is allowed!",
-        });
+        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure({ message: "Product Image is required.Only jpeg, jpg and png file is allowed!" }));
       }
       if (!validatorResult.isEmpty()) {
         if (req.file) {
@@ -85,10 +82,7 @@ class adminController {
     try {
       const validatorResult = validationResult(req);
       if (!req.file) {
-        validatorResult.errors.push({
-          param: "productImage",
-          msg: "Product Image is required. Only jpeg, jpg and png file is allowed!",
-        });
+        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure({ message: "Product Image is required.Only jpeg, jpg and png file is allowed!" }));
       }
       console.log("Image format: ok");
       if (!validatorResult.isEmpty()) {

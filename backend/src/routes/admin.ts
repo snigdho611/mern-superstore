@@ -1,11 +1,9 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const adminController = require("../controller/adminController");
-const validator = require("../middleware/validation");
-const { checkAuth, isAdmin } = require("../middleware/authenticate");
-const multer = require("multer");
-const path = require("path");
-const fileUploader = require("../middleware/files");
+import AdminController from "controller/adminController";
+import validator from "../middleware/validation";
+import { checkAuth, isAdmin } from "../middleware/authenticate";
+import { fileUploader } from "../middleware/files";
 
 router.post(
   "/products/add",
@@ -13,7 +11,7 @@ router.post(
   isAdmin,
   fileUploader.single("productImage"),
   validator.addProduct,
-  adminController.addProduct
+  AdminController.addProduct
 );
 
 router.put(
@@ -21,7 +19,7 @@ router.put(
   checkAuth,
   isAdmin,
   validator.updateProduct,
-  adminController.updateProduct
+  AdminController.updateProduct
 );
 
 router.post(
@@ -30,7 +28,7 @@ router.post(
   isAdmin,
   fileUploader.single("productImage"),
   validator.updateImage,
-  adminController.updateImage
+  AdminController.updateImage
 );
 
 router.delete(
@@ -38,7 +36,7 @@ router.delete(
   checkAuth,
   isAdmin,
   validator.deleteProduct,
-  adminController.deleteProduct
+  AdminController.deleteProduct
 );
 
 module.exports = router;

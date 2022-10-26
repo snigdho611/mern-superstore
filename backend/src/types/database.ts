@@ -32,5 +32,5 @@ export interface ILogin extends Document {
 }
 
 export interface MulterRequest extends Request {
-    file: any;
+    file?: any;
 }

@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const path = require("path");
+import path from "path";
+
 
 // getImage
 router.get("/products/:img", (req, res) => {

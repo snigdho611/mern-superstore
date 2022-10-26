@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 var mailTransport = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
@@ -9,7 +9,7 @@ var mailTransport = nodemailer.createTransport({
   },
 });
 
-const sendMail = async (mailOptions) => {
+const sendMail = async (mailOptions: any) => {
   try {
     const mail = await mailTransport.sendMail(mailOptions);
     console.log("Email sent: ", mail.response);

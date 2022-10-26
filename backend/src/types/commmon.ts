@@ -19,3 +19,7 @@ export interface FailureProps {
     message: string;
     error?: any[];
 }
+
+export interface AuthRequest extends Request {
+    user?: any;
+}

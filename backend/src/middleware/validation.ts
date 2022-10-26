@@ -155,4 +155,4 @@ const validator = {
   sendCheckoutEmail: [body("userId").notEmpty().withMessage("User ID is required")],
 };
 
-module.exports = validator;
+export default validator;

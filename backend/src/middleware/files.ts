@@ -1,8 +1,15 @@
+import { Request } from "express";
 import multer from "multer";
 import path from "path";
 
+type DestinationCallback = (error: Error | null, destination: string) => void;
+type FileNameCallback = (error: Error | null, filename: string) => void;
+interface MulRequest extends Request {
+
+}
+
 const fileStorage = multer.diskStorage({
-  destination: (req, file, callback) => {
+  destination: (req: Request, file: Express.Multer.File, callback: any) => {
     if (file) {
       if (
         req.originalUrl === "/admin/products/update-image" ||
@@ -15,7 +22,7 @@ const fileStorage = multer.diskStorage({
       callback("No file is found", null);
     }
   },
-  filename: (req, file, callback) => {
+  filename: (req: Request, file: Express.Multer.File, callback: any) => {
     if (file) {
       callback(
         null,
@@ -30,7 +37,7 @@ const fileStorage = multer.diskStorage({
   },
 });
 
-const checkImage = (req, file, callback) => {
+const checkImage = (req: Request, file: Express.Multer.File, callback: any) => {
   if (file) {
     if (
       file.mimetype === "image/jpeg" ||
@@ -46,10 +53,8 @@ const checkImage = (req, file, callback) => {
   }
 };
 
-const fileUploader = multer({
+export const fileUploader = multer({
   storage: fileStorage,
-  limits: 30000,
+  limits: { fieldSize: 30000 },
   fileFilter: checkImage,
 });
-
-module.exports = fileUploader;

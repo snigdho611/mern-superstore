@@ -1,4 +1,5 @@
 import { Request, NextFunction, Response } from "express";
+import { AuthRequest } from "types/commmon";
 import { IProduct } from "types/database";
 
 const Product = require("../model/product");
@@ -34,7 +35,7 @@ class cartController {
     }
   }
 
-  async addProductToCart(req: Request, res: Response, next: NextFunction) {
+  async addProductToCart(req: any, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
       if (!validatorResult.isEmpty()) {
@@ -148,4 +149,5 @@ class cartController {
   }
 }
 
-module.exports = new cartController();
+const CartController = new cartController();
+export default CartController;
