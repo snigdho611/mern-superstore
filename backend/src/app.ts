@@ -2,30 +2,25 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import databaseConnection from "./config/database";
-// const path = require("path");
-// const productRouter = require("@routes/products");
 import productRouter from "./routes/products";
-// import productRouter from "./routes/products";
 
-// const adminRouter = require("./routes/admin");
-// const authenticateRouter = require("./routes/authenticate");
-// const cartRouter = require("./routes/cart");
-// const imagesRouter = require("./routes/files");
+import adminRouter from "./routes/admin";
+import authenticateRouter from "./routes/authenticate";
+import cartRouter from "./routes/cart";
+import imagesRouter from "./routes/files";
 
 const app = express();
 dotenv.config();
 app.use(cors());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-// app.set("view engine", "ejs");
-
-// // console.log(dir);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.set("view engine", "ejs");
 
 app.use("/products", productRouter);
-// app.use("/admin", adminRouter);
-// app.use("/cart", cartRouter);
-// app.use("/files", imagesRouter);
-// app.use("/auth", authenticateRouter);
+app.use("/admin", adminRouter);
+app.use("/cart", cartRouter);
+app.use("/files", imagesRouter);
+app.use("/auth", authenticateRouter);
 
 databaseConnection(() => {
   app.listen(8000, () => {

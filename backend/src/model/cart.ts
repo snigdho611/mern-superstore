@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Product = require("./product");
+import { Product } from "./product";
 
 const itemEntry = new mongoose.Schema(
   {

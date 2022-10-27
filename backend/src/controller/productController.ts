@@ -4,15 +4,15 @@ import { Product } from "../model/product";
 // const { success, failure } = require("../utils/commonResponse");
 import { success, failure } from "../utils/commonResponse";
 import { HTTP_STATUS } from "../utils/httpStatus";
-const { validationResult } = require("express-validator");
-const getPagination = require("../utils/pagination");
+import { validationResult } from "express-validator";
+import getPagination from "../utils/pagination";
 
 class productController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const page: string | number = req.query.page as string ? req.query.page as string : 0;
       const itemsPerPage: string | number = req.query.limit as string ? req.query.limit as string : 0;
-      const { skip, limit } = getPagination(page, itemsPerPage);
+      const { skip, limit } = getPagination(page as number, itemsPerPage as number);
 
       let products: IProduct[];
       let total: number;
@@ -25,7 +25,6 @@ class productController {
         products = await Product.find().skip(skip).limit(limit).exec();
       }
       total = await Product.count().exec();
-      // console.log(products.length);
       if (products.length > 0) {
         return res
           .status(HTTP_STATUS.OK)

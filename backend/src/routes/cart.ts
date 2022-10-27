@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-
-const express = require("express");
+import express from "express";
 import CartController from "../controller/cartController";
 import { isAdmin, checkAuth } from "../middleware/authenticate";
-const validator = require("../middleware/validation");
+import validator from "../middleware/validation";
 const router = express.Router();
 
 router.post("/get", checkAuth, validator.getCart, CartController.getCart);
@@ -29,4 +28,4 @@ router.post(
 
 router.delete("/");
 
-module.exports = router;
+export default router;

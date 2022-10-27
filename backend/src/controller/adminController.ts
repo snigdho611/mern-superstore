@@ -2,9 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { IProduct, MulterRequest } from "types/database";
 import { Product } from "../model/product";
 import { success, failure } from "../utils/commonResponse";
-import { HTTP_STATUS } from "utils/httpStatus";
+import { HTTP_STATUS } from "../utils/httpStatus";
 import { Result, ValidationError, validationResult } from "express-validator";
-import fs from "fs/promises";
+// import fs from "fs/promises";
+import { promises as fsPromises } from 'fs';
 import path from "path";
 import Cart from "../model/cart";
 
@@ -17,7 +18,7 @@ class adminController {
       }
       if (!validatorResult.isEmpty()) {
         if (req.file) {
-          await fs.unlink(path.join(__dirname, "../files/products", req.file.filename));
+          await fsPromises.unlink(path.join(__dirname, "../files/products", req.file.filename));
           console.log({ error: "File was deleted due to other validation errors" });
         }
         return res
@@ -87,7 +88,7 @@ class adminController {
       console.log("Image format: ok");
       if (!validatorResult.isEmpty()) {
         if (req.file) {
-          await fs.unlink(path.join(__dirname, "../files/products", req.file.filename));
+          await fsPromises.unlink(path.join(__dirname, "../files/products", req.file.filename));
           console.log({ error: "File was deleted due to other validation errors" });
         }
         console.log("File removed for request containing other errors");
@@ -98,7 +99,7 @@ class adminController {
       const product: IProduct | null = await Product.findById(req.body.productId).exec();
       if (product) {
         try {
-          await fs.unlink(path.join(__dirname, "..", product.image));
+          await fsPromises.unlink(path.join(__dirname, "..", product.image));
         } catch (error) {
           console.log("Product original image seems unavailable, unable to delete it.");
         }
@@ -108,7 +109,7 @@ class adminController {
           .status(HTTP_STATUS.OK)
           .send(success({ message: "Updated image successully!" }));
       } else {
-        await fs.unlink(path.join(__dirname, "..", req.file.path));
+        await fsPromises.unlink(path.join(__dirname, "..", req.file.path));
 
         return res.status(HTTP_STATUS.OK).send(failure({ message: "Image update failed!" }));
       }

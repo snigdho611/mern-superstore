@@ -1,7 +1,7 @@
 import express from "express";
 import AuthenticateController from "../controller/authentincateController";
 // const authenticateController = require("../controller/authentincateController");
-const validator = require("../middleware/validation");
+import validator from "../middleware/validation";
 const router = express.Router();
 
 router.post("/login", validator.login, AuthenticateController.login);
@@ -32,4 +32,4 @@ router.post("/reset-password", validator.resetPassword, AuthenticateController.r
 //   });
 // });
 
-module.exports = router;
+export default router;

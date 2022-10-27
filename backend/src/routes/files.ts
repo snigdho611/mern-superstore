@@ -13,4 +13,4 @@ router.get("/products/:img", (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

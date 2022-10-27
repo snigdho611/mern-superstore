@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import AdminController from "controller/adminController";
+import AdminController from "../controller/adminController";
 import validator from "../middleware/validation";
 import { checkAuth, isAdmin } from "../middleware/authenticate";
 import { fileUploader } from "../middleware/files";
@@ -39,4 +39,4 @@ router.delete(
   AdminController.deleteProduct
 );
 
-module.exports = router;
+export default router;
