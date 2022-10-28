@@ -14,7 +14,7 @@ export interface IUser extends Document {
     firstName: string;
     lastName: string;
     phone: string;
-    address: string;
+    address?: string;
     type: string;
     balance: number;
 }

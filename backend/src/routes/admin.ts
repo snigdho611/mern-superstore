@@ -7,8 +7,8 @@ import { fileUploader } from "../middleware/files";
 
 router.post(
   "/products/add",
-  checkAuth,
-  isAdmin,
+  // checkAuth,
+  // isAdmin,
   fileUploader.single("productImage"),
   validator.addProduct,
   AdminController.addProduct
@@ -16,16 +16,16 @@ router.post(
 
 router.put(
   "/products/edit",
-  checkAuth,
-  isAdmin,
+  // checkAuth,
+  // isAdmin,
   validator.updateProduct,
   AdminController.updateProduct
 );
 
 router.post(
   "/products/update-image",
-  checkAuth,
-  isAdmin,
+  // checkAuth,
+  // isAdmin,
   fileUploader.single("productImage"),
   validator.updateImage,
   AdminController.updateImage
@@ -33,8 +33,8 @@ router.post(
 
 router.delete(
   "/products/delete/:productId",
-  checkAuth,
-  isAdmin,
+  // checkAuth,
+  // isAdmin,
   validator.deleteProduct,
   AdminController.deleteProduct
 );

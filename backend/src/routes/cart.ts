@@ -11,7 +11,7 @@ router.post("/add-product", checkAuth, validator.addToCart, CartController.addPr
 
 router.post(
   "/remove-product",
-  checkAuth,
+  // checkAuth,
   validator.removeProduct,
   CartController.removeProductFromCart
 );
@@ -21,7 +21,7 @@ router.post("/delete", (req: Request, res: Response) => {
 });
 router.post(
   "/checkout-email",
-  checkAuth,
+  // checkAuth,
   validator.sendCheckoutEmail,
   CartController.sendCheckoutEmail
 );

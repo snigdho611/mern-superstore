@@ -2,7 +2,7 @@
 
 .nav {
   position: fixed;
-  background-color: colors.$teal-dark;
+  background-color: colors.$color-1-a;
   width: 15rem;
   z-index: 10;
   &__container {
@@ -25,6 +25,6 @@
 
   &__link:hover {
     color: colors.$blue-dark;
-    background-color: colors.$teal-medium;
+    background-color: colors.$color-1-b;
   }
 }

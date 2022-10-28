@@ -39,7 +39,7 @@
 }
 .form__row__inputCell__inputBox:focus, .form__row__inputCell__inputBox:hover {
   outline: none;
-  background-color: #14b8a6;
+  background-color: #364b8c;
 }
 .form__row__errors {
   height: 1.35rem;
@@ -62,5 +62,5 @@
   transition: 0.5s color, 0.5s background-color;
 }
 .form__bottom__btn__row:hover {
-  background-color: #14b8a6;
+  background-color: #364b8c;
 }/*# sourceMappingURL=index.css.map */

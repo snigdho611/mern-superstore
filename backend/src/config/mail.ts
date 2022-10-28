@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import Mail from "nodemailer/lib/mailer";
 
 var mailTransport = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
@@ -9,13 +10,13 @@ var mailTransport = nodemailer.createTransport({
   },
 });
 
-const sendMail = async (mailOptions: any) => {
+const sendMail = async (mailOptions: Mail.Options) => {
   try {
     const mail = await mailTransport.sendMail(mailOptions);
     console.log("Email sent: ", mail.response);
-  } catch (error) {
+  } catch (error: unknown) {
     console.log(error);
   }
 };
 
-module.exports = sendMail;
+export default sendMail;

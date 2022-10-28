@@ -1,6 +1,6 @@
 .nav {
   position: fixed;
-  background-color: #0f766e;
+  background-color: #2e3c83;
   width: 15rem;
   z-index: 10;
 }
@@ -21,5 +21,5 @@
 }
 .nav__link:hover {
   color: #1e3a8a;
-  background-color: #14b8a6;
+  background-color: #6271ba;
 }/*# sourceMappingURL=index.css.map */

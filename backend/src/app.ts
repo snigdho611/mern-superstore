@@ -8,6 +8,7 @@ import adminRouter from "./routes/admin";
 import authenticateRouter from "./routes/authenticate";
 import cartRouter from "./routes/cart";
 import imagesRouter from "./routes/files";
+import { IncomingMessage, Server, ServerResponse } from "http";
 
 const app = express();
 dotenv.config();
@@ -22,7 +23,7 @@ app.use("/cart", cartRouter);
 app.use("/files", imagesRouter);
 app.use("/auth", authenticateRouter);
 
-databaseConnection(() => {
+databaseConnection((): any => {
   app.listen(8000, () => {
     console.log("Application is running on 8000");
   });

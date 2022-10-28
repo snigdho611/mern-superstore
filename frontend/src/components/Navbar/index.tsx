@@ -8,11 +8,11 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const user = getUser();
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/");
+  //   }
+  // }, [user, navigate]);
 
   return (
     <div className="nav">

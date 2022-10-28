@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/app.ts",
-    "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "dev": "nodemon app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Snigdho Dip Howlader",
@@ -25,7 +25,9 @@
     "nodemailer": "^6.7.5"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
+    "@types/ejs": "^3.1.1",
     "@types/express": "^4.17.14",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/multer": "^1.4.7",
