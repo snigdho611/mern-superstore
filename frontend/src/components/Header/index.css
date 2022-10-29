@@ -1,11 +1,11 @@
 .header {
-  background-color: #2e3c83;
+  background-color: #1d2a6d;
   position: -webkit-sticky;
   position: sticky;
   display: flex;
   top: 0;
   height: 12vh;
-  box-shadow: 5px 3px 10px rgb(13, 148, 136);
+  box-shadow: 5px 3px 10px #9caaf1;
 }
 .header__col {
   width: 50%;
