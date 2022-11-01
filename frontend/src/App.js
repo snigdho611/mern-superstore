@@ -13,9 +13,11 @@ import Deals from "components/Deals";
 import Home from "components/Home";
 import Login from "components/Authenticate/Login";
 import ProductDetails from "components/ProductDetails";
-import ProductList from "components/ProductList";
+// import ProductList from "pages/ProductList";
 import ResetPassword from "components/Authenticate/ResetPassword";
 import ForgotPassword from "components/Authenticate/ForgotPassword";
+import ProductsPage from "pages/ProductsPage";
+import "styles/index.css";
 
 const App = () => {
   return (
@@ -46,10 +48,11 @@ const App = () => {
           path="/products"
           element={
             <>
-              <Header />
+              {/* <Header />
               <Navbar />
               <ProductList />
-              <Footer />
+              <Footer /> */}
+              <ProductsPage />
             </>
           }
         />

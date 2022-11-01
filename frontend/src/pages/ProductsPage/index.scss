@@ -13,7 +13,7 @@
       &__input {
         height: 2.5rem;
         width: 90%;
-        background-color: colors.$teal-light;
+        background-color: colors.$color-1-a;
         border: none;
         border-radius: 0.75rem;
         padding: 0.25rem 0.75rem;
@@ -23,8 +23,8 @@
       &__input:focus,
       &__input:hover {
         outline: none;
-        background-color: colors.$teal-medium;
-        color: colors.$teal-light;
+        background-color: colors.$color-1-b;
+        color: colors.$color-1-a;
       }
       &__radio {
         padding: 20px;
@@ -59,7 +59,7 @@
       margin: 0px 5px;
       border: none;
       // background-color: var(--nav_background);
-      background-color: colors.$teal-dark;
+      background-color: colors.$color-1-a;
       color: azure;
       cursor: pointer;
       transition: 0.5s color, 0.5s background-color;

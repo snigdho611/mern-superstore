@@ -14,7 +14,7 @@
 .productlist__child__search__input {
   height: 2.5rem;
   width: 90%;
-  background-color: #99f6e4;
+  background-color: #1c265c;
   border: none;
   border-radius: 0.75rem;
   padding: 0.25rem 0.75rem;
@@ -23,8 +23,8 @@
 }
 .productlist__child__search__input:focus, .productlist__child__search__input:hover {
   outline: none;
-  background-color: #364b8c;
-  color: #99f6e4;
+  background-color: #28367c;
+  color: #1c265c;
 }
 .productlist__child__search__radio {
   padding: 20px;
@@ -57,7 +57,7 @@
   padding: 10px 15px;
   margin: 0px 5px;
   border: none;
-  background-color: #0f766e;
+  background-color: #1c265c;
   color: azure;
   cursor: pointer;
   transition: 0.5s color, 0.5s background-color;
