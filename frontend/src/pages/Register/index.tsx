@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getUser, setUser } from "util/local/index";
-// import setUser from "util/local/setUser";
-import "./index.css";
+import Footer from "components/Footer";
+import { Form, InputRow, InputSubmit } from "components/Form";
+import Header from "components/Header";
+import React, { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { Form, InputRow, InputSubmit, Response } from "components/Form";
+import { useNavigate } from "react-router-dom";
+import { Response } from "types";
+import { getUser, setUser } from "util/local";
 
-const Login = () => {
+const Register = () => {
   const [response, setResponse] = useState<Response>({
     success: false,
     loading: false,
@@ -74,11 +75,14 @@ const Login = () => {
         });
       });
   };
-
   return (
-    <div className="Form">
-      <h3 className="Form__header3">Please sign up to continue</h3>
-      <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
+    <>
+      <Header />
+      <Form
+        title="Please sign up to continue"
+        onSubmission={onSubmission}
+        handleSubmit={handleSubmit}
+      >
         <InputRow
           label="First name"
           name="firstName"
@@ -134,8 +138,9 @@ const Login = () => {
           message={response.message}
         />
       </Form>
-    </div>
+      <Footer />
+    </>
   );
 };
 
-export default Login;
+export default Register;

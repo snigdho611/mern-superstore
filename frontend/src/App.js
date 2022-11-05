@@ -7,32 +7,43 @@ import Footer from "components/Footer";
 import ChangeProduct from "components/UpdateForm/ChangeProduct";
 import AddProduct from "components/UpdateForm/AddProduct";
 import VerifyEmail from "components/VerifyEmail";
-import Register from "components/Authenticate/Register";
+// import Register from "components/Authenticate/Register";
 import Cart from "components/Cart";
 import Deals from "components/Deals";
 import Home from "components/Home";
-import Login from "components/Authenticate/Login";
+// import Login from "components/Authenticate/Login";
 import ProductDetails from "components/ProductDetails";
 // import ProductList from "pages/ProductList";
 import ResetPassword from "components/Authenticate/ResetPassword";
 import ForgotPassword from "components/Authenticate/ForgotPassword";
 import ProductsPage from "pages/ProductsPage";
 import "styles/index.css";
+import Login from "pages/Login";
+import Register from "pages/Register";
 
 const App = () => {
+  const routes = [
+    {
+      path: "/",
+      element: <Login />,
+    },
+    {
+      path: "/home",
+      element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
+    },
+  ];
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <Login />
-              <Footer />
-            </>
-          }
-        />
+        {routes.map(({ path, element }, i) => {
+          return <Route key={i} path={path} element={<>{element}</>} />;
+        })}
+        {/* <Route path="/" element={<Login />} />
         <Route
           path="/home"
           element={
@@ -48,10 +59,6 @@ const App = () => {
           path="/products"
           element={
             <>
-              {/* <Header />
-              <Navbar />
-              <ProductList />
-              <Footer /> */}
               <ProductsPage />
             </>
           }
@@ -115,9 +122,7 @@ const App = () => {
           path="/register"
           element={
             <>
-              <Header />
               <Register />
-              <Footer />
             </>
           }
         />
@@ -150,7 +155,7 @@ const App = () => {
               <Footer />
             </>
           }
-        />
+        /> */}
       </Routes>
     </BrowserRouter>
   );

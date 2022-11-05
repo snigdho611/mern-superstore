@@ -29,3 +29,9 @@ export interface User extends MongoObject {
   phone: string;
   balance: number;
 }
+
+export interface Response {
+  success: boolean;
+  loading: boolean;
+  message: string | null;
+}

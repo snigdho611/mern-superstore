@@ -11,18 +11,19 @@ export interface Response {
 
 interface FormProps {
   children: React.ReactNode;
+  title?: string;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
   onSubmission: (formData: FieldValues) => void;
 }
 
-const Form: React.FC<FormProps> = ({ children, handleSubmit, onSubmission }) => {
+const Form: React.FC<FormProps> = ({ children, title, handleSubmit, onSubmission }) => {
   return (
-    <form
-      onSubmit={handleSubmit(onSubmission)}
-      className="w-1/2 mx-auto bg-blue-500 flex flex-col py-5 rounded-lg"
-    >
-      {children}
-    </form>
+    <div className="w-1/2 mx-auto flex flex-col justify-center text-center bg-blue-500">
+      {title ? <h3 className="text-2xl my-10 font-bold">{title}</h3> : null}
+      <form onSubmit={handleSubmit(onSubmission)} className="flex flex-col py-5 rounded-lg">
+        {children}
+      </form>
+    </div>
   );
 };
 
@@ -50,51 +51,27 @@ const InputRow: React.FC<InputRowProps> = ({
       <label className="w-1/4 text-right px-3 text-lg text-slate-200" htmlFor={label}>
         {label}:
       </label>
-      <input
-        className="w-3/4 py-2 px-4 rounded-md focus:bg-slate-200 hover:bg-slate-200 outline-none"
-        type={type}
-        placeholder={label}
-        {...register(`${name}`, {
-          required: {
-            value: required ? true : false,
-            message: `Please enter ${name}`,
-          },
-          pattern: {
-            value: pattern ? pattern : null,
-            message: `Pattern of ${name} does not match`,
-          },
-        })}
-      />
+      <div className="w-3/4 flex flex-col">
+        <input
+          className="py-2 px-4 rounded-md focus:bg-slate-200 hover:bg-slate-200 outline-none"
+          type={type}
+          placeholder={label}
+          {...register(`${name}`, {
+            required: {
+              value: required ? true : false,
+              message: `Please enter ${name}`,
+            },
+            pattern: {
+              value: pattern ? pattern : null,
+              message: `Pattern of ${name} does not match`,
+            },
+          })}
+        />
+        <div className="h-7 text-sm text-pink-300">
+          {errors[name] ? errors[name].message : null}
+        </div>
+      </div>
     </div>
-    // <div className="form__row">
-    //   <div className="form__row__main">
-    //     <div className="form__row__labelCell">{label}:</div>
-    //     <div className="form__row__inputCell">
-    //       <input
-    //         className="form__row__inputCell__inputBox"
-    //         type={type}
-    //         style={
-    //           errors[name]
-    //             ? {
-    //                 backgroundColor: "#f0abfc",
-    //               }
-    //             : null
-    //         }
-    //         {...register(`${name}`, {
-    //           required: {
-    //             value: required ? true : false,
-    //             message: `Please enter ${name}`,
-    //           },
-    //           pattern: {
-    //             value: pattern ? pattern : null,
-    //             message: `Pattern of ${name} does not match`,
-    //           },
-    //         })}
-    //       />
-    //     </div>
-    //   </div>
-    //   <div className="form__row__errors">{errors[name] ? errors[name].message : null}</div>
-    // </div>
   );
 };
 
@@ -109,13 +86,13 @@ const InputSubmit: React.FC<InputSubmitProps> = ({ text, loading, message, succe
   return (
     <div className="flex flex-col">
       {!loading ? (
-        <button className="w-32 text-center rounded-lg bg-blue-800 cursor-pointer px-5 py-2 text-teal-100 font-mono font-bold text-lg mx-auto">
+        <button className="w-32 text-center rounded-lg bg-blue-800 hover:bg-blue-200 text-blue-200 hover:text-blue-800 transition-colors cursor-pointer px-5 py-2 font-mono font-bold text-lg mx-auto">
           {text}
         </button>
       ) : (
         <Loader />
       )}
-      <div className={success ? "text-lime-400" : "text-red-600"}>{message}</div>
+      <div className={success ? "text-lime-400" : "text-pink-300"}>{message}</div>
     </div>
   );
 };
