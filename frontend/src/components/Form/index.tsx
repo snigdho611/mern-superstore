@@ -42,7 +42,6 @@ const InputRow: React.FC<InputRowProps> = ({
   type = "text",
   pattern = null,
 }) => {
-  // console.log(errors);
   return (
     <div className="form__row">
       <div className="form__row__main">
@@ -58,7 +57,6 @@ const InputRow: React.FC<InputRowProps> = ({
                   }
                 : null
             }
-            // placeholder={name}
             {...register(`${name}`, {
               required: {
                 value: required ? true : false,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUser } from "util/local/index";
-import "./index.css";
+// import "./index.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { setUser } from "util/local";
 import { Form, InputRow, InputSubmit, Response } from "components/Form";
@@ -71,9 +71,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="Form">
-      <h3 className="Form__header3">Please log in to continue</h3>
-      <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
+    <div className="flex flex-col justify-center text-center">
+      <h3 className="text-2xl my-10 font-bold">Please log in to continue</h3>
+      {/* <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
         <InputRow label="Email" name="email" register={register} errors={errors} required={true} />
         <InputRow
           label="Password"
@@ -89,17 +89,47 @@ const Login: React.FC = () => {
           loading={response.loading}
           message={response.message}
         />
-      </Form>
-      <div>
-        <Link to="/reset-password-request" className="Form__link">
-          Forgot Password
-        </Link>
-      </div>
-      <div>
-        <Link to="/register" className="Form__link">
-          Sign Up
-        </Link>
-      </div>
+      </Form> */}
+      <form className="w-1/2 mx-auto bg-blue-500 flex flex-col py-5 rounded-lg">
+        <div className="w-3/4 mx-auto flex items-center h-16 px-4">
+          <label className="w-1/4 text-right px-3 text-lg text-slate-200" htmlFor="">
+            Email:
+          </label>
+          <input
+            className="w-3/4 py-2 px-4 rounded-md focus:bg-slate-200 hover:bg-slate-200 outline-none"
+            type={"text"}
+            placeholder="Email"
+          />
+        </div>
+        <div className="w-3/4 mx-auto flex items-center h-16 px-4">
+          <label className="w-1/4 text-right px-3 text-lg text-slate-200" htmlFor="">
+            Password:
+          </label>
+          <input
+            className="w-3/4 py-2 px-4 rounded-md focus:bg-slate-200 hover:bg-slate-200 outline-none"
+            type={"password"}
+            placeholder="Password"
+          />
+        </div>
+        <div className="my-4 flex flex-col gap-2 w-fit mx-auto">
+          <Link to="/reset-password-request">
+            <a
+              href="/reset-password-request"
+              className="text-xl text-blue-900 hover:text-slate-300 w-fit mx-auto transition-colors"
+            >
+              Forgot Password
+            </a>
+          </Link>
+          <Link to="/register">
+            <a
+              href="/"
+              className="text-xl text-blue-900 hover:text-slate-300 w-fit mx-auto transition-colors"
+            >
+              Sign Up
+            </a>
+          </Link>
+        </div>
+      </form>
     </div>
   );
 };
