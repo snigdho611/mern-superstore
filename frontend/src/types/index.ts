@@ -7,8 +7,8 @@ export interface Product extends MongoObject {
   description: string;
   weight: string;
   type: string;
-  image: string;
-  price: number;
+  image: any;
+  price: string | number;
 }
 
 export interface Login extends MongoObject {
