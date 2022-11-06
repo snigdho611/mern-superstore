@@ -10,16 +10,18 @@ import VerifyEmail from "components/VerifyEmail";
 // import Register from "components/Authenticate/Register";
 import Cart from "components/Cart";
 import Deals from "components/Deals";
-import Home from "components/Home";
+// import Home from "components/Home";
 // import Login from "components/Authenticate/Login";
 import ProductDetails from "components/ProductDetails";
 // import ProductList from "pages/ProductList";
-import ResetPassword from "components/Authenticate/ResetPassword";
-import ForgotPassword from "components/Authenticate/ForgotPassword";
+// import ResetPassword from "components/Authenticate/ResetPassword";
+import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
 import ProductsPage from "pages/ProductsPage";
 import "styles/index.css";
 import Login from "pages/Login";
 import Register from "pages/Register";
+import ResetPassword from "pages/ResetPassword";
+import Home from "pages/Home";
 
 const App = () => {
   const routes = [
@@ -29,11 +31,19 @@ const App = () => {
     },
     {
       path: "/home",
-      element: <Login />,
+      element: <Home />,
     },
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/reset-password-request",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/reset-password/:token/:userId",
+      element: <ResetPassword />,
     },
   ];
 

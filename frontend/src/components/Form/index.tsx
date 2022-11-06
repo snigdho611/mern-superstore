@@ -47,11 +47,14 @@ const InputRow: React.FC<InputRowProps> = ({
   pattern = null,
 }) => {
   return (
-    <div className="w-3/4 mx-auto flex items-center h-16 px-4">
-      <label className="w-1/4 text-right px-3 text-lg text-slate-200" htmlFor={label}>
-        {label}:
-      </label>
-      <div className="w-3/4 flex flex-col">
+    <div className="w-3/4 mx-auto flex px-4">
+      <div className="w-1/4 text-right px-3 pt-1 text-md text-slate-200">
+        <label htmlFor={label}>{label}:</label>
+        {/* <div className="h-7 text-sm text-pink-300">
+          {errors[name] ? errors[name].message : null}
+        </div> */}
+      </div>
+      <div className="w-3/4 flex flex-col justify-center">
         <input
           className="py-2 px-4 rounded-md focus:bg-slate-200 hover:bg-slate-200 outline-none"
           type={type}

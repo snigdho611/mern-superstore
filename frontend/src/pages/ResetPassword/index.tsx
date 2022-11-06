@@ -1,8 +1,10 @@
-import { Form, InputRow, InputSubmit, Response } from "components/Form";
-import { useState } from "react";
+import Footer from "components/Footer";
+import { Form, InputRow, InputSubmit } from "components/Form";
+import Header from "components/Header";
+import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import "./index.css";
+import { Response } from "types";
 
 const ResetPassword = () => {
   const [response, setResponse] = useState<Response>({
@@ -66,11 +68,14 @@ const ResetPassword = () => {
         });
       });
   };
-
   return (
-    <div className={"Form"}>
-      <h3 className={"Form__header3"}>Please create a new password</h3>
-      <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
+    <>
+      <Header />
+      <Form
+        onSubmission={onSubmission}
+        handleSubmit={handleSubmit}
+        title="Please create a new password"
+      >
         <InputRow
           label="New Password"
           name="password"
@@ -80,7 +85,7 @@ const ResetPassword = () => {
           required={true}
         />
         <InputRow
-          label="Confirm Password"
+          label="Confirm"
           name="confirmPassword"
           type="password"
           register={register}
@@ -94,7 +99,8 @@ const ResetPassword = () => {
           message={response.message}
         />
       </Form>
-    </div>
+      <Footer />
+    </>
   );
 };
 
