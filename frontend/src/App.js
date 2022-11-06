@@ -45,6 +45,10 @@ const App = () => {
       path: "/reset-password/:token/:userId",
       element: <ResetPassword />,
     },
+    {
+      path: "/products",
+      element: <ProductsPage />,
+    },
   ];
 
   return (

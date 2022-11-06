@@ -45,6 +45,7 @@ const ProductsPage = () => {
       <Header />
       <Navbar />
       <div className="productlist">
+        {/* <Loader /> */}
         {!response.loading ? (
           <div className="productlist__list">
             {dataToShow.length > 0 ? (

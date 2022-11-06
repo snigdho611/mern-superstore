@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getUser } from 'util/local/index';
-import classes from './index.module.css'
 
 // interface ProductCardProps {
 //     data: any;
@@ -14,40 +13,32 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
 
     return (
         <div
-            className={classes.main}
+            className="bg-blue-200 rounded-lg w-64 flex flex-col shadow-blue-600"
         >
-            <div className={classes.main__child}>
-                <img src={data.image ? `${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" className={classes.image} />
+            <div className="flex justify-center my-3">
+                <img className="h-48" src={data.image ? `${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}` : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"} alt="Not found" />
             </div>
-            <div style={{
-                display: "flex",
-                justifyContent: 'center',
-                borderTop: "1px solid green",
-                borderBottom: "1px solid green"
-            }}>
+            <div
+                className='flex justify-center border-t-2 border-b-2 border-blue-900 border-solid'
+            >
                 {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}
             </div>
-            <div style={{
-                display: "flex", width: "100%"
-            }}>
-                <div style={{
-                    width: "50%",
-                    borderRight: "1px solid green",
-                    borderBottom: "1px solid green",
-                    padding: "5px"
-                }}>
+            <div
+                className='flex w-full'
+            >
+                <div
+                    className='w-1/2 border-r-2 border-b-2 border-blue-900 border-solid'
+                >
                     BDT {data.price}
                 </div>
-                <div style={{
-                    width: "50%",
-                    borderBottom: "1px solid green",
-                    padding: "5px"
-                }}>
+                <div
+                    className='w-1/2 border-b-2 border-blue-900 border-solid'
+                >
                     Wt: {data.weight}
                 </div>
             </div>
             <div
-                className={classes.card__btnSection}
+                className="flex flex-col justify-center"
             >
                 {!user.isAdmin ?
                     <>
@@ -63,7 +54,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                                 )
                             }
                             }
-                            className={classes.card__add}
+                            className="w-24 h-10 bg-blue-600 border-none cursor-pointer text-blue-50 rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center hover:text-blue-600 hover:bg-blue-50"
                         >
                             Add to Cart
                         </button>
@@ -74,7 +65,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                     user_type ?
                         <Link
                             to={`/products/edit/${data._id}`}
-                            className={classes.card__add}
+                            className="w-24 h-10 bg-blue-600 border-none cursor-pointer text-blue-50 rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center hover:text-blue-600 hover:bg-blue-50"
                         >
                             Edit
                         </Link>
@@ -85,7 +76,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                         <button
                             onClick={() => { deleteProduct(data._id) }
                             }
-                            className={classes.card__add}
+                            className="w-24 h-10 bg-blue-600 border-none cursor-pointer text-blue-50 rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center hover:text-blue-600 hover:bg-blue-50"
                         >
                             Delete
                         </button>
@@ -93,7 +84,7 @@ const ProductCard = ({ data, dispatchMethod, deleteProduct }) => {
                 }
                 <Link
                     to={`/products/${data._id}`}
-                    className={classes.card__add}
+                    className="w-24 h-10 bg-blue-600 border-none cursor-pointer text-blue-50 rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center hover:text-blue-600 hover:bg-blue-50"
                 >
                     Details
                 </Link>

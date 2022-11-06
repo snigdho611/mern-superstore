@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const HomeCard = (user: any) => {
+const HomeCard: React.FC<any> = ({ user }) => {
+  console.log(user);
   return (
     <div className="mx-auto w-fit text-center">
-      <h2 className="text-xl">Welcome to ABC Store {` ${user?.firstName} ${user?.lastName} `}</h2>
+      <h2 className="text-xl">Welcome to ABC Store {` ${user.firstName} ${user.lastName} `}</h2>
       <p>
         Find our best deals at{" "}
         <Link to="/deals">
