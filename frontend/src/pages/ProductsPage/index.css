@@ -21,7 +21,8 @@
   transition: 0.5s color, 0.5s background-color;
   margin-top: 0.75rem;
 }
-.productlist__child__search__input:focus, .productlist__child__search__input:hover {
+.productlist__child__search__input:focus,
+.productlist__child__search__input:hover {
   outline: none;
   background-color: #28367c;
   color: #1c265c;
@@ -66,4 +67,4 @@
 .productlist__pagination__btn:hover {
   background-color: var(--nav_background_secondary);
   color: var(--font_color_basic);
-}/*# sourceMappingURL=index.css.map */
+}

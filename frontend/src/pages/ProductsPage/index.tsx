@@ -44,13 +44,11 @@ const ProductsPage = () => {
     <>
       <Header />
       <Navbar />
-      <div className="productlist">
-        {/* <Loader /> */}
+      <div className="z-10 ml-[15%] w-[80%]">
         {!response.loading ? (
-          <div className="productlist__list">
+          <div className="flex flex-row justify-center flex-wrap mt-8 mb-16 mx-auto gap-5">
             {dataToShow.length > 0 ? (
               dataToShow.map((element) => {
-                //   console.log(element);
                 return (
                   <ProductCard
                     key={element._id}
