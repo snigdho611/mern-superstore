@@ -52,7 +52,7 @@ const ProductsPage = () => {
       .then((json) => {
         // console.log(json.results.products);
         // setOriginalData(json.results.products);
-        console.log(json.results);
+        // console.log(json.results);
         setTotal(json.results.total);
         setDataToShow(json.results.products);
         setResponse((prevState) => ({ ...prevState, loading: false }));
@@ -66,9 +66,9 @@ const ProductsPage = () => {
   //   setDataToShow(originalData);
   // }, [originalData]);
 
-  useEffect(() => {
-    console.log(dataToShow.length);
-  }, [dataToShow]);
+  // useEffect(() => {
+  //   console.log(dataToShow.length);
+  // }, [dataToShow]);
 
   // console.log(Array(8).fill(1));
   return (
@@ -97,19 +97,11 @@ const ProductsPage = () => {
           <div>No results</div>
         )}
       </div>
-      <div
-        style={{
-          margin: "0 auto",
-          width: "50%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        {/* {console.log(Array(originalData.length / 8))} */}
-        {Array.from(Array(Math.ceil(total / 8)).keys()).map((element) => {
+      <div className="my-0 mx-auto w-1/2 flex flex-row justify-center">
+        {Array.from(Array(Math.ceil(total / 8)).keys()).map((element, i) => {
           return (
             <button
+              key={i}
               onClick={() => {
                 navigate({
                   pathname: "/products",

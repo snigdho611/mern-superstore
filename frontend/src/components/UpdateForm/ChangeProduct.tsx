@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "util/local/index";
-import { Product } from "types";
+import { Product, Response } from "types";
+import { Form, InputRow, InputSubmit } from "components/Form";
 
 const ChangeProduct = () => {
   const [success, setSuccess] = useState(false);
@@ -15,6 +16,12 @@ const ChangeProduct = () => {
   const [imageURL, setImageURL] = useState<any>(null);
   const [imageMessage, setImageMessage] = useState("");
 
+  const [response, setResponse] = useState<Response>({
+    success: false,
+    loading: false,
+    message: null,
+  });
+
   const user = getUser();
   const navigate = useNavigate();
   useEffect(() => {
@@ -25,6 +32,7 @@ const ChangeProduct = () => {
   }, []);
 
   useEffect(() => {
+    setResponse({ ...response, loading: true, message: null });
     axios
       .get(`${process.env.REACT_APP_BASE_BACKEND}/products/details/${productId}`)
       .then((response) => {
@@ -54,7 +62,6 @@ const ChangeProduct = () => {
     reset({
       name: product && product.name ? product.name : "",
       description: product && product.description ? product.description : "",
-      // image: product && product.image ? product.image : "",
       price: product && product.price ? (product.price as string) : "",
       weight: product && product.weight ? product.weight : "",
     });
@@ -99,7 +106,7 @@ const ChangeProduct = () => {
     }
   }, [image, product, imageMessage, user.access_token]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FieldValues) => {
     setSuccess(false);
     setError("");
     const editData = {
@@ -125,6 +132,46 @@ const ChangeProduct = () => {
 
   return (
     <div className="">
+      <Form title="Update product" onSubmission={onSubmit} handleSubmit={handleSubmit}>
+        <InputRow
+          label="Name"
+          name="name"
+          errors={errors}
+          register={register}
+          required={true}
+          pattern={/^[A-Z a-z0-9±()]+$/i}
+        />
+        <InputRow
+          label="Description"
+          name="description"
+          errors={errors}
+          register={register}
+          required={true}
+          pattern={/^[A-Z a-z0-9±()]+$/i}
+        />
+        <InputRow
+          label="Price"
+          name="price"
+          errors={errors}
+          register={register}
+          required={true}
+          pattern={/^[0-9]+$/i}
+        />
+        <InputRow
+          label="Weight"
+          name="weight"
+          errors={errors}
+          register={register}
+          required={true}
+          pattern={/^[A-Z a-z0-9]+$/i}
+        />
+        <InputSubmit
+          text="Submit"
+          success={response.success}
+          loading={response.loading}
+          message={response.message}
+        />
+      </Form>
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="">
           <div>
@@ -140,7 +187,6 @@ const ChangeProduct = () => {
               alt="Not found"
               className=""
             />
-            {/* {image ? "Ok" : null} */}
           </div>
           <div>{imageMessage}</div>
           <input
@@ -153,7 +199,7 @@ const ChangeProduct = () => {
             alt="Not found"
           />
         </div>
-        <input
+        {/* <input
           {...register("name", {
             required: { value: true, message: "Name is required" },
             pattern: {
@@ -203,7 +249,7 @@ const ChangeProduct = () => {
           className=""
           type="text"
           placeholder="Weight"
-        />
+        /> */}
         <label className="">{errors.weight ? errors.weight.message : null}</label>
         <button className="">Submit</button>
         <label className="">

@@ -1,20 +1,6 @@
 import "./index.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "components/Header";
-import Navbar from "components/Navbar";
-import Footer from "components/Footer";
-import ChangeProduct from "components/UpdateForm/ChangeProduct";
-import AddProduct from "components/UpdateForm/AddProduct";
-import VerifyEmail from "components/VerifyEmail";
-// import Register from "components/Authenticate/Register";
-import Cart from "components/Cart";
-import Deals from "components/Deals";
-// import Home from "components/Home";
-// import Login from "components/Authenticate/Login";
-import ProductDetails from "components/ProductDetails";
-// import ProductList from "pages/ProductList";
-// import ResetPassword from "components/Authenticate/ResetPassword";
 import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
 import ProductsPage from "pages/ProductsPage";
 import "styles/index.css";
@@ -22,6 +8,8 @@ import Login from "pages/Login";
 import Register from "pages/Register";
 import ResetPassword from "pages/ResetPassword";
 import Home from "pages/Home";
+import VerifyEmail from "components/VerifyEmail";
+import ChangeProduct from "components/UpdateForm/ChangeProduct";
 
 const App = () => {
   const routes = [
@@ -48,6 +36,14 @@ const App = () => {
     {
       path: "/products",
       element: <ProductsPage />,
+    },
+    {
+      path: "/products/edit/:productId",
+      element: <ChangeProduct />,
+    },
+    {
+      path: "/email-verify",
+      element: <VerifyEmail />,
     },
   ];
 

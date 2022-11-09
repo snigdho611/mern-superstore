@@ -42,11 +42,9 @@ const ForgotPassword = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (response.success) {
+        if (json.success) {
           setResponse({ ...response, loading: false });
-          //
         } else {
-          //
           setResponse({
             ...response,
             loading: false,
@@ -68,7 +66,14 @@ const ForgotPassword = () => {
     <>
       <Header />
       <Form title="Please enter your email" onSubmission={onSubmission} handleSubmit={handleSubmit}>
-        <InputRow label="Email" name="email" errors={errors} register={register} required={true} />
+        <InputRow
+          label="Email"
+          name="email"
+          errors={errors}
+          register={register}
+          required={true}
+          pattern={/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i}
+        />
         <InputSubmit
           text="Submit"
           success={response.success}
