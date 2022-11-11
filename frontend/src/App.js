@@ -9,7 +9,7 @@ import Register from "pages/Register";
 import ResetPassword from "pages/ResetPassword";
 import Home from "pages/Home";
 import VerifyEmail from "components/VerifyEmail";
-import ChangeProduct from "components/UpdateForm/ChangeProduct";
+import UpdateProduct from "pages/UpdateProduct";
 
 const App = () => {
   const routes = [
@@ -39,7 +39,7 @@ const App = () => {
     },
     {
       path: "/products/edit/:productId",
-      element: <ChangeProduct />,
+      element: <UpdateProduct />,
     },
     {
       path: "/email-verify",

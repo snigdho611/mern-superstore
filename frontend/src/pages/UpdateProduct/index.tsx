@@ -6,11 +6,9 @@ import { getUser } from "util/local/index";
 import { Product, Response } from "types";
 import { Form, InputRow, InputSubmit } from "components/Form";
 
-const ChangeProduct = () => {
-  const [success, setSuccess] = useState(false);
+const UpdateProduct = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<Product>();
-  const [error, setError] = useState<any>();
 
   const [image, setImage] = useState<any>("");
   const [imageURL, setImageURL] = useState<any>(null);
@@ -32,17 +30,29 @@ const ChangeProduct = () => {
   }, []);
 
   useEffect(() => {
-    setResponse({ ...response, loading: true, message: null });
-    axios
-      .get(`${process.env.REACT_APP_BASE_BACKEND}/products/details/${productId}`)
-      .then((response) => {
-        setProduct(response.data.results);
-        setImage(response.data.results.image);
+    setResponse((prevState) => ({ ...prevState, loading: true, message: null }));
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/products/details/${productId}`)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        setProduct(json.results);
+        setImage(json.results.image);
+        setResponse({
+          success: true,
+          loading: false,
+          message: "",
+        });
       })
       .catch((error) => {
+        setResponse({
+          success: false,
+          loading: false,
+          message: "An unknown error has occured",
+        });
         console.log(error);
       });
   }, [productId]);
+
   const {
     register,
     reset,
@@ -102,13 +112,18 @@ const ChangeProduct = () => {
           setImageMessage("File failed to upload");
         });
     } catch (error) {
+      setResponse({
+        success: false,
+        loading: false,
+        message: "An unknown error has occured",
+      });
       console.log(error);
     }
   }, [image, product, imageMessage, user.access_token]);
 
   const onSubmit = (data: FieldValues) => {
-    setSuccess(false);
-    setError("");
+    // setSuccess(false);
+    // setError("");
     const editData = {
       ...data,
       productId: productId,
@@ -121,11 +136,23 @@ const ChangeProduct = () => {
         },
       })
       .then((response) => {
-        setSuccess(true);
+        // setSuccess(true);
+        setResponse({
+          ...response,
+          success: true,
+          loading: false,
+          message: "Successfully updated data",
+        });
         console.log(response);
       })
       .catch((error) => {
-        setError("Failed to update");
+        // setError("Failed to update");
+        setResponse({
+          ...response,
+          success: false,
+          loading: false,
+          message: "An unknown error has occured",
+        });
         console.log(error);
       });
   };
@@ -199,68 +226,11 @@ const ChangeProduct = () => {
             alt="Not found"
           />
         </div>
-        {/* <input
-          {...register("name", {
-            required: { value: true, message: "Name is required" },
-            pattern: {
-              value: /^[A-Z a-z0-9±()]+$/i,
-              message: "Only alphabetical characters or spaces are allowed",
-            },
-          })}
-          className=""
-          type="text"
-          placeholder="Name"
-        />
-        <label className="">{errors.name ? errors.name.message : null}</label>
-        <input
-          {...register("description", {
-            required: { value: true, message: "Description is required" },
-            pattern: {
-              value: /^[A-Z a-z.0-9,]+$/i,
-              message: "Only alphabetical characters or spaces are allowed",
-            },
-          })}
-          className=""
-          type="text"
-          placeholder="Description"
-        />
-        <label className="">{errors.description ? errors.description.message : null}</label>
-        <input
-          {...register("price", {
-            required: { value: true, message: "Price is required" },
-            pattern: {
-              value: /^[0-9]+$/i,
-              message: "Price must be numeric",
-            },
-          })}
-          className=""
-          type="text"
-          placeholder="Price"
-        />
-        <label className="">{errors.price ? errors.price.message : null}</label>
-        <input
-          {...register("weight", {
-            required: { value: true, message: "Weight is required" },
-            pattern: {
-              value: /^[A-Z a-z0-9]+$/i,
-              message: "Only alphabetical characters or spaces are allowed",
-            },
-          })}
-          className=""
-          type="text"
-          placeholder="Weight"
-        /> */}
         <label className="">{errors.weight ? errors.weight.message : null}</label>
         <button className="">Submit</button>
-        <label className="">
-          <p>{!error || error !== "" ? error : null}</p>
-        </label>
-        <label className="">
-          <p>{success ? "Success!" : null}</p>
-        </label>
       </form>
     </div>
   );
 };
 
-export default ChangeProduct;
+export default UpdateProduct;
