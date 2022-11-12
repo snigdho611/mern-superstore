@@ -114,7 +114,7 @@ class adminController {
         return res.status(HTTP_STATUS.OK).send(failure({ message: "Image update failed!" }));
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       next(error);
     }
   }

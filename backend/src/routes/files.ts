@@ -6,6 +6,7 @@ import path from "path";
 // getImage
 router.get("/products/:img", (req, res) => {
   try {
+    console.log(req.params.img);
     const dir = path.join(__dirname, "../", "\\files\\products\\" + req.params.img);
     res.sendFile(dir);
   } catch (error) {
