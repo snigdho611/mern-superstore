@@ -15,7 +15,8 @@ const fileStorage = multer.diskStorage({
         req.originalUrl === "/admin/products/update-image" ||
         req.originalUrl === "/admin/products/add"
       ) {
-        callback(null, path.join(__dirname, '../files/products'));
+        // callback(null, path.join(__dirname, '../files/products'));
+        callback(null, 'files/');
       } else if (req.originalUrl === "/admin/products/add") {
       }
     } else {

@@ -103,7 +103,8 @@ class adminController {
         } catch (error) {
           console.log("Product original image seems unavailable, unable to delete it.");
         }
-        product.image = `\\${req.file.path}`;
+        // \/home/snigdho611/Repositories/mern-superstore/backend/src
+        product.image = `/${req.file.path}`;
         product.save();
         return res
           .status(HTTP_STATUS.OK)
