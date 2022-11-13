@@ -1,5 +1,5 @@
 import React from "react";
-import "components/Form/index.css";
+// import "components/Form/index.css";
 import Loader from "components/Loader";
 import { FieldValues, UseFormHandleSubmit } from "react-hook-form";
 

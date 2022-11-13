@@ -122,8 +122,6 @@ const UpdateProduct = () => {
   }, [image, product, imageMessage, user.access_token]);
 
   const onSubmit = (data: FieldValues) => {
-    // setSuccess(false);
-    // setError("");
     const editData = {
       ...data,
       productId: productId,
@@ -160,6 +158,36 @@ const UpdateProduct = () => {
   return (
     <div className="">
       <Form title="Update product" onSubmission={onSubmit} handleSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)} className="">
+          <div className="">
+            <div>
+              <img
+                style={{ margin: "0 auto", height: "200px" }}
+                src={
+                  imageURL
+                    ? imageURL
+                    : product && product.image
+                    ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}`
+                    : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
+                }
+                alt="Not found"
+                className=""
+              />
+            </div>
+            <div>{imageMessage}</div>
+            <input
+              type="file"
+              onChange={(e) => {
+                if (e && e.target && e.target.files && e.target.files[0]) {
+                  setImage(e.target.files[0]);
+                }
+              }}
+              alt="Not found"
+            />
+          </div>
+          <label className="">{errors.weight ? errors.weight.message : null}</label>
+          <button className="">Submit</button>
+        </form>
         <InputRow
           label="Name"
           name="name"
@@ -174,7 +202,7 @@ const UpdateProduct = () => {
           errors={errors}
           register={register}
           required={true}
-          pattern={/^[A-Z a-z0-9±()]+$/i}
+          pattern={/^[A-Z a-z0-9±(),.]+$/i}
         />
         <InputRow
           label="Price"
@@ -199,36 +227,6 @@ const UpdateProduct = () => {
           message={response.message}
         />
       </Form>
-      <form onSubmit={handleSubmit(onSubmit)} className="">
-        <div className="">
-          <div>
-            <img
-              style={{ margin: "0 auto", height: "200px" }}
-              src={
-                imageURL
-                  ? imageURL
-                  : product && product.image
-                  ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}`
-                  : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
-              }
-              alt="Not found"
-              className=""
-            />
-          </div>
-          <div>{imageMessage}</div>
-          <input
-            type="file"
-            onChange={(e) => {
-              if (e && e.target && e.target.files && e.target.files[0]) {
-                setImage(e.target.files[0]);
-              }
-            }}
-            alt="Not found"
-          />
-        </div>
-        <label className="">{errors.weight ? errors.weight.message : null}</label>
-        <button className="">Submit</button>
-      </form>
     </div>
   );
 };

@@ -1,19 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { getUser } from "util/local/index";
-import "./index.css";
-// import shopLogo from "shop.png";
 
 const Header: React.FC = () => {
   let user = getUser();
 
   return (
-    <div className="header">
-      <div className="header__col">
+    <div className="bg-cyan-800 sticky flex top-0 h-24 shadow-lg shadow-blue-300">
+      <div className="w-1/2 flex justify-end">
         <Link to={user ? "/home" : "/"}>
           <img
             // style={{ height: "50px" }}
-            className="header__col__image"
+            className="h-[70px]"
             src={
               "https://res.cloudinary.com/drnym8nne/image/upload/v1659979478/superstore/basic/supermarket_bwbuit.png"
             }
@@ -21,7 +19,7 @@ const Header: React.FC = () => {
           />
         </Link>
       </div>
-      <div className="header__col">
+      <div className="w-1/2 flex justify-end">
         {user ? (
           user.isAdmin ? (
             <div>
