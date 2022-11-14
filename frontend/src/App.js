@@ -10,6 +10,7 @@ import ResetPassword from "pages/ResetPassword";
 import Home from "pages/Home";
 import VerifyEmail from "components/VerifyEmail";
 import UpdateProduct from "pages/UpdateProduct";
+import ProductDetails from "pages/ProductDetails";
 
 const App = () => {
   const routes = [
@@ -40,6 +41,10 @@ const App = () => {
     {
       path: "/products/edit/:productId",
       element: <UpdateProduct />,
+    },
+    {
+      path: "/products/:productId",
+      element: <ProductDetails />,
     },
     {
       path: "/email-verify",

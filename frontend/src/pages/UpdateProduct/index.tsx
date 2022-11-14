@@ -5,6 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "util/local/index";
 import { Product, Response } from "types";
 import { Form, InputRow, InputSubmit } from "components/Form";
+import Header from "components/Header";
+import Navbar from "components/Navbar";
+import Footer from "components/Footer";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -154,80 +157,86 @@ const UpdateProduct = () => {
         console.log(error);
       });
   };
+  // console.log(`${process.env.REACT_APP_BASE_BACKEND}${product && product.image}`);
 
   return (
-    <div className="">
-      <Form title="Update product" onSubmission={onSubmit} handleSubmit={handleSubmit}>
-        <form onSubmit={handleSubmit(onSubmit)} className="">
-          <div className="">
-            <div>
-              <img
-                style={{ margin: "0 auto", height: "200px" }}
-                src={
-                  imageURL
-                    ? imageURL
-                    : product && product.image
-                    ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}`
-                    : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
-                }
+    <>
+      <Header />
+      <Navbar />
+      <div className="">
+        <Form title="Update product" onSubmission={onSubmit} handleSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)} className="">
+            <div className="">
+              <div>
+                <img
+                  style={{ margin: "0 auto", height: "200px" }}
+                  src={
+                    imageURL
+                      ? imageURL
+                      : product && product.image
+                      ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}`
+                      : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
+                  }
+                  alt="Not found"
+                  className=""
+                />
+              </div>
+              <div>{imageMessage}</div>
+              <input
+                type="file"
+                onChange={(e) => {
+                  if (e && e.target && e.target.files && e.target.files[0]) {
+                    setImage(e.target.files[0]);
+                  }
+                }}
                 alt="Not found"
-                className=""
               />
             </div>
-            <div>{imageMessage}</div>
-            <input
-              type="file"
-              onChange={(e) => {
-                if (e && e.target && e.target.files && e.target.files[0]) {
-                  setImage(e.target.files[0]);
-                }
-              }}
-              alt="Not found"
-            />
-          </div>
-          <label className="">{errors.weight ? errors.weight.message : null}</label>
-          <button className="">Submit</button>
-        </form>
-        <InputRow
-          label="Name"
-          name="name"
-          errors={errors}
-          register={register}
-          required={true}
-          pattern={/^[A-Z a-z0-9±()]+$/i}
-        />
-        <InputRow
-          label="Description"
-          name="description"
-          errors={errors}
-          register={register}
-          required={true}
-          pattern={/^[A-Z a-z0-9±(),.]+$/i}
-        />
-        <InputRow
-          label="Price"
-          name="price"
-          errors={errors}
-          register={register}
-          required={true}
-          pattern={/^[0-9]+$/i}
-        />
-        <InputRow
-          label="Weight"
-          name="weight"
-          errors={errors}
-          register={register}
-          required={true}
-          pattern={/^[A-Z a-z0-9]+$/i}
-        />
-        <InputSubmit
-          text="Submit"
-          success={response.success}
-          loading={response.loading}
-          message={response.message}
-        />
-      </Form>
-    </div>
+            <label className="">{errors.weight ? errors.weight.message : null}</label>
+            <button className="">Submit</button>
+          </form>
+          <InputRow
+            label="Name"
+            name="name"
+            errors={errors}
+            register={register}
+            required={true}
+            pattern={/^[A-Z a-z0-9±()]+$/i}
+          />
+          <InputRow
+            label="Description"
+            name="description"
+            errors={errors}
+            register={register}
+            required={true}
+            pattern={/^[A-Z a-z0-9±(),.]+$/i}
+          />
+          <InputRow
+            label="Price"
+            name="price"
+            errors={errors}
+            register={register}
+            required={true}
+            pattern={/^[0-9]+$/i}
+          />
+          <InputRow
+            label="Weight"
+            name="weight"
+            errors={errors}
+            register={register}
+            required={true}
+            pattern={/^[A-Z a-z0-9]+$/i}
+          />
+          <InputSubmit
+            text="Submit"
+            success={response.success}
+            loading={response.loading}
+            message={response.message}
+          />
+        </Form>
+      </div>
+      <Footer />
+    </>
   );
 };
 

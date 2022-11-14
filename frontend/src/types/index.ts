@@ -3,6 +3,7 @@ export interface MongoObject {
 }
 
 export interface Product extends MongoObject {
+  id: string;
   name: string;
   description: string;
   weight: string;
