@@ -26,7 +26,7 @@ const UpdateProduct = () => {
   const user = getUser();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user.isAdmin) {
+    if (user && !user.isAdmin) {
       return navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,6 +80,8 @@ const UpdateProduct = () => {
     });
   }, [product, reset]);
 
+  const token = user && user.access_token;
+
   useEffect(() => {
     try {
       const extension = image && image.name ? image?.name.split(".")[1] : "";
@@ -102,7 +104,7 @@ const UpdateProduct = () => {
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${user && user.access_token}`,
             },
           }
         )
@@ -122,7 +124,7 @@ const UpdateProduct = () => {
       });
       console.log(error);
     }
-  }, [image, product, imageMessage, user.access_token]);
+  }, [image, product, imageMessage, user, token]);
 
   const onSubmit = (data: FieldValues) => {
     const editData = {
@@ -133,7 +135,7 @@ const UpdateProduct = () => {
     axios
       .put(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/edit`, editData, {
         headers: {
-          Authorization: `Bearer ${user.access_token}`,
+          Authorization: `Bearer ${user && user.access_token}`,
         },
       })
       .then((response) => {

@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data, dispatchMethod, deleteP
         <div className="w-1/2 border-b-2 border-blue-900 border-solid">Wt: {data.weight}</div>
       </div>
       <div className="flex flex-col justify-center">
-        {!user.isAdmin ? (
+        {user && !user.isAdmin ? (
           <>
             <button
               onClick={() => {
@@ -60,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data, dispatchMethod, deleteP
             Edit
           </Link>
         ) : null}
-        {user.isAdmin ? (
+        {user && user.isAdmin ? (
           <button
             onClick={() => {
               deleteProduct(data._id);

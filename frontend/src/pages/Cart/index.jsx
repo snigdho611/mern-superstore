@@ -1,14 +1,15 @@
 import axios from 'axios';
+import Footer from 'components/Footer';
+import Header from 'components/Header';
+import Loader from 'components/Loader';
+import Navbar from 'components/Navbar';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUser } from 'util/local/index';
-import classes from './index.module.css'
 
 const Cart = () => {
     const user = getUser();
-    // const firstName = user && user.userId && user.userId.firstName ? user.userId.firstName : null;
-    // const lastName = user && user.userId && user.userId.lastName ? user.userId.lastName : null;
 
     const cart = useSelector((state) => state.cart);
     const [success, setSuccess] = useState(false);
@@ -17,7 +18,6 @@ const Cart = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // console.log(cart)
         try {
             axios.post(`${process.env.REACT_APP_BASE_BACKEND
                 }/cart/get`,
@@ -106,49 +106,54 @@ const Cart = () => {
     }
 
     return (
-        <div className={classes.Cart}>
-            <table style={{ width: "100%" }}>
-                <thead>
-                    <tr>
-                        <th className={classes.Cart__dataHead} style={{ width: "10%" }}>#</th>
-                        <th className={classes.Cart__dataHead} style={{ width: "40%" }}>Name</th>
-                        <th className={classes.Cart__dataHead} style={{ width: "20%" }}>Qty</th>
-                        <th className={classes.Cart__dataHead} style={{ width: "30%" }}>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {cart.map(element => {
-                        return (
-                            <tr key={element.id}>
-                                <td className={classes.Cart__dataCell}>{element.id.slice(-2)}</td>
-                                <td className={classes.Cart__dataCell}>{element.name}</td>
-                                <td className={classes.Cart__dataCell}>{element.quantity}</td>
-                                <td className={classes.Cart__dataCell}>{element.price}x{element.quantity} = {element.price * element.quantity}</td>
-                                <td ><button className={classes.Cart__crossBtn} onClick={() => { removeFromCart(element) }}>x</button></td>
-                            </tr>
-                        )
-                    })}
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td className={classes.Cart__dataCell}>Total: <label style={{ fontWeight: "bold" }}>{calculateTotal()}</label></td>
-                    </tr>
-                    <tr>
-                        <td><Link className={classes.Cart__goBackBtn} to="/products">{"<="}</Link></td>
-                        <td></td>
-                        <td></td>
-                        <td><button className={classes.Cart_checkOutBtn} onClick={() => proceedCheckout()}>Checkout</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            {
-                loader ? <div className={classes.loader} /> : null
-            }
-            <div className={success ? classes.Cart__confirmationMsg : classes.Cart__errorMsg}>
-                {displayCheckoutMsg ? displayCheckoutMsg : null}
+        <>
+            <Header />
+            <Navbar />
+            <div className="w-2/3 mx-80 mt-28">
+                <table className='w-full'>
+                    <thead>
+                        <tr>
+                            <th className="bg-blue-700 text-blue-100 text-lg w-[10%]">#</th>
+                            <th className="bg-blue-700 text-blue-100 text-lg w-[40%]">Name</th>
+                            <th className="bg-blue-700 text-blue-100 text-lg w-[20%]">Qty</th>
+                            <th className="bg-blue-700 text-blue-100 text-lg w-[30%]">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cart.map(element => {
+                            return (
+                                <tr key={element.id}>
+                                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">{element.id.slice(-2)}</td>
+                                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">{element.name}</td>
+                                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">{element.quantity}</td>
+                                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">{element.price}x{element.quantity} = {element.price * element.quantity}</td>
+                                    <td ><button className="text-blue-100 bg-red-600 cursor-pointer px-4 py-2 transition-colors hover:bg-pink-300 hover:text-blue-900" onClick={() => { removeFromCart(element) }}>x</button></td>
+                                </tr>
+                            )
+                        })}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">Total: <label className='font-bold'>{calculateTotal()}</label></td>
+                        </tr>
+                        <tr>
+                            <td><Link className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl p-3 w-full transition-colors hover:bg-blue-400 hover:text-blue-800" to="/products">{"<="}</Link></td>
+                            <td></td>
+                            <td></td>
+                            <td><button className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl w-full h-[40px] transition-colors hover:bg-blue-400 hover:text-blue-800" onClick={() => proceedCheckout()}>Checkout</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                {
+                    loader ? <Loader /> : null
+                }
+                <div className={success ? "text-center font-bold text-green-400" : "text-center font-bold text-red-400"}>
+                    {displayCheckoutMsg ? displayCheckoutMsg : null}
+                </div>
             </div>
-        </div>
+            <Footer />
+        </>
     )
 }
 

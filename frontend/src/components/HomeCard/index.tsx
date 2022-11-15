@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const HomeCard: React.FC<any> = ({ user }) => {
-  console.log(user);
+  // console.log(user);
   return (
     <div className="mx-auto w-fit text-center">
       <h2 className="text-xl">Welcome to ABC Store {` ${user.firstName} ${user.lastName} `}</h2>

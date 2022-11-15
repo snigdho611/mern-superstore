@@ -33,7 +33,7 @@ const AddProduct = () => {
   });
 
   useEffect(() => {
-    if (!user.isAdmin) {
+    if (user && !user.isAdmin) {
       return navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,7 +73,7 @@ const AddProduct = () => {
       body: bodyData,
       headers: {
         // "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${user.access_token}`,
+        Authorization: `Bearer ${user && user.access_token}`,
       },
     })
       .then((res) => res.json())
