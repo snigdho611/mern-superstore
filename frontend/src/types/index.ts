@@ -12,6 +12,10 @@ export interface Product extends MongoObject {
   price: string | number;
 }
 
+export interface CartItem extends Product {
+  quantity: number;
+}
+
 export interface Login extends MongoObject {
   email: string;
   password: string;
