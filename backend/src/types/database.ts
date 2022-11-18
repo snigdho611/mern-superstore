@@ -1,5 +1,6 @@
 import { Request } from "express";
-import { ObjectId, Document } from "mongoose";
+import { Document } from "mongoose";
+import mongoose from "mongoose";
 
 export interface IProduct extends Document {
     name: string;
@@ -28,7 +29,7 @@ export interface ILogin extends Document {
     emailTokenExpire?: Date | null;
     passwordResetToken?: string | null;
     passwordResetExpire?: Date | null;
-    userId: IUser | ObjectId;
+    userId: IUser | mongoose.Types.ObjectId;
 }
 
 export interface MulterRequest extends Request {
