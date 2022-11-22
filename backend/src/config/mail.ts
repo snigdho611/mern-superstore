@@ -6,8 +6,8 @@ var mailTransport: nodemailer.Transporter<SMTPTransport.SentMessageInfo> = nodem
   host: "smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: "bfa1322a9f57c7",
-    pass: "b90d20ca97a69f",
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASS,
   },
 });
 
