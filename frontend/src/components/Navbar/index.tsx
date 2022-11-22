@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
             className={`text-center no-underline cursor-pointer text-xl transition-colors px-[10px] text-blue-200 hover:bg-blue-600 hover:text-gray-900 py-[2vh] ${
               location.pathname === "/products/add" ? "bg-blue-600 text-gray-800" : null
             }`}
-            to="/products/add"
+            to="/products/add-product"
           >
             Add Product
           </Link>

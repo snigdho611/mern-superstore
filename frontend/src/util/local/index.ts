@@ -1,12 +1,12 @@
 interface StorageUser {
-  access_token: String;
-  _id: String;
-  email: String;
+  access_token: string;
+  _id: string;
+  email: string;
   isAdmin: Boolean;
   isEmailVerified: Boolean;
-  firstName: String;
-  userId: String;
-  lastName: String;
+  firstName: string;
+  userId: string;
+  lastName: string;
 }
 
 export const getUser = () => {

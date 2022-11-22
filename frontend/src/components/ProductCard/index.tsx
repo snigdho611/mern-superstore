@@ -38,7 +38,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ data, dispatchMethod, deleteP
           <>
             <button
               onClick={() => {
-                console.log(data);
+                deleteProduct(data._id);
+                // console.log(data);
                 // dispatchMethod({
                 //   _id: data._id,
                 //   name: data.name,

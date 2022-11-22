@@ -38,6 +38,12 @@ const ProductsPage = () => {
   }, [searchParams]);
 
   useEffect(() => {
+    if (!searchParams.get("page")) {
+      navigate({
+        pathname: "/products",
+        search: `?page=1`,
+      });
+    }
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/products/all?page=1&limit=8`, {
       method: "GET",
     })
@@ -49,7 +55,11 @@ const ProductsPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [navigate, searchParams]);
+
+  const deleteProduct = (_id: string) => {
+    console.log(_id);
+  };
 
   return (
     <>
@@ -65,7 +75,7 @@ const ProductsPage = () => {
                     key={element._id}
                     data={element}
                     dispatchMethod={null}
-                    deleteProduct={null}
+                    deleteProduct={deleteProduct}
                   />
                 );
               })
@@ -88,7 +98,12 @@ const ProductsPage = () => {
                   search: `?page=${element + 1}`,
                 });
               }}
-              style={{ width: "80px", outline: "#bbb solid 1px" }}
+              className={`w-[80px] outline-1 outline outline-zinc-600 ${
+                parseInt(searchParams.get("page") as string) === element + 1
+                  ? "bg-blue-200"
+                  : "bg-blue"
+              }`}
+              // style={{ width: "80px", outline: "#bbb solid 1px" }}
             >
               {element + 1}
             </button>

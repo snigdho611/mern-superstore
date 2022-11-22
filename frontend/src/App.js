@@ -12,6 +12,7 @@ import VerifyEmail from "components/VerifyEmail";
 import UpdateProduct from "pages/UpdateProduct";
 import ProductDetails from "pages/ProductDetails";
 import Cart from "pages/Cart";
+import AddProduct from "pages/AddProduct";
 
 const App = () => {
   const routes = [
@@ -54,6 +55,10 @@ const App = () => {
     {
       path: "/cart",
       element: <Cart />,
+    },
+    {
+      path: "/products/add-product",
+      element: <AddProduct />,
     },
   ];
 

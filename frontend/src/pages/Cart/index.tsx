@@ -14,7 +14,7 @@ const Cart = () => {
 
   const cart: CartItem[] = useSelector((state: any) => state.cart);
   const [success, setSuccess] = useState<Boolean>(false);
-  const [displayCheckoutMsg, setDisplayCheckoutMsg] = useState<String>();
+  const [displayCheckoutMsg, setDisplayCheckoutMsg] = useState<string>();
   const [loader, setLoader] = useState<Boolean>(false);
   const dispatch = useDispatch();
 

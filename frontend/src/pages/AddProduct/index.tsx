@@ -4,6 +4,9 @@ import { FieldValues, useForm } from "react-hook-form";
 import { getUser } from "util/local/index";
 import { useNavigate } from "react-router-dom";
 import { Form, InputRow, InputSubmit, Response } from "components/Form";
+import Navbar from "components/Navbar";
+import Header from "components/Header";
+import Footer from "components/Footer";
 // import { useParams } from "react-router-dom";
 
 const AddProduct = () => {
@@ -105,67 +108,72 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="Form">
-      <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
-        <div className="Form__imageInput">
-          <div>
-            <img
-              style={{ margin: "0 auto", height: "200px" }}
-              src={imageURL ? imageURL : "#"}
-              alt="No file"
-              className="image"
+    <>
+      <Header />
+      <Navbar />
+      <div className="Form">
+        <Form onSubmission={onSubmission} handleSubmit={handleSubmit}>
+          <div className="Form__imageInput">
+            <div>
+              <img
+                style={{ margin: "0 auto", height: "200px" }}
+                src={imageURL ? imageURL : "#"}
+                alt="No file"
+                className="image"
+              />
+            </div>
+            <div>{imageMessage}</div>
+            <input
+              type="file"
+              onChange={(e) => {
+                setImage(e.target.files && e.target.files[0]);
+              }}
+              alt="Not found"
             />
           </div>
-          <div>{imageMessage}</div>
-          <input
-            type="file"
-            onChange={(e) => {
-              setImage(e.target.files && e.target.files[0]);
-            }}
-            alt="Not found"
+          <InputRow
+            label="Name"
+            name="name"
+            required={true}
+            pattern={/^[A-Z a-z0-9±()]+$/i}
+            register={register}
+            errors={errors}
           />
-        </div>
-        <InputRow
-          label="Name"
-          name="name"
-          required={true}
-          pattern={/^[A-Z a-z0-9±()]+$/i}
-          register={register}
-          errors={errors}
-        />
-        <InputRow
-          label="Description"
-          name="description"
-          required={true}
-          pattern={/^[A-Z a-z0-9±()]+$/i}
-          register={register}
-          errors={errors}
-        />
-        <InputRow
-          label="Price"
-          name="price"
-          required={true}
-          type={"number"}
-          //   pattern={/^[A-Z a-z0-9±()]+$/i}
-          register={register}
-          errors={errors}
-        />
-        <InputRow
-          label="Weight"
-          name="weight"
-          required={true}
-          pattern={/^[A-Z a-z0-9]+$/i}
-          register={register}
-          errors={errors}
-        />
-        <InputSubmit
-          text="Add"
-          success={response.success}
-          loading={response.loading}
-          message={response.message}
-        />
-      </Form>
-    </div>
+          <InputRow
+            label="Description"
+            name="description"
+            required={true}
+            pattern={/^[A-Z a-z0-9±()]+$/i}
+            register={register}
+            errors={errors}
+          />
+          <InputRow
+            label="Price"
+            name="price"
+            required={true}
+            type={"number"}
+            //   pattern={/^[A-Z a-z0-9±()]+$/i}
+            register={register}
+            errors={errors}
+          />
+          <InputRow
+            label="Weight"
+            name="weight"
+            required={true}
+            pattern={/^[A-Z a-z0-9]+$/i}
+            register={register}
+            errors={errors}
+          />
+          <InputSubmit
+            text="Add"
+            success={response.success}
+            loading={response.loading}
+            message={response.message}
+          />
+        </Form>
+      </div>
+      <Footer />
+    </>
   );
 };
 
