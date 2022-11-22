@@ -7,7 +7,7 @@ import { success, failure } from "../utils/commonResponse";
 import crypto = require("crypto");
 import path from "path";
 import { HTTP_STATUS } from "../utils/httpStatus";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import ejs from "ejs";
 import sendMail from "../config/mail";
