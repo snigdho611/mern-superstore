@@ -2,6 +2,7 @@ import Footer from "components/Footer";
 import { Response } from "components/Form";
 import Header from "components/Header";
 import Loader from "components/Loader";
+import Modal from "components/Modal";
 import Navbar from "components/Navbar";
 import ProductCard from "components/ProductCard";
 import React, { useEffect, useState } from "react";
@@ -16,6 +17,9 @@ const ProductsPage = () => {
     loading: false,
     message: "",
   });
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [productId, setProductId] = useState<string | null>();
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -38,6 +42,15 @@ const ProductsPage = () => {
   }, [searchParams]);
 
   useEffect(() => {
+    if (dataToShow.length === 0) {
+      navigate({
+        pathname: "/products",
+        search: `?page=1`,
+      });
+    }
+  }, [navigate, dataToShow]);
+
+  useEffect(() => {
     if (!searchParams.get("page")) {
       navigate({
         pathname: "/products",
@@ -58,11 +71,43 @@ const ProductsPage = () => {
   }, [navigate, searchParams]);
 
   const deleteProduct = (_id: string) => {
-    console.log(_id);
+    setModalOpen(true);
+    setProductId(_id);
+  };
+
+  const confirmDeletion = () => {
+    // console.log("ok");
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete/${productId}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.success) {
+          setDataToShow(dataToShow.filter((element) => element._id !== productId));
+          // console.log(dataToShow.length);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setModalOpen(false);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
     <>
+      {modalOpen ? (
+        <Modal
+          message="Are you sure you want to delete this product?"
+          buttons={[
+            { text: "Yes", function: confirmDeletion },
+            { text: "No", function: closeModal },
+          ]}
+        />
+      ) : null}
       <Header />
       <Navbar />
       <div className="z-10 ml-[15%] w-[80%]">
@@ -87,8 +132,8 @@ const ProductsPage = () => {
           <div>No results</div>
         )}
       </div>
-      <div className="my-0 mx-auto w-1/2 flex flex-row justify-center">
-        {Array.from(Array(Math.floor(total / 8)).keys()).map((element, i) => {
+      <div className="my-0 mx-auto w-full flex flex-row justify-center fixed bottom-0">
+        {Array.from(Array(Math.ceil(total / 8)).keys()).map((element, i) => {
           return (
             <button
               key={i}

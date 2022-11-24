@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import "./index.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { getUser } from "util/local/index";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +6,6 @@ import { Form, InputRow, InputSubmit, Response } from "components/Form";
 import Navbar from "components/Navbar";
 import Header from "components/Header";
 import Footer from "components/Footer";
-// import { useParams } from "react-router-dom";
 
 const AddProduct = () => {
   const [response, setResponse] = useState<Response>({
