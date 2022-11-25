@@ -6,7 +6,7 @@ import Modal from "components/Modal";
 import Navbar from "components/Navbar";
 import ProductCard from "components/ProductCard";
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, NavigateFunction } from "react-router-dom";
 import { Product } from "types";
 
 const ProductsPage = () => {
@@ -22,7 +22,7 @@ const ProductsPage = () => {
   const [productId, setProductId] = useState<string | null>();
 
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     fetch(
@@ -76,7 +76,6 @@ const ProductsPage = () => {
   };
 
   const confirmDeletion = () => {
-    // console.log("ok");
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete/${productId}`, {
       method: "DELETE",
     })
@@ -84,7 +83,6 @@ const ProductsPage = () => {
       .then((json) => {
         if (json.success) {
           setDataToShow(dataToShow.filter((element) => element._id !== productId));
-          // console.log(dataToShow.length);
         }
       })
       .catch((error) => {
@@ -95,6 +93,25 @@ const ProductsPage = () => {
 
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const addToCart = (_id: string) => {
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/add-product`, {
+      method: "POST",
+      body: JSON.stringify({
+        // userId: user,
+        productId: "629e5c4c8f7be555830f3490",
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.success) {
+          setDataToShow(dataToShow.filter((element) => element._id !== productId));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

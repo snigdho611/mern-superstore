@@ -57,14 +57,15 @@ class cartController {
 
       if (cart) {
         console.log("Cart exists");
-        const item = cart.itemList.filter((element) => {
-          if (element.productId._id.toString() === req.body.productId) {
-            element.quantity = element.quantity + 1;
-            return element;
+        let added = false;
+        for (let i = 0; i < cart.itemList.length; i++) {
+          if (cart.itemList[i].productId._id.toString() === req.body.productId) {
+            cart.itemList[i].quantity = cart.itemList[i].quantity + 1;
+            added = true;
           }
-        });
-        console.log(item);
-        if (item.length === 0) {
+        }
+        // console.log(item);
+        if (!added) {
           cart.itemList.push({ productId: req.body.productId, quantity: 1 });
         }
         cart.save();
@@ -95,23 +96,49 @@ class cartController {
           .status(HTTP_STATUS.NOT_ACCEPTABLE)
           .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
-      const cart = await Cart.findOne({ userId: req.body.userId })
+      const cart: ICart | null = await Cart.findOne({ userId: req.body.userId })
         .populate({ path: "itemList.productId" })
         .exec();
-      const product = await Product.findOne({ _id: req.body.productId });
-      if (product) {
-        if (cart) {
-          console.log("User already has a cart");
-          await cart.removeFromCart(product._id);
-          return res.status(HTTP_STATUS.OK).send(success({ message: "Decremented product to cart" }));
-        } else {
-          console.log("User doesn't have a cart");
-          return res.status(HTTP_STATUS.OK).send(success({ message: "Cart does not exist" }));
-        }
-      } else {
+      const product: IProduct | null = await Product.findOne({ _id: req.body.productId });
+
+      if (!product) {
+        console.log("Product does not exist");
         return res
-          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure({ message: "No product of such ID exists" }));
+          .status(HTTP_STATUS.NOT_ACCEPTABLE)
+          .send(failure({ message: "Product does not exist" }));
+      }
+
+      if (cart) {
+        console.log("Cart exists");
+        let removed = false;
+        for (let i = 0; i < cart.itemList.length; i++) {
+          if (cart.itemList[i].productId._id.toString() === req.body.productId) {
+            if (cart.itemList[i].quantity <= 1) {
+              cart.itemList.splice(i, 1);
+              removed = true;
+            } else {
+              cart.itemList[i].quantity = cart.itemList[i].quantity - 1;
+              removed = true;
+            }
+          }
+        }
+
+        if (!removed) {
+          console.log("Product does not exist in cart");
+          return res
+            .status(HTTP_STATUS.NOT_ACCEPTABLE)
+            .send(failure({ message: "Product does not exist in cart" }));
+        }
+        console.log(cart);
+        cart.save();
+        return res
+          .status(HTTP_STATUS.OK)
+          .send(success({ message: "Product has been removed from cart", data: cart }));
+      } else {
+        console.log("Cart does not exist");
+        return res
+          .status(HTTP_STATUS.NOT_ACCEPTABLE)
+          .send(failure({ message: "Cart does not exist" }));
       }
     } catch (error) {
       console.log(error);
