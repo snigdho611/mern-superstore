@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import Footer from "components/Footer";
 import React from "react";
 import { useSearchParams } from "react-router-dom";

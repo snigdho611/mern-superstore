@@ -1,21 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getUser } from "util/local/index";
+// import { getUser } from "util/local/index";
 
 interface ProductCardProps {
   data: any;
   dispatchMethod: any;
   deleteProduct?: (objectId: string) => void;
   addToCart?: (objectId: string) => void;
+  isAdmin: boolean;
 }
 const ProductCard: React.FC<ProductCardProps> = ({
   data,
   dispatchMethod,
   deleteProduct,
   addToCart,
+  isAdmin,
 }) => {
-  const user = getUser();
-  const user_type = user && user.isAdmin ? user.isAdmin : null;
+  // const user = getUser();
+  // const user_type = user && user.isAdmin ? user.isAdmin : null;
 
   return (
     <div className="bg-blue-200 rounded-lg w-64 flex flex-col shadow-blue-600">
@@ -40,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="w-1/2 border-b-2 border-blue-900 border-solid">Wt: {data.weight}</div>
       </div>
       <div className="flex flex-col justify-center">
-        {user && !user.isAdmin ? (
+        {!isAdmin ? (
           <>
             <button
               onClick={() => {
@@ -59,15 +61,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </button>
           </>
         ) : null}
-        {user_type ? (
+        {isAdmin ? (
           <Link
-            to={`/products/edit/${data._id}`}
+            to={`/product/edit/${data._id}`}
             className="w-24 h-10 bg-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm text-blue-50 border-none cursor-pointer rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center"
           >
             Edit
           </Link>
         ) : null}
-        {user && user.isAdmin ? (
+        {isAdmin ? (
           <button
             onClick={() => {
               deleteProduct?.(data._id);
@@ -78,7 +80,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </button>
         ) : null}
         <Link
-          to={`/products/${data._id}`}
+          to={`/product/${data._id}`}
           className="w-24 h-10 bg-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm text-blue-50 border-none cursor-pointer rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center"
         >
           Details

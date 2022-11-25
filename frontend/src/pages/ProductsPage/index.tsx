@@ -8,6 +8,7 @@ import ProductCard from "components/ProductCard";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, NavigateFunction } from "react-router-dom";
 import { Product } from "types";
+import { getUser } from "util/local";
 
 const ProductsPage = () => {
   const [dataToShow, setDataToShow] = useState<Product[]>([]);
@@ -23,6 +24,8 @@ const ProductsPage = () => {
 
   const [searchParams] = useSearchParams();
   const navigate: NavigateFunction = useNavigate();
+
+  const user = getUser();
 
   useEffect(() => {
     fetch(
@@ -96,11 +99,17 @@ const ProductsPage = () => {
   };
 
   const addToCart = (_id: string) => {
+    console.log(_id);
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/add-product`, {
       method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user && user.access_token}`,
+      },
       body: JSON.stringify({
-        // userId: user,
-        productId: "629e5c4c8f7be555830f3490",
+        userId: user?._id,
+        productId: _id,
       }),
     })
       .then((response) => response.json())
@@ -138,6 +147,8 @@ const ProductsPage = () => {
                     data={element}
                     dispatchMethod={null}
                     deleteProduct={deleteProduct}
+                    addToCart={addToCart}
+                    isAdmin={(user && user.isAdmin) as boolean}
                   />
                 );
               })

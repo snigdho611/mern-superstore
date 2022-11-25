@@ -41,11 +41,11 @@ const App = () => {
       element: <ProductsPage />,
     },
     {
-      path: "/products/edit/:productId",
+      path: "/product/edit/:productId",
       element: <UpdateProduct />,
     },
     {
-      path: "/products/:productId",
+      path: "/product/:productId",
       element: <ProductDetails />,
     },
     {
