@@ -25,46 +25,46 @@ const cartSchema = new mongoose.Schema({
   itemList: [itemEntry],
 });
 
-cartSchema.methods.addToCart = async function (productId: number) {
-  try {
-    const productIndex = this.itemList.findIndex((prod: any) => {
-      console.log(prod.productId);
-      return prod.productId._id.toString() === productId.toString();
-    });
-    if (productIndex >= 0) {
-      console.log("Product inccremented to cart");
+// cartSchema.methods.addToCart = async function (productId: number) {
+//   try {
+//     const productIndex = this.itemList.findIndex((prod: any) => {
+//       console.log(prod.productId);
+//       return prod.productId._id.toString() === productId.toString();
+//     });
+//     if (productIndex >= 0) {
+//       console.log("Product inccremented to cart");
 
-      this.itemList[productIndex].quantity++;
-    } else {
-      console.log("Product added from cart");
-      this.itemList.push({
-        productId: productId,
-        quantity: 1,
-      });
-    }
-    await this.save();
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
+//       this.itemList[productIndex].quantity++;
+//     } else {
+//       console.log("Product added from cart");
+//       this.itemList.push({
+//         productId: productId,
+//         quantity: 1,
+//       });
+//     }
+//     await this.save();
+//   } catch (error: any) {
+//     throw new Error(error);
+//   }
+// };
 
-cartSchema.methods.removeFromCart = async function (productId: number) {
-  try {
-    const productIndex = this.itemList.findIndex(
-      (prod: any) => prod.productId._id.toString() === productId.toString()
-    );
-    if (productIndex >= 0 && this.itemList[productIndex].quantity > 1) {
-      console.log("Product decremented from cart");
-      this.itemList[productIndex].quantity--;
-    } else {
-      console.log("Product deleted from cart");
-      this.itemList.splice(productIndex, 1);
-    }
-    await this.save();
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
+// cartSchema.methods.removeFromCart = async function (productId: number) {
+//   try {
+//     const productIndex = this.itemList.findIndex(
+//       (prod: any) => prod.productId._id.toString() === productId.toString()
+//     );
+//     if (productIndex >= 0 && this.itemList[productIndex].quantity > 1) {
+//       console.log("Product decremented from cart");
+//       this.itemList[productIndex].quantity--;
+//     } else {
+//       console.log("Product deleted from cart");
+//       this.itemList.splice(productIndex, 1);
+//     }
+//     await this.save();
+//   } catch (error: any) {
+//     throw new Error(error);
+//   }
+// };
 
 const Cart = mongoose.model("Cart", cartSchema);
 export default Cart;

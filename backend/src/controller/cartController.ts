@@ -1,11 +1,11 @@
 import { Request, NextFunction, Response } from "express";
 import { AuthRequest } from "types/commmon";
-import { ILogin, IProduct, IUser } from "types/database";
+import { ICart, ILogin, IProduct, IUser } from "types/database";
 
 import { Product } from "../model/product";
 import { success, failure } from "../utils/commonResponse";
 import { HTTP_STATUS } from "../utils/httpStatus";
-import { validationResult } from "express-validator";
+import { Result, ValidationError, validationResult } from "express-validator";
 import Cart from "../model/cart";
 import { Login } from "../model/login";
 import path from "path";
@@ -18,7 +18,7 @@ class cartController {
   async getCart(req: Request, res: Response, next: NextFunction) {
     try {
       //
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.NOT_ACCEPTABLE)
@@ -35,35 +35,51 @@ class cartController {
     }
   }
 
-  async addProductToCart(req: any, res: Response, next: NextFunction) {
+  async addProductToCart(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.NOT_ACCEPTABLE)
           .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
-      const cart = await Cart.findOne({ userId: req.body.userId })
+      const cart: ICart | null = await Cart.findOne({ userId: req.body.userId })
         .populate({ path: "itemList.productId" })
         .exec();
       const product: IProduct | null = await Product.findOne({ _id: req.body.productId });
-      if (product) {
-        if (cart) {
-          console.log("User already has a cart");
-          await cart.addToCart(product._id);
-          return res.status(HTTP_STATUS.OK).send(success({ message: "Incremented product to cart" }));
-        } else {
-          console.log("User doesn't have a cart");
-          // console.log(req.user._id)
-          const newCart = new Cart({ userId: req.user._id, itemList: [], total: 0 });
-          await newCart.save();
-          await newCart.addToCart(product._id);
-          return res.status(HTTP_STATUS.OK).send(success({ message: "Created new cart for user" }));
-        }
-      } else {
+
+      if (!product) {
+        console.log("Product does not exist");
         return res
-          .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
-          .send(failure({ message: "No product of such ID exists" }));
+          .status(HTTP_STATUS.NOT_ACCEPTABLE)
+          .send(failure({ message: "Product does not exist" }));
+      }
+
+      if (cart) {
+        console.log("Cart exists");
+        const item = cart.itemList.filter((element) => {
+          if (element.productId._id.toString() === req.body.productId) {
+            element.quantity = element.quantity + 1;
+            return element;
+          }
+        });
+        console.log(item);
+        if (item.length === 0) {
+          cart.itemList.push({ productId: req.body.productId, quantity: 1 });
+        }
+        cart.save();
+        console.log("Product has been added to cart");
+        return res
+          .status(HTTP_STATUS.OK)
+          .send(success({ message: "Cart exists, product has been added to cart", data: cart }));
+      } else {
+        console.log("Cart does not exist");
+        const newCart = new Cart({ userId: req.body.userId, itemList: [{ productId: req.body.productId, quantity: 1 }] });
+        newCart.save();
+        console.log(newCart);
+        return res
+          .status(HTTP_STATUS.OK)
+          .send(success({ message: "Cart has been created, product has been added to cart", data: newCart }));
       }
     } catch (error) {
       console.log(error);
@@ -73,7 +89,7 @@ class cartController {
 
   async removeProductFromCart(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.NOT_ACCEPTABLE)
@@ -107,7 +123,7 @@ class cartController {
   // Send email when customer is checking out
   async sendCheckoutEmail(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.NOT_ACCEPTABLE)

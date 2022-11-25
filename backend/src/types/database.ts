@@ -35,3 +35,27 @@ export interface ILogin extends Document {
 export interface MulterRequest extends Request {
     file?: any;
 }
+
+export interface ICart extends Document {
+    userId: IUser | mongoose.Types.ObjectId;
+    itemList: {
+        productId: IProduct | mongoose.Types.ObjectId;
+        quantity: number;
+    }[];
+    // userId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     ref: "User",
+    // },
+    // itemList: [{
+    //     productId: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         required: true,
+    //         ref: Product,
+    //     },
+    //     quantity: {
+    //         type: Number,
+    //         required: true,
+    //     },
+    // }],
+}

@@ -16,11 +16,13 @@ class adminController {
       if (!req.file) {
         return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure({ message: "Product Image is required.Only jpeg, jpg and png file is allowed!" }));
       }
+      // console.log(validatorResult);
       if (!validatorResult.isEmpty()) {
         if (req.file) {
           await fsPromises.unlink(path.join(__dirname, "../files/products", req.file.filename));
           console.log({ error: "File was deleted due to other validation errors" });
         }
+        // console.log(req.file);
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
@@ -45,13 +47,16 @@ class adminController {
       });
     } catch (error) {
       console.log(error);
-      next(error);
+      // next(error);
+      return res
+        .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+        .send(failure({ message: "An unexpected error occured" }));
     }
   }
 
   async updateProduct(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
@@ -82,9 +87,10 @@ class adminController {
   async updateImage(req: MulterRequest, res: Response, next: NextFunction) {
     try {
       const validatorResult = validationResult(req);
-      if (!req.file) {
-        return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure({ message: "Product Image is required.Only jpeg, jpg and png file is allowed!" }));
-      }
+      // if (!req.file) {
+      //   return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure({ message: "Product Image is required.Only jpeg, jpg and png file is allowed!" }));
+      // }
+      console.log(req.body);
       console.log("Image format: ok");
       if (!validatorResult.isEmpty()) {
         if (req.file) {
@@ -122,7 +128,7 @@ class adminController {
 
   async deleteProduct(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)

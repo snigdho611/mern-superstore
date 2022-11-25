@@ -7,7 +7,9 @@ const router = express.Router();
 
 router.post("/get", checkAuth, validator.getCart, CartController.getCart);
 
-router.post("/add-product", checkAuth, validator.addToCart, CartController.addProductToCart);
+router.post("/add-product",
+  // checkAuth, 
+  validator.addToCart, CartController.addProductToCart);
 
 router.post(
   "/remove-product",

@@ -62,7 +62,7 @@ class authenticateController {
 
   async signup(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
@@ -144,7 +144,7 @@ class authenticateController {
 
   async emailVerify(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
@@ -179,7 +179,7 @@ class authenticateController {
   }
   async requestResetPasswordEmail(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
@@ -231,7 +231,7 @@ class authenticateController {
 
   async resetPassword(req: Request, res: Response, next: NextFunction) {
     try {
-      const validatorResult = validationResult(req);
+      const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
