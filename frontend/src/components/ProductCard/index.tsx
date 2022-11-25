@@ -5,9 +5,15 @@ import { getUser } from "util/local/index";
 interface ProductCardProps {
   data: any;
   dispatchMethod: any;
-  deleteProduct: any;
+  deleteProduct?: (objectId: string) => void;
+  addToCart?: (objectId: string) => void;
 }
-const ProductCard: React.FC<ProductCardProps> = ({ data, dispatchMethod, deleteProduct }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  data,
+  dispatchMethod,
+  deleteProduct,
+  addToCart,
+}) => {
   const user = getUser();
   const user_type = user && user.isAdmin ? user.isAdmin : null;
 
@@ -38,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data, dispatchMethod, deleteP
           <>
             <button
               onClick={() => {
-                deleteProduct(data._id);
+                addToCart?.(data._id);
                 // console.log(data);
                 // dispatchMethod({
                 //   _id: data._id,
@@ -64,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data, dispatchMethod, deleteP
         {user && user.isAdmin ? (
           <button
             onClick={() => {
-              deleteProduct(data._id);
+              deleteProduct?.(data._id);
             }}
             className="w-24 h-10 bg-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm text-blue-50 border-none cursor-pointer rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center"
           >

@@ -37,7 +37,7 @@ const UpdateProduct = () => {
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/products/details/${productId}`)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        // console.log(json);
         setProduct(json.results);
         setImage(json.results.image);
         setResponse({
@@ -80,11 +80,12 @@ const UpdateProduct = () => {
     });
   }, [product, reset]);
 
-  const token = user && user.access_token;
+  // const token = user && user.access_token;
 
   useEffect(() => {
     try {
       const extension = image && image.name ? image?.name.split(".")[1] : "";
+      console.log(extension);
       if (extension === "") {
         return;
       }
@@ -93,22 +94,21 @@ const UpdateProduct = () => {
         setImageMessage("File is in the wrong format");
         return;
       }
+      // console.log(URL.createObjectURL(image));
       setImageURL(URL.createObjectURL(image));
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_BACKEND}/admin/products/update-image`,
-          {
-            productId: product && product._id ? product._id : null,
-            productImage: image,
-          },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${user && user.access_token}`,
-            },
-          }
-        )
-        .then((response) => {
+      const formData = new FormData();
+      formData.append("productId", (product && product._id) as string);
+      formData.append("productImage", image);
+      fetch(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/update-image`, {
+        method: "POST",
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user && user.access_token}`,
+        },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((json) => {
           console.log(response);
           setImageMessage("File uploaded successfully");
         })
@@ -124,7 +124,8 @@ const UpdateProduct = () => {
       });
       console.log(error);
     }
-  }, [image, product, imageMessage, user, token]);
+    // eslint-disable-next-line
+  }, [product, image]);
 
   const onSubmit = (data: FieldValues) => {
     const editData = {
@@ -220,6 +221,7 @@ const UpdateProduct = () => {
             register={register}
             required={true}
             pattern={/^[0-9]+$/i}
+            type="number"
           />
           <InputRow
             label="Weight"
