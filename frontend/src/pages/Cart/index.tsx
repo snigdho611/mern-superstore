@@ -12,7 +12,8 @@ import { CartItem } from "types/index";
 const Cart = () => {
   const user = getUser();
 
-  const cart: CartItem[] = useSelector((state: any) => state.cart);
+  // const cart: CartItem[] = useSelector((state: any) => state.cart);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [success, setSuccess] = useState<Boolean>(false);
   const [displayCheckoutMsg, setDisplayCheckoutMsg] = useState<string>();
   const [loader, setLoader] = useState<Boolean>(false);
@@ -61,7 +62,7 @@ const Cart = () => {
       setDisplayCheckoutMsg(
         `Sorry, ${user && user.firstName} ${
           user && user.lastName
-        } san, but you need to select something to buy it`
+        }, but you need to select something to buy it`
       );
     } else {
       console.log(user && user._id);
@@ -86,7 +87,7 @@ const Cart = () => {
             setDisplayCheckoutMsg(
               `Thank you for shopping with us, ${user && user.firstName} ${
                 user && user.lastName
-              } san, please wait for a confirmation email`
+              } please wait for a confirmation email`
             );
             setLoader(false);
           }, 2000);
@@ -101,29 +102,25 @@ const Cart = () => {
     }
   };
 
-  const removeFromCart = (data: CartItem) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_BACKEND}/cart/remove-product`,
-        {
-          userId: user && user._id.toString(),
-          productId: data.id,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user && user.access_token}`,
-          },
-        }
-      )
+  const removeFromCart = (_id: string) => {
+    // console.log(_id);
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/remove-product`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user && user.access_token}`,
+      },
+      body: JSON.stringify({
+        userId: user && user._id.toString(),
+        productId: _id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json))
       .catch((error) => {
         console.log(error);
       });
-    dispatch({
-      type: "dec",
-      payLoad: { id: data.id },
-    });
   };
 
   return (
@@ -141,35 +138,36 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {cart.map((element) => {
-              return (
-                <tr key={element.id}>
-                  <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                    {element.id.slice(-2)}
-                  </td>
-                  <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                    {element.name}
-                  </td>
-                  <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                    {element.quantity}
-                  </td>
-                  <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                    {element.price}x{element.quantity} ={" "}
-                    {(element.price as number) * element.quantity}
-                  </td>
-                  <td>
-                    <button
-                      className="text-blue-100 bg-red-600 cursor-pointer px-4 py-2 transition-colors hover:bg-pink-300 hover:text-blue-900"
-                      onClick={() => {
-                        removeFromCart(element);
-                      }}
-                    >
-                      x
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {cart &&
+              cart.map((element) => {
+                return (
+                  <tr key={element.id}>
+                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                      {element.id.slice(-2)}
+                    </td>
+                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                      {element.name}
+                    </td>
+                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                      {element.quantity}
+                    </td>
+                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                      {element.price}x{element.quantity} ={" "}
+                      {(element.price as number) * element.quantity}
+                    </td>
+                    <td>
+                      <button
+                        className="text-blue-100 bg-red-600 cursor-pointer px-4 py-2 transition-colors hover:bg-pink-300 hover:text-blue-900"
+                        onClick={() => {
+                          removeFromCart(element.id);
+                        }}
+                      >
+                        x
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             <tr>
               <td></td>
               <td></td>

@@ -26,11 +26,11 @@ const Header: React.FC = () => {
               <div>Admin Mode</div>
             </div>
           ) : (
-            <div>
-              <Link to="/cart" className="cart__btn">
-                Cart
-              </Link>
-            </div>
+            <Link to="/cart" className="cart__btn">
+              <div className="h-10 w-10 mx-5 my-5 px-2 py-2 rounded-3xl bg-blue-100 hover:bg-blue-400 transition-colors">
+                <img src="/images/shopping-cart.png" alt="Not found" />
+              </div>
+            </Link>
           )
         ) : null}
       </div>
