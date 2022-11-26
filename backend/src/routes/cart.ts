@@ -5,7 +5,10 @@ import { isAdmin, checkAuth } from "../middleware/authenticate";
 import validator from "../middleware/validation";
 const router = express.Router();
 
-router.post("/get", checkAuth, validator.getCart, CartController.getCart);
+router.post("/get",
+  // checkAuth, 
+  validator.getCart,
+  CartController.getCart);
 
 router.post("/add-product",
   // checkAuth, 
