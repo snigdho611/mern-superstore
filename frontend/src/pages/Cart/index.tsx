@@ -24,7 +24,7 @@ const Cart = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user && user.access_token}`,
+        // Authorization: `Bearer ${user && user.access_token}`,
       },
     })
       .then((response) => response.json())
@@ -35,12 +35,11 @@ const Cart = () => {
       .catch((error) => {
         console.log(error);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart.length]);
+  }, [cart, user]);
 
   const calculateTotal = () => {
     const total = cart.reduce((accumulator, object) => {
-      return accumulator + (object.price as number) * object.quantity;
+      return accumulator + ((object.productId as Product).price as number) * object.quantity;
     }, 0);
     return total;
   };
@@ -108,6 +107,8 @@ const Cart = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    setCart([]);
   };
 
   return (

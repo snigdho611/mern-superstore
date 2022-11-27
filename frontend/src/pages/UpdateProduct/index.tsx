@@ -14,8 +14,9 @@ const UpdateProduct = () => {
   const [product, setProduct] = useState<Product>();
 
   const [image, setImage] = useState<any>(null);
-  const [imageURL, setImageURL] = useState<any>(null);
-  const [imageMessage, setImageMessage] = useState("");
+  const [imageURL, setImageURL] = useState<Blob | MediaSource | string | null>(null);
+  const [fileFormatStatus, setFileFormatStatus] = useState<boolean>(false);
+  // const [imageMessage, setImageMessage] = useState("");
 
   const [response, setResponse] = useState<Response>({
     success: false,
@@ -89,10 +90,23 @@ const UpdateProduct = () => {
         return;
       }
       if (extension !== "jpg" && extension !== "png" && extension !== "jpeg") {
-        console.log("File is in the wrong format");
-        setImageMessage("File is in the wrong format");
+        // console.log("File is in the wrong format");
+        // setImageMessage("File is in the wrong format");
+        setResponse({
+          success: false,
+          loading: false,
+          message: "File is in the wrong format",
+        });
+
+        setFileFormatStatus(false);
         return;
       }
+      setResponse({
+        success: false,
+        loading: false,
+        message: "",
+      });
+      setFileFormatStatus(true);
       setImageURL(URL.createObjectURL(image));
     } catch (error) {
       setResponse({
@@ -118,12 +132,24 @@ const UpdateProduct = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(response);
-        setImageMessage("File uploaded successfully");
+        // console.log(response);
+        // setImageMessage("File uploaded successfully");
+        setResponse({
+          //  ...response,
+          success: true,
+          loading: false,
+          message: "File uploaded successfully",
+        });
       })
       .catch((error) => {
         console.log(error);
-        setImageMessage("File failed to upload");
+        // setImageMessage("File failed to upload");
+        setResponse({
+          //  ...response,
+          success: true,
+          loading: false,
+          message: "File failed to upload",
+        });
       });
   };
 
@@ -171,8 +197,8 @@ const UpdateProduct = () => {
               <img
                 style={{ margin: "0 auto", height: "200px" }}
                 src={
-                  imageURL
-                    ? imageURL
+                  (imageURL as string)
+                    ? (imageURL as string)
                     : product && product.image
                     ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}`
                     : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
@@ -181,8 +207,10 @@ const UpdateProduct = () => {
                 className=""
               />
             </div>
-            <div>{imageMessage}</div>
+            {/* <div>{imageMessage}</div> */}
             <input
+              // style={{ visibility: "hidden" }}
+              className="my-2"
               type="file"
               onChange={(e) => {
                 if (e && e.target && e.target.files && e.target.files[0]) {
@@ -193,9 +221,14 @@ const UpdateProduct = () => {
             />
           </div>
           <label className="">{errors.weight ? errors.weight.message : null}</label>
-          <button className="" onClick={() => updateImage()}>
-            Submit
-          </button>
+          {fileFormatStatus ? (
+            <button
+              className="h-8 w-8 mx-auto bg-blue-300 rounded-lg px-1 py-1 hover:bg-blue-400 transition-colors my-2"
+              onClick={() => updateImage()}
+            >
+              <img src="/images/upload-icon.png" alt="Not found" />
+            </button>
+          ) : null}
           {/* </form> */}
           <InputRow
             label="Name"
