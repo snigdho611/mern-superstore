@@ -13,7 +13,7 @@ const UpdateProduct = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState<Product>();
 
-  const [image, setImage] = useState<any>("");
+  const [image, setImage] = useState<any>(null);
   const [imageURL, setImageURL] = useState<any>(null);
   const [imageMessage, setImageMessage] = useState("");
 
@@ -37,7 +37,6 @@ const UpdateProduct = () => {
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/products/details/${productId}`)
       .then((res) => res.json())
       .then((json) => {
-        // console.log(json);
         setProduct(json.results);
         setImage(json.results.image);
         setResponse({
@@ -94,28 +93,7 @@ const UpdateProduct = () => {
         setImageMessage("File is in the wrong format");
         return;
       }
-      // console.log(URL.createObjectURL(image));
       setImageURL(URL.createObjectURL(image));
-      const formData = new FormData();
-      formData.append("productId", (product && product._id) as string);
-      formData.append("productImage", image);
-      fetch(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/update-image`, {
-        method: "POST",
-        headers: {
-          // "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user && user.access_token}`,
-        },
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(response);
-          setImageMessage("File uploaded successfully");
-        })
-        .catch((error) => {
-          console.log(error);
-          setImageMessage("File failed to upload");
-        });
     } catch (error) {
       setResponse({
         success: false,
@@ -124,8 +102,30 @@ const UpdateProduct = () => {
       });
       console.log(error);
     }
-    // eslint-disable-next-line
-  }, [product, image]);
+  }, [image, product]);
+
+  const updateImage = () => {
+    const formData = new FormData();
+    formData.append("productId", (product && product._id) as string);
+    formData.append("productImage", image);
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/update-image`, {
+      method: "POST",
+      headers: {
+        // "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${user && user.access_token}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(response);
+        setImageMessage("File uploaded successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+        setImageMessage("File failed to upload");
+      });
+  };
 
   const onSubmit = (data: FieldValues) => {
     const editData = {
@@ -140,7 +140,6 @@ const UpdateProduct = () => {
         },
       })
       .then((response) => {
-        // setSuccess(true);
         setResponse({
           ...response,
           success: true,
@@ -150,7 +149,6 @@ const UpdateProduct = () => {
         console.log(response);
       })
       .catch((error) => {
-        // setError("Failed to update");
         setResponse({
           ...response,
           success: false,
@@ -160,7 +158,6 @@ const UpdateProduct = () => {
         console.log(error);
       });
   };
-  // console.log(`${process.env.REACT_APP_BASE_BACKEND}${product && product.image}`);
 
   return (
     <>
@@ -168,36 +165,38 @@ const UpdateProduct = () => {
       <Navbar />
       <div className="">
         <Form title="Update product" onSubmission={onSubmit} handleSubmit={handleSubmit}>
-          <form onSubmit={handleSubmit(onSubmit)} className="">
-            <div className="">
-              <div>
-                <img
-                  style={{ margin: "0 auto", height: "200px" }}
-                  src={
-                    imageURL
-                      ? imageURL
-                      : product && product.image
-                      ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}`
-                      : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
-                  }
-                  alt="Not found"
-                  className=""
-                />
-              </div>
-              <div>{imageMessage}</div>
-              <input
-                type="file"
-                onChange={(e) => {
-                  if (e && e.target && e.target.files && e.target.files[0]) {
-                    setImage(e.target.files[0]);
-                  }
-                }}
+          {/* <form onSubmit={(e) => updateImage(e)} className=""> */}
+          <div className="">
+            <div>
+              <img
+                style={{ margin: "0 auto", height: "200px" }}
+                src={
+                  imageURL
+                    ? imageURL
+                    : product && product.image
+                    ? `${process.env.REACT_APP_BASE_BACKEND}${product.image.replace(/\\/g, "/")}`
+                    : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
+                }
                 alt="Not found"
+                className=""
               />
             </div>
-            <label className="">{errors.weight ? errors.weight.message : null}</label>
-            <button className="">Submit</button>
-          </form>
+            <div>{imageMessage}</div>
+            <input
+              type="file"
+              onChange={(e) => {
+                if (e && e.target && e.target.files && e.target.files[0]) {
+                  setImage(e.target.files[0]);
+                }
+              }}
+              alt="Not found"
+            />
+          </div>
+          <label className="">{errors.weight ? errors.weight.message : null}</label>
+          <button className="" onClick={() => updateImage()}>
+            Submit
+          </button>
+          {/* </form> */}
           <InputRow
             label="Name"
             name="name"

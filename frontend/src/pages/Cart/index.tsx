@@ -3,51 +3,40 @@ import Footer from "components/Footer";
 import Header from "components/Header";
 import Loader from "components/Loader";
 import Navbar from "components/Navbar";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUser } from "util/local/index";
-import { CartItem } from "types/index";
+import { CartItem, Product } from "types/index";
 
 const Cart = () => {
   const user = getUser();
-
-  // const cart: CartItem[] = useSelector((state: any) => state.cart);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [success, setSuccess] = useState<Boolean>(false);
   const [displayCheckoutMsg, setDisplayCheckoutMsg] = useState<string>();
   const [loader, setLoader] = useState<Boolean>(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    try {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_BACKEND}/cart/get`,
-          {
-            userId: user && user._id.toString(),
-          },
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user && user.access_token}`,
-            },
-          }
-        )
-        .then((response) => {
-          // if (cart.length === 0) {
-          dispatch({ type: "fill", payLoad: { initialCart: response.data.results } });
-          // }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/get`, {
+      method: "POST",
+      body: JSON.stringify({
+        userId: user && user._id.toString(),
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user && user.access_token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json.results.itemList);
+        setCart(json.results.itemList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, cart.length]);
+  }, [cart.length]);
 
   const calculateTotal = () => {
     const total = cart.reduce((accumulator, object) => {
@@ -57,7 +46,6 @@ const Cart = () => {
   };
 
   const proceedCheckout = () => {
-    // setSuccess(false)
     if (calculateTotal() === 0) {
       setDisplayCheckoutMsg(
         `Sorry, ${user && user.firstName} ${
@@ -103,7 +91,6 @@ const Cart = () => {
   };
 
   const removeFromCart = (_id: string) => {
-    // console.log(_id);
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/remove-product`, {
       method: "POST",
       headers: {
@@ -141,25 +128,25 @@ const Cart = () => {
             {cart &&
               cart.map((element) => {
                 return (
-                  <tr key={element.id}>
+                  <tr key={(element.productId as Product)._id}>
                     <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                      {element.id.slice(-2)}
+                      {(element.productId as Product)._id.slice(-2)}
                     </td>
                     <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                      {element.name}
+                      {(element.productId as Product).name}
                     </td>
                     <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
                       {element.quantity}
                     </td>
                     <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                      {element.price}x{element.quantity} ={" "}
-                      {(element.price as number) * element.quantity}
+                      {(element.productId as Product).price}x{element.quantity} ={" "}
+                      {((element.productId as Product).price as number) * element.quantity}
                     </td>
                     <td>
                       <button
                         className="text-blue-100 bg-red-600 cursor-pointer px-4 py-2 transition-colors hover:bg-pink-300 hover:text-blue-900"
                         onClick={() => {
-                          removeFromCart(element.id);
+                          removeFromCart((element.productId as Product)._id);
                         }}
                       >
                         x
