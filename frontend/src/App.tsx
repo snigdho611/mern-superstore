@@ -13,6 +13,7 @@ import UpdateProduct from "pages/UpdateProduct";
 import ProductDetails from "pages/ProductDetails";
 import Cart from "pages/Cart";
 import AddProduct from "pages/AddProduct";
+import Deals from "pages/Deals";
 
 const App = () => {
   const routes = [
@@ -59,6 +60,10 @@ const App = () => {
     {
       path: "/products/add-product",
       element: <AddProduct />,
+    },
+    {
+      path: "/deals",
+      element: <Deals />,
     },
   ];
 
