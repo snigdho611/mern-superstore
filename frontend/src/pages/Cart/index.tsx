@@ -24,7 +24,7 @@ const Cart = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${user && user.access_token}`,
+        Authorization: `Bearer ${user && user.access_token}`,
       },
     })
       .then((response) => response.json())
@@ -35,12 +35,15 @@ const Cart = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [cart, user]);
+  }, []);
 
   const calculateTotal = () => {
-    const total = cart.reduce((accumulator, object) => {
-      return accumulator + ((object.productId as Product).price as number) * object.quantity;
-    }, 0);
+    const total =
+      cart &&
+      cart.length > 0 &&
+      cart.reduce((accumulator, object) => {
+        return accumulator + ((object.productId as Product).price as number) * object.quantity;
+      }, 0);
     return total;
   };
 
@@ -107,8 +110,22 @@ const Cart = () => {
       .catch((error) => {
         console.log(error);
       });
+    setCart(
+      cart.filter((element) => {
+        if ((element.productId as Product)._id === _id) {
+          if (element.quantity === 1) {
+            return null;
+          } else {
+            element.quantity = element.quantity - 1;
+            return element;
+          }
+        } else {
+          return element;
+        }
+      })
+    );
 
-    setCart([]);
+    // setCart((prevState) => [...prevState, ]);
   };
 
   return (
@@ -127,6 +144,7 @@ const Cart = () => {
           </thead>
           <tbody>
             {cart &&
+              cart.length > 0 &&
               cart.map((element) => {
                 return (
                   <tr key={(element.productId as Product)._id}>
