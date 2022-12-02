@@ -18,6 +18,7 @@ const ProductsPage = () => {
     loading: false,
     message: "",
   });
+  const [range, setRange] = useState({ min: 1, max: 3 });
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [productId, setProductId] = useState<string | null>();
@@ -122,6 +123,9 @@ const ProductsPage = () => {
         console.log(error);
       });
   };
+  // console.log(total);
+
+  // useEffect(() => {}, [navigate, searchParams]);
 
   return (
     <>
@@ -161,27 +165,65 @@ const ProductsPage = () => {
         )}
       </div>
       <div className="my-0 mx-auto w-full flex flex-row justify-center fixed bottom-0">
-        {Array.from(Array(Math.ceil(total / 8)).keys()).map((element, i) => {
-          return (
-            <button
-              key={i}
-              onClick={() => {
-                navigate({
-                  pathname: "/products",
-                  search: `?page=${element + 1}`,
-                });
-              }}
-              className={`w-[80px] outline-1 outline outline-zinc-600 ${
-                parseInt(searchParams.get("page") as string) === element + 1
-                  ? "bg-blue-200"
-                  : "bg-blue"
-              }`}
-              // style={{ width: "80px", outline: "#bbb solid 1px" }}
-            >
-              {element + 1}
-            </button>
-          );
-        })}
+        {parseInt(searchParams.get("page") as string) > 3 ? (
+          <button
+            onClick={() => {
+              // navigate({
+              //   pathname: "/products",
+              //   search: `?page=${element + 1}`,
+              // });
+            }}
+            className={`w-[80px] outline-1 outline outline-zinc-600`}
+          >
+            {"<"}
+          </button>
+        ) : null}
+
+        {/* {Array.from(Array(Math.ceil(total / 8)).keys()).map((element, i) => { */}
+        {Array(3)
+          .fill(0)
+          .map((element, i) => {
+            return (
+              <button
+                key={i}
+                onClick={() => {
+                  navigate({
+                    pathname: "/products",
+                    search: `?page=${i + 1}`,
+                  });
+                }}
+                className={`w-[80px] outline-1 outline outline-zinc-600 ${
+                  parseInt(searchParams.get("page") as string) === i + 1 ? "bg-blue-200" : "bg-blue"
+                }`}
+              >
+                {i + 1}
+              </button>
+            );
+          })}
+        {parseInt(searchParams.get("page") as string) <= Math.ceil(total / 8) - 3 ? (
+          // <button
+          //   onClick={() => {
+          //     // navigate({
+          //     //   pathname: "/products",
+          //     //   search: `?page=${element + 1}`,
+          //     // });
+          //   }}
+          //   className={`w-[80px] outline-1 outline outline-zinc-600`}
+          // >
+          //   {"<"}
+          // </button>
+          <button
+            onClick={() => {
+              // navigate({
+              //   pathname: "/products",
+              //   search: `?page=${element + 1}`,
+              // });
+            }}
+            className={`w-[80px] outline-1 outline outline-zinc-600`}
+          >
+            {">"}
+          </button>
+        ) : null}
       </div>
       <Footer />
     </>

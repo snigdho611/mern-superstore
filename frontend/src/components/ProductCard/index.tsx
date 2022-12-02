@@ -20,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   // const user_type = user && user.isAdmin ? user.isAdmin : null;
 
   return (
-    <div className="bg-blue-200 rounded-lg w-64 flex flex-col shadow-blue-600">
+    <div className="bg-blue-200 rounded-lg w-64 flex flex-col  border-blue-900 border-solid border-[1px] shadow-md shadow-blue-600 py-5">
       <div className="flex justify-center my-3">
         <img
           className="h-48"
@@ -32,14 +32,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
           alt="Not found"
         />
       </div>
-      <div className="flex justify-center border-t-2 border-b-2 border-blue-900 border-solid">
+      <div className="flex justify-center border-t-2 border-b-2 border-blue-700 border-solid py-1 text-center">
         {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}
       </div>
       <div className="flex w-full">
-        <div className="w-1/2 border-r-2 border-b-2 border-blue-900 border-solid">
+        <div className="w-1/2 border-r-2 border-b-2 border-blue-700 border-solid py-1 text-center">
           BDT {data.price}
         </div>
-        <div className="w-1/2 border-b-2 border-blue-900 border-solid">Wt: {data.weight}</div>
+        <div className="w-1/2 border-b-2 border-blue-700 border-solid py-1 text-center">
+          Wt: {data.weight}
+        </div>
       </div>
       <div className="flex flex-col justify-center">
         {!isAdmin ? (
