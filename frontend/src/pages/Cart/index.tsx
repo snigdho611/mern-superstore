@@ -134,19 +134,18 @@ const Cart = () => {
       <Header />
       <Navbar />
       <div className="w-2/3 mx-80 mt-28">
-        <table className="w-full">
-          <thead>
-            <tr>
-              <th className="bg-blue-700 text-blue-100 text-lg w-[10%]">#</th>
-              <th className="bg-blue-700 text-blue-100 text-lg w-[40%]">Name</th>
-              <th className="bg-blue-700 text-blue-100 text-lg w-[20%]">Qty</th>
-              <th className="bg-blue-700 text-blue-100 text-lg w-[30%]">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cart &&
-              cart.length > 0 &&
-              cart.map((element) => {
+        {cart && cart.length > 0 ? (
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="bg-blue-700 text-blue-100 text-lg w-[10%]">#</th>
+                <th className="bg-blue-700 text-blue-100 text-lg w-[40%]">Name</th>
+                <th className="bg-blue-700 text-blue-100 text-lg w-[20%]">Qty</th>
+                <th className="bg-blue-700 text-blue-100 text-lg w-[30%]">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((element) => {
                 return (
                   <tr key={(element.productId as Product)._id}>
                     <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
@@ -175,36 +174,39 @@ const Cart = () => {
                   </tr>
                 );
               })}
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                Total: <label className="font-bold">{calculateTotal()}</label>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <Link
-                  className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl p-3 w-full transition-colors hover:bg-blue-400 hover:text-blue-800"
-                  to="/products"
-                >
-                  {"<="}
-                </Link>
-              </td>
-              <td></td>
-              <td></td>
-              <td>
-                <button
-                  className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl w-full h-[40px] transition-colors hover:bg-blue-400 hover:text-blue-800"
-                  onClick={() => proceedCheckout()}
-                >
-                  Checkout
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                  Total: <label className="font-bold">{calculateTotal()}</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Link
+                    className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl p-3 w-full transition-colors hover:bg-blue-400 hover:text-blue-800"
+                    to="/products"
+                  >
+                    {"<="}
+                  </Link>
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  <button
+                    className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl w-full h-[40px] transition-colors hover:bg-blue-400 hover:text-blue-800"
+                    onClick={() => proceedCheckout()}
+                  >
+                    Checkout
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <div>No items found in cart</div>
+        )}
         {loader ? <Loader /> : null}
         <div
           className={

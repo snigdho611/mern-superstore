@@ -126,6 +126,9 @@ const ProductsPage = () => {
   // console.log(total);
 
   // useEffect(() => {}, [navigate, searchParams]);
+  useEffect(() => {
+    console.log(range);
+  }, [range]);
 
   return (
     <>
@@ -164,14 +167,13 @@ const ProductsPage = () => {
           <div>No results</div>
         )}
       </div>
-      <div className="my-0 mx-auto w-full flex flex-row justify-center fixed bottom-0">
+      <div className="mx-auto w-full flex flex-row justify-center fixed bottom-0 gap-2 py-5 bg-[rgba(177,177,177,0.5)]">
         {parseInt(searchParams.get("page") as string) > 3 ? (
           <button
             onClick={() => {
-              // navigate({
-              //   pathname: "/products",
-              //   search: `?page=${element + 1}`,
-              // });
+              if (range.max < total) {
+                setRange((prevState) => ({ min: prevState.min - 1, max: prevState.max - 1 }));
+              }
             }}
             className={`w-[80px] outline-1 outline outline-zinc-600`}
           >
@@ -179,51 +181,40 @@ const ProductsPage = () => {
           </button>
         ) : null}
 
-        {/* {Array.from(Array(Math.ceil(total / 8)).keys()).map((element, i) => { */}
-        {Array(3)
-          .fill(0)
-          .map((element, i) => {
-            return (
-              <button
-                key={i}
-                onClick={() => {
-                  navigate({
-                    pathname: "/products",
-                    search: `?page=${i + 1}`,
-                  });
-                }}
-                className={`w-[80px] outline-1 outline outline-zinc-600 ${
-                  parseInt(searchParams.get("page") as string) === i + 1 ? "bg-blue-200" : "bg-blue"
-                }`}
-              >
-                {i + 1}
-              </button>
-            );
-          })}
-        {parseInt(searchParams.get("page") as string) <= Math.ceil(total / 8) - 3 ? (
-          // <button
-          //   onClick={() => {
-          //     // navigate({
-          //     //   pathname: "/products",
-          //     //   search: `?page=${element + 1}`,
-          //     // });
-          //   }}
-          //   className={`w-[80px] outline-1 outline outline-zinc-600`}
-          // >
-          //   {"<"}
-          // </button>
+        {/* {Array(3).fill(0).map((element, i) => { */}
+        {Array.from(Array(Math.ceil(total / 8)).keys()).map((element, i) => {
+          return (
+            <button
+              key={i}
+              onClick={() => {
+                navigate({
+                  pathname: "/products",
+                  search: `?page=${i + 1}`,
+                });
+              }}
+              className={`w-[80px] outline-1 outline outline-zinc-600 rounded-lg py-2 ${
+                parseInt(searchParams.get("page") as string) === i + 1
+                  ? "bg-blue-200"
+                  : "bg-blue-50"
+              }`}
+            >
+              {i + 1}
+            </button>
+          );
+        })}
+        {/* {parseInt(searchParams.get("page") as string) <= Math.ceil(total / 8) - 3 ? (
           <button
             onClick={() => {
-              // navigate({
-              //   pathname: "/products",
-              //   search: `?page=${element + 1}`,
-              // });
+              console.log(range.min);
+              if (range.min <= Math.ceil(total / 8)) {
+                setRange((prevState) => ({ min: prevState.min + 1, max: prevState.max + 1 }));
+              }
             }}
             className={`w-[80px] outline-1 outline outline-zinc-600`}
           >
             {">"}
           </button>
-        ) : null}
+        ) : null} */}
       </div>
       <Footer />
     </>
