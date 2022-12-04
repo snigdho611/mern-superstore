@@ -42,20 +42,14 @@ export interface ICart extends Document {
         productId: IProduct | mongoose.Types.ObjectId;
         quantity: number;
     }[];
-    // userId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: "User",
-    // },
-    // itemList: [{
-    //     productId: {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         required: true,
-    //         ref: Product,
-    //     },
-    //     quantity: {
-    //         type: Number,
-    //         required: true,
-    //     },
-    // }],
+}
+
+export interface ISale extends Document {
+    customerId: IUser | mongoose.Types.ObjectId;
+    products: {
+        product: IProduct | mongoose.Types.ObjectId,
+        quantity: number;
+    }[];
+    total: number;
+    verified: boolean;
 }

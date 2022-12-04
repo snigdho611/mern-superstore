@@ -41,7 +41,7 @@ const ProductDetails = () => {
         <div className="ml-[300px] mt-5 w-[70%] flex border-2 border-solid border-blue-900">
           <div className="flex flex-col w-1/2">
             <div className="flex flex-row">
-              <div className="py-2 px-0  border-b-2 border-solid border-r-2 border-blue-900 w-[30%]">
+              <div className="py-2 px-3  border-b-2 border-solid border-r-2 border-blue-900 w-[30%] text-right font-bold">
                 ID:
               </div>
               <div className="w-[70%] py-2 border-b-2 border-r-2 border-blue-900">
@@ -49,7 +49,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="flex flex-row">
-              <div className="py-2 px-0 border-r-2 border-b-2 border-solid border-blue-900 w-[30%]">
+              <div className="py-2 px-3 border-r-2 border-b-2 border-solid border-blue-900 w-[30%] text-right font-bold">
                 NAME:
               </div>
               <div className="w-[70%] py-2 border-r-2 border-b-2 border-blue-900">
@@ -57,7 +57,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="flex flex-row">
-              <div className="py-2 px-0 border-b-2 border-r-2 border-solid border-blue-900 w-[30%]">
+              <div className="py-2 px-3 border-b-2 border-r-2 border-solid border-blue-900 w-[30%] text-right font-bold">
                 WEIGHT:
               </div>
               <div className="w-[70%] py-2 border-b-2 border-r-2 border-blue-900">
@@ -65,7 +65,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="flex flex-row">
-              <div className="py-2 px-0 border-b-2 border-r-2 border-solid border-blue-900 w-[30%]">
+              <div className="py-2 px-3 border-b-2 border-r-2 border-solid border-blue-900 w-[30%] text-right font-bold">
                 PRICE:
               </div>
               <div className="w-[70%] py-2 border-r-2 border-b-2 border-blue-900">
@@ -73,7 +73,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="flex flex-row">
-              <div className="py-2 px-0 border-b-2 border-r-2 border-solid border-blue-900 w-[30%]">
+              <div className="py-2 px-3 border-b-2 border-r-2 border-solid border-blue-900 w-[30%] text-right font-bold">
                 TYPE:
               </div>
               <div className="w-[70%] py-2 border-r-2 border-b-2 border-blue-900">
@@ -81,7 +81,7 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="flex flex-row">
-              <div className="py-2 px-0 border-r-2 border-solid border-blue-900 w-[30%]">
+              <div className="py-2 px-3 border-r-2 border-solid border-blue-900 w-[30%] text-right font-bold">
                 DESCRIPTION:
               </div>
               <div className="w-[70%] py-2 border-r-2  border-blue-900">{product?.description}</div>
