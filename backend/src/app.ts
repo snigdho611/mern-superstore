@@ -2,13 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import databaseConnection from "./config/database";
-import productRouter from "./routes/products";
+import productRouter from "./routes/product";
 
 import adminRouter from "./routes/admin";
 import authenticateRouter from "./routes/authenticate";
 import cartRouter from "./routes/cart";
-import imagesRouter from "./routes/files";
-import { IncomingMessage, Server, ServerResponse } from "http";
+import imagesRouter from "./routes/file";
 
 const app = express();
 dotenv.config();
