@@ -14,4 +14,14 @@ router.get("/products/:img", (req, res) => {
   }
 });
 
+router.get("/deals/:img", (req, res) => {
+  console.log(path.join(__dirname, "../../files/" + req.params.img));
+  try {
+    const dir = path.join(__dirname, "../../files/deals/" + req.params.img);
+    res.sendFile(dir);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 export default router;

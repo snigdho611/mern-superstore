@@ -192,9 +192,9 @@ const ProductsPage = () => {
                   search: `?page=${i + 1}`,
                 });
               }}
-              className={`w-[80px] outline-1 outline outline-zinc-600 rounded-lg py-2 ${
+              className={`w-[80px] outline-1 outline outline-zinc-600 rounded-lg py-2 hover:bg-blue-300 transition-colors ${
                 parseInt(searchParams.get("page") as string) === i + 1
-                  ? "bg-blue-200"
+                  ? "bg-blue-300"
                   : "bg-blue-50"
               }`}
             >
