@@ -1,4 +1,4 @@
-import { FailureProps, FailureResponse, SuccessProps, SuccessResponse } from "types/commmon";
+import { FailureProps, FailureResponse, SuccessProps, SuccessResponse } from "interfaces/commmon";
 
 export const success = ({ message, data = [] }: SuccessProps): SuccessResponse => {
   return {

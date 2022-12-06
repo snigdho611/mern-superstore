@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { AuthRequest } from "types/commmon";
-import { IUser } from "types/database";
 
 import jwt from "jsonwebtoken";
 import { failure } from "../utils/commonResponse";

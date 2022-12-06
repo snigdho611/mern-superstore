@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IProduct } from "types/database";
+import { IProduct } from "../interfaces/database";
 import { Product } from "../model/product";
 // const { success, failure } = require("../utils/commonResponse");
 import { success, failure } from "../utils/commonResponse";

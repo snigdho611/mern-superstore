@@ -1,6 +1,6 @@
 import { Request, NextFunction, Response } from "express";
-import { AuthRequest } from "types/commmon";
-import { ICart, ILogin, IProduct, IUser } from "types/database";
+import { AuthRequest } from "../interfaces/commmon";
+import { ICart, ILogin, IProduct, IUser } from "interfaces/database";
 
 import { Product } from "../model/product";
 import { success, failure } from "../utils/commonResponse";

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ILogin, IUser } from "types/database";
+import { ILogin, IUser } from "../interfaces/database";
 import { Result, ValidationError, validationResult } from "express-validator";
 import { Login } from "../model/login";
 import { User } from "../model/user";

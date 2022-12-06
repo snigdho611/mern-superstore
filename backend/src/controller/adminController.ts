@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IProduct, MulterRequest } from "types/database";
+import { IProduct, MulterRequest } from "../interfaces/database";
 import { Product } from "../model/product";
 import { success, failure } from "../utils/commonResponse";
 import { HTTP_STATUS } from "../utils/httpStatus";
