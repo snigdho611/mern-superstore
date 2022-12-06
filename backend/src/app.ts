@@ -8,6 +8,7 @@ import adminRouter from "./routes/admin";
 import authenticateRouter from "./routes/authenticate";
 import cartRouter from "./routes/cart";
 import imagesRouter from "./routes/file";
+import salesRouter from "./routes/sales";
 
 const app = express();
 dotenv.config();
@@ -21,6 +22,7 @@ app.use("/admin", adminRouter);
 app.use("/cart", cartRouter);
 app.use("/files", imagesRouter);
 app.use("/auth", authenticateRouter);
+app.use("/sales", salesRouter);
 
 databaseConnection((): any => {
   app.listen(8000, () => {

@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 const router: Router = express.Router();
-import ProductController from "../controller/productController";
+import SaleController from "../controller/saleController";
 import validator from "../middleware/validation";
 
 // router.get("/all", ProductController.getAll);
@@ -11,6 +11,6 @@ import validator from "../middleware/validation";
 //     ProductController.searchProduct
 // );
 
-router.get("/all", ProductController.getAll);
+router.get("/all", SaleController.getAll);
 
 export default router;

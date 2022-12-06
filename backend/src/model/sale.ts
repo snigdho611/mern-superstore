@@ -9,14 +9,14 @@ const saleSchema = new mongoose.Schema({
         required: true,
         ref: User,
     },
-    productsList: {
-        product: {
+    cart: [{
+        productId: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
-            ref: Product
+            ref: Product,
         },
         quantity: Number
-    },
+    }],
     total: { type: Number },
     verified: { type: Boolean }
 });
