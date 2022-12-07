@@ -12,5 +12,7 @@ import validator from "../middleware/validation";
 // );
 
 router.get("/all", SaleController.getAll);
+router.get("/customer/:customerId", validator.addSale, SaleController.getSalesByCustomer);
+router.post("/customer/checkout", SaleController.addSale);
 
 export default router;

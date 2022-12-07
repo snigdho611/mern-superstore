@@ -153,6 +153,7 @@ const validator = {
     param("searchParams").notEmpty().withMessage("Parameter is needed for searching"),
   ],
   sendCheckoutEmail: [body("userId").notEmpty().withMessage("User ID is required")],
+  addSale: [param("customerId").notEmpty().withMessage("Customer ID is required")]
 };
 
 export default validator;
