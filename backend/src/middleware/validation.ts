@@ -153,7 +153,12 @@ const validator = {
     param("searchParams").notEmpty().withMessage("Parameter is needed for searching"),
   ],
   sendCheckoutEmail: [body("userId").notEmpty().withMessage("User ID is required")],
-  addSale: [param("customerId").notEmpty().withMessage("Customer ID is required")]
+  addSale: [
+    body("customerId").notEmpty().withMessage("Customer ID is required"),
+    body("cart")
+      // .notEmpty().withMessage("Cart is empty!")
+      .isArray({ min: 1 }).withMessage("Cart is empty!")
+  ]
 };
 
 export default validator;

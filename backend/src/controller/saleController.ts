@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { failure, success } from "../utils/commonResponse";
 import { Sale } from "../model/sale";
+import { Result, ValidationError, validationResult } from "express-validator";
 
 class saleController {
     async getAll(req: Request, res: Response) {
@@ -29,13 +30,17 @@ class saleController {
 
     async addSale(req: Request, res: Response) {
         try {
+            const validatorResult: Result<ValidationError> = validationResult(req);
+            if (!validatorResult.isEmpty()) {
+                return res.send(failure({ message: "Invalid inputs!", error: validatorResult.array() }));
+            }
             const newSale = new Sale();
             newSale.customerId = req.body.customerId;
             // 62a0801a27b1488454e58159;
             newSale.cart = req.body.cart;
             newSale.total = req.body.total;
             newSale.verified = false;
-            await newSale.save();
+            // await newSale.save();
             console.log(newSale);
             return res.send(success({ message: "Successfully got all sales", data: newSale }));
         } catch (error) {
