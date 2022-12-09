@@ -15,7 +15,8 @@ const saleSchema = new mongoose.Schema({
             required: true,
             ref: Product,
         },
-        quantity: Number
+        quantity: Number,
+        _id: false
     }],
     total: { type: Number },
     verified: { type: Boolean }

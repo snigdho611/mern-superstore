@@ -11,7 +11,7 @@ import validator from "../middleware/validation";
 //     ProductController.searchProduct
 // );
 
-router.get("/all", SaleController.getAll);
+// router.get("/all", SaleController.getAll);
 router.get("/customer/:customerId", SaleController.getSalesByCustomer);
 router.post("/customer/checkout", validator.addSale, SaleController.addSale);
 

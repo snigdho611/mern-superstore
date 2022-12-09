@@ -4,11 +4,6 @@ import { Sale } from "../model/sale";
 import { Result, ValidationError, validationResult } from "express-validator";
 
 class saleController {
-    async getAll(req: Request, res: Response) {
-        const {} = req;
-        const results = await Sale.find({}).populate("customerId").populate({ path: "cart.productId" });
-        return res.send(success({ message: "Successfully got all sales", data: results }));
-    }
 
     async getSalesByCustomer(req: Request, res: Response) {
         try {
@@ -16,7 +11,15 @@ class saleController {
             if (customerId.length !== 24) {
                 return res.send(failure({ message: "Customer ID is not in the correct format!" }));
             }
-            const results = await Sale.find({ customerId: customerId }).populate("customerId").populate({ path: "cart.productId" });
+            const results = await Sale.find({ customerId: customerId }).populate({
+                path: "cart.productId",
+                select: {
+                    name: true,
+                    weight: true,
+                    type: true,
+                    image: true, price: true,
+                }
+            });
             if (results.length > 0) {
                 return res.send(success({ message: "Successfully got all sales", data: results }));
             } else {
@@ -34,14 +37,14 @@ class saleController {
             if (!validatorResult.isEmpty()) {
                 return res.send(failure({ message: "Invalid inputs!", error: validatorResult.array() }));
             }
+            const { cart } = req.body;
             const newSale = new Sale();
             newSale.customerId = req.body.customerId;
             // 62a0801a27b1488454e58159;
             newSale.cart = req.body.cart;
-            newSale.total = req.body.total;
+            newSale.total = cart.reduce((accumulator: any, current: any) => accumulator + current, 0);
             newSale.verified = false;
-            // await newSale.save();
-            console.log(newSale);
+            console.log(cart.reduce((accumulator: any, current: any) => accumulator + current, 0));
             return res.send(success({ message: "Successfully got all sales", data: newSale }));
         } catch (error) {
             console.log(error);
