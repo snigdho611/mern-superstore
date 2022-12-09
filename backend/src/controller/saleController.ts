@@ -11,15 +11,19 @@ class saleController {
             if (customerId.length !== 24) {
                 return res.send(failure({ message: "Customer ID is not in the correct format!" }));
             }
-            const results = await Sale.find({ customerId: customerId }).populate({
-                path: "cart.productId",
-                select: {
-                    name: true,
-                    weight: true,
-                    type: true,
-                    image: true, price: true,
-                }
-            });
+            const results = await Sale
+                .find({ customerId: customerId })
+                .populate({
+                    path: "cart.productId",
+                    select: {
+                        name: 1,
+                        weight: 1,
+                        type: 1,
+                        image: 1,
+                        price: 1,
+                    }
+                })
+                .select({ cart: 1, _id: 0 });
             if (results.length > 0) {
                 return res.send(success({ message: "Successfully got all sales", data: results }));
             } else {
@@ -40,11 +44,10 @@ class saleController {
             const { cart } = req.body;
             const newSale = new Sale();
             newSale.customerId = req.body.customerId;
-            // 62a0801a27b1488454e58159;
             newSale.cart = req.body.cart;
             newSale.total = cart.reduce((accumulator: any, current: any) => accumulator + current, 0);
             newSale.verified = false;
-            console.log(cart.reduce((accumulator: any, current: any) => accumulator + current, 0));
+            console.log(cart.reduce((accumulator: any, current: any) => accumulator + current.quantity, 0));
             return res.send(success({ message: "Successfully got all sales", data: newSale }));
         } catch (error) {
             console.log(error);

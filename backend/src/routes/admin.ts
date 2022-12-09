@@ -27,9 +27,6 @@ router.post(
   // checkAuth,
   // isAdmin,
   fileUploader.single("productImage"),
-  // (req, res) => {
-  //   console.log(req);
-  // }
   validator.updateImage,
   AdminController.updateImage
 );
