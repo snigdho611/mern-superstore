@@ -65,6 +65,10 @@ const App = () => {
       path: "/deals",
       element: <Deals />,
     },
+    {
+      path: "/profile",
+      // element: <UpdatePassword />,
+    },
   ];
 
   return (
