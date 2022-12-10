@@ -6,7 +6,7 @@ import validator from "../middleware/validation";
 const router = express.Router();
 
 router.post("/get",
-  checkAuth,
+  // checkAuth,
   validator.getCart,
   CartController.getCart);
 

@@ -23,12 +23,13 @@ class authenticateController {
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure({ message: "Invalid Inputs", error: validatorResult.array() }));
       }
+      const { email, password } = req.body;
 
-      const login: ILogin | null = await Login.findOne({ email: req.body.email }).populate("userId").exec();
+      const login: ILogin | null = await Login.findOne({ email: email }).populate("userId").exec();
       if (!login) {
         return res.status(HTTP_STATUS.UNAUTHORIZED).send(failure({ message: "User login is not authorized" }));
       }
-      const passMatch = await bcrypt.compare(req.body.password, login.password);
+      const passMatch = await bcrypt.compare(password, login.password);
 
       if (!passMatch) {
         return res.status(HTTP_STATUS.UNAUTHORIZED).send(failure({ message: "User login is not authorized" }));
@@ -47,7 +48,7 @@ class authenticateController {
       if (!process.env.JWT_SECRET_KEY) {
         return;
       }
-      const jwtToken = jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+      const jwtToken: string = jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
       const resData = {
         access_token: jwtToken,
         ...userData,
@@ -68,9 +69,7 @@ class authenticateController {
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .send(failure({ message: "Invalid inputs", error: validatorResult.array() }));
       }
-      const firstName = req.body.firstName;
-      const lastName = req.body.lastName;
-      const phone = req.body.phone;
+      const { firstName, lastName, phone } = req.body;
       const user: IUser = new User({ firstName: firstName, lastName: lastName, type: "regular", phone: phone, address: null, balance: 0 });
       await user.save();
 
@@ -82,7 +81,7 @@ class authenticateController {
         return;
       }
 
-      const jwtToken = jwt.sign(
+      const jwtToken: string = jwt.sign(
         {
           _id: login._id,
           firstName: firstName,
@@ -106,7 +105,7 @@ class authenticateController {
         _id: login._id,
       };
 
-      const verifyToken = crypto.randomBytes(32).toString("hex");
+      const verifyToken: string = crypto.randomBytes(32).toString("hex");
       login.emailToken = verifyToken;
       login.emailTokenExpire = new Date(Date.now() + 60 * 60 * 1000);
       await login.save();
@@ -114,7 +113,7 @@ class authenticateController {
       if (!process.env.BACKEND_BASE_URI) {
         return;
       }
-      const emailVerifyUrl = path.join(
+      const emailVerifyUrl: string = path.join(
         process.env.BACKEND_BASE_URI,
         "auth",
         "email-verify",
@@ -177,6 +176,7 @@ class authenticateController {
       return res.redirect(process.env.FRONTEND_BASE_URI + "/email-verify?status=5");
     }
   }
+
   async requestResetPasswordEmail(req: Request, res: Response, next: NextFunction) {
     try {
       const validatorResult: Result<ValidationError> = validationResult(req);
@@ -260,7 +260,6 @@ class authenticateController {
           .send(failure({ message: "New password cannot be same as old password" }));
       }
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      // console.log(hashedPassword);
       login.password = hashedPassword;
       login.passwordResetToken = null;
       login.passwordResetExpire = null;
@@ -271,7 +270,6 @@ class authenticateController {
     } catch (error) {
       console.log(error);
     }
-    //
   }
 }
 
