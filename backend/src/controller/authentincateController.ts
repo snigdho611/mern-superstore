@@ -179,6 +179,8 @@ class authenticateController {
 
   async requestResetPasswordEmail(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log(process.env.NODEMAILER_USER, process.env.NODEMAILER_PASS);
+
       const validatorResult: Result<ValidationError> = validationResult(req);
       if (!validatorResult.isEmpty()) {
         return res
@@ -195,7 +197,7 @@ class authenticateController {
       login.passwordResetToken = token;
       login.passwordResetExpire = new Date(Date.now() + 60 * 60 * 1000);
       await login.save();
-      console.log(login);
+      // console.log(login);
 
       if (!process.env.FRONTEND_BASE_URI) {
         return;
