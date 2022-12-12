@@ -22,6 +22,8 @@ router.post(
 
 router.post("/reset-password", validator.resetPassword, AuthenticateController.resetPassword);
 
+router.post("/update-password", validator.updatePassword, AuthenticateController.updatePassword);
+
 // router.get("/test", (req, res, next) => {
 //   res.render("ResetPassword", {
 //     pageTitle: "Add Product",

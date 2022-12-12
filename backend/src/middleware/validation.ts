@@ -158,6 +158,12 @@ const validator = {
     body("cart")
       // .notEmpty().withMessage("Cart is empty!")
       .isArray({ min: 1 }).withMessage("Cart is empty!")
+  ],
+  updatePassword: [
+    body("userId").notEmpty().withMessage("User Id must be provided"),
+    body("currentPassword").notEmpty().withMessage("The current password must be provided"),
+    body("newPassword").notEmpty().withMessage("The new password must be provided"),
+    body("confirmPassword").notEmpty().withMessage("The new password must be provided again"),
   ]
 };
 
