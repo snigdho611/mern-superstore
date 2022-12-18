@@ -292,18 +292,15 @@ class authenticateController {
       if (currentPassword === newPassword) {
         return res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).send(failure({ message: "New password cannot be same as old password." }));
       }
-      // 62a0801a27b1488454e58159
       const result: ILogin | null = await Login.findOne({ userId: userId });
       if (!result) {
         return res.status(HTTP_STATUS.NOT_FOUND).send(failure({ message: "User was not found." }));
       }
 
       const passMatch = await bcrypt.compare(currentPassword, result.password);
-      // console.log(passMatch);
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       result.password = hashedPassword;
-      console.log(result);
       await result.save();
       if (passMatch) {
         return res.send(success({ message: "Successfully updated password" }));

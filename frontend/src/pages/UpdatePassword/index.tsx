@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { Response } from "types";
+import { getUser } from "util/local";
 
 const UpdatePassword = () => {
   const [response, setResponse] = useState<Response>({
@@ -12,7 +13,8 @@ const UpdatePassword = () => {
     loading: false,
     message: null,
   });
-  const { token, userId } = useParams();
+  // const { token, userId } = useParams();
+  const user = getUser();
 
   const {
     register,
@@ -22,19 +24,19 @@ const UpdatePassword = () => {
   } = useForm();
 
   const onSubmission = (formData: FieldValues) => {
-    console.log(formData.password, formData.confirmPassword);
-    if (formData.password !== formData.confirmPassword) {
+    console.log(formData.newPassword, formData.confirmPassword);
+    if (formData.newPassword !== formData.confirmPassword) {
       setError("confirmPassword", { type: "custom", message: "Passwords do not match" });
       return;
     }
     setResponse({ ...response, success: false, loading: true });
     const requestData = {
-      token: token,
-      userId: userId,
+      // token: token,
+      userId: user?.userId,
       ...formData,
     };
     console.log(requestData);
-    fetch(`${process.env.REACT_APP_BASE_BACKEND}/auth/reset-password`, {
+    fetch(`${process.env.REACT_APP_BASE_BACKEND}/auth/update-password`, {
       method: "POST",
       body: JSON.stringify(requestData),
       headers: {
@@ -77,8 +79,16 @@ const UpdatePassword = () => {
         title="Please create a new password"
       >
         <InputRow
-          label="New Password"
-          name="password"
+          label="Current Password"
+          name="currentPassword"
+          type="password"
+          register={register}
+          errors={errors}
+          required={true}
+        />
+        <InputRow
+          label="New"
+          name="newPassword"
           type="password"
           register={register}
           errors={errors}

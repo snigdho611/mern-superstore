@@ -1,9 +1,8 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getUser, removeUser } from "util/local/index";
+import { Link, useLocation } from "react-router-dom";
+import { getUser } from "util/local/index";
 
 const Navbar: React.FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const user = getUser();
 
@@ -45,16 +44,6 @@ const Navbar: React.FC = () => {
             Deals
           </Link>
         )}
-        <a
-          href="/#"
-          className={`text-center no-underline cursor-pointer text-xl transition-colors px-[10px] text-blue-200 hover:bg-blue-600 hover:text-gray-900 py-[2vh]`}
-          onClick={() => {
-            removeUser();
-            navigate("/");
-          }}
-        >
-          Log Out
-        </a>
       </div>
     </div>
   );

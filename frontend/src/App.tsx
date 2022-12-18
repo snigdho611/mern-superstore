@@ -14,6 +14,8 @@ import ProductDetails from "pages/ProductDetails";
 import Cart from "pages/Cart";
 import AddProduct from "pages/AddProduct";
 import Deals from "pages/Deals";
+import History from "pages/History";
+import UpdatePassword from "pages/UpdatePassword";
 
 const App = () => {
   const routes = [
@@ -68,6 +70,14 @@ const App = () => {
     {
       path: "/profile",
       // element: <UpdatePassword />,
+    },
+    {
+      path: "/history",
+      element: <History />,
+    },
+    {
+      path: "/update-password",
+      element: <UpdatePassword />,
     },
   ];
 
