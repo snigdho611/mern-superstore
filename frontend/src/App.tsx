@@ -16,8 +16,17 @@ import AddProduct from "pages/AddProduct";
 import Deals from "pages/Deals";
 import History from "pages/History";
 import UpdatePassword from "pages/UpdatePassword";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getUser } from "store/user";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   const routes = [
     {
       path: "/",

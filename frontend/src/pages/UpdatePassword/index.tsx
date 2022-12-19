@@ -3,9 +3,8 @@ import { Form, InputRow, InputSubmit } from "components/Form";
 import Header from "components/Header";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Response } from "types";
-import { getUser } from "util/local";
 
 const UpdatePassword = () => {
   const [response, setResponse] = useState<Response>({
@@ -13,8 +12,10 @@ const UpdatePassword = () => {
     loading: false,
     message: null,
   });
-  // const { token, userId } = useParams();
-  const user = getUser();
+  const selector = useSelector((state: any) => ({
+    user: state.user,
+  }));
+  // console.log(selector.user);
 
   const {
     register,
@@ -24,7 +25,7 @@ const UpdatePassword = () => {
   } = useForm();
 
   const onSubmission = (formData: FieldValues) => {
-    console.log(formData.newPassword, formData.confirmPassword);
+    // console.log(formData.newPassword, formData.confirmPassword);
     if (formData.newPassword !== formData.confirmPassword) {
       setError("confirmPassword", { type: "custom", message: "Passwords do not match" });
       return;
@@ -32,7 +33,7 @@ const UpdatePassword = () => {
     setResponse({ ...response, success: false, loading: true });
     const requestData = {
       // token: token,
-      userId: user?.userId,
+      userId: selector.user?.userId,
       ...formData,
     };
     console.log(requestData);
