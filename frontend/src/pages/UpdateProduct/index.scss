@@ -1,0 +1,29 @@
+.updateproduct {
+  &__formbody {
+    &__fileinput {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.imageview {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: #93c5fd;
+  transition-property: background-color, border-color, color, fill, stroke;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+}
+
+.imageproduct {
+  margin: 0 auto;
+  height: 200px;
+}

@@ -8,6 +8,7 @@ import { Form, InputRow, InputSubmit } from "components/Form";
 import Header from "components/Header";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
+import "./index.scss";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -132,10 +133,7 @@ const UpdateProduct = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        // console.log(response);
-        // setImageMessage("File uploaded successfully");
         setResponse({
-          //  ...response,
           success: true,
           loading: false,
           message: "File uploaded successfully",
@@ -143,9 +141,7 @@ const UpdateProduct = () => {
       })
       .catch((error) => {
         console.log(error);
-        // setImageMessage("File failed to upload");
         setResponse({
-          //  ...response,
           success: true,
           loading: false,
           message: "File failed to upload",
@@ -189,13 +185,12 @@ const UpdateProduct = () => {
     <>
       <Header />
       <Navbar />
-      <div className="">
+      <div>
         <Form title="Update product" onSubmission={onSubmit} handleSubmit={handleSubmit}>
-          {/* <form onSubmit={(e) => updateImage(e)} className=""> */}
-          <div className="">
+          <div>
             <div>
               <img
-                style={{ margin: "0 auto", height: "200px" }}
+                className="imageproduct"
                 src={
                   (imageURL as string)
                     ? (imageURL as string)
@@ -204,13 +199,10 @@ const UpdateProduct = () => {
                     : "https://www.tazzadesign.com/wp-content/uploads/sites/65/2013/11/dummy-image-square-300x300.jpg"
                 }
                 alt="Not found"
-                className=""
               />
             </div>
-            {/* <div>{imageMessage}</div> */}
             <input
-              // style={{ visibility: "hidden" }}
-              className="my-2"
+              className="updateproduct__formbody__fileinput"
               type="file"
               onChange={(e) => {
                 if (e && e.target && e.target.files && e.target.files[0]) {
@@ -220,12 +212,9 @@ const UpdateProduct = () => {
               alt="Not found"
             />
           </div>
-          <label className="">{errors.weight ? errors.weight.message : null}</label>
+          <label>{errors.weight ? errors.weight.message : null}</label>
           {fileFormatStatus ? (
-            <button
-              className="h-8 w-8 mx-auto bg-blue-300 rounded-lg px-1 py-1 hover:bg-blue-400 transition-colors my-2"
-              onClick={() => updateImage()}
-            >
+            <button className="imageview" onClick={() => updateImage()}>
               <img src="/images/upload-icon.png" alt="Not found" />
             </button>
           ) : null}

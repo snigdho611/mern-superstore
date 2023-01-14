@@ -1,0 +1,80 @@
+@use "styles/colors";
+
+.productcard {
+  display: flex;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #bfdbfe;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  flex-direction: column;
+  width: 20%;
+  border-radius: 0.5rem;
+  border-color: #1d4ed8;
+  border-style: solid;
+  border-width: 0.1rem;
+  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.522);
+  &__img {
+    display: flex;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    justify-content: center;
+  }
+  &__name {
+    display: flex;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    text-align: center;
+    justify-content: center;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-color: #1d4ed8;
+    border-style: solid;
+  }
+  &__weightprice {
+    display: flex;
+    width: 100%;
+    &__price,
+    &__weight {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      text-align: center;
+      width: 50%;
+      border-bottom-width: 2px;
+      border-color: #1d4ed8;
+      border-style: solid;
+    }
+    &__price {
+      border-right-width: 2px;
+    }
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &__button {
+      display: inline-flex;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+      background-color: #2563eb;
+      transition-property: background-color, border-color, color, fill, stroke;
+      color: #eff6ff;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      width: 6rem;
+      border-radius: 0.75rem;
+      border-style: none;
+      cursor: pointer;
+      transition: 0.25s color, 0.25s background-color;
+      &:hover {
+        color: #2563eb;
+        background-color: #eff6ff;
+      }
+    }
+  }
+}

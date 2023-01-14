@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import { getUser } from "util/local/index";
+import "./index.scss";
 
 interface ProductCardProps {
   data: any;
@@ -20,10 +21,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
   // const user_type = user && user.isAdmin ? user.isAdmin : null;
 
   return (
-    <div className="bg-blue-200 rounded-lg w-64 flex flex-col  border-blue-900 border-solid border-[1px] shadow-md shadow-blue-600 py-5">
-      <div className="flex justify-center my-3">
+    <div className="productcard">
+      <div className="productcard__img">
         <img
-          className="h-48"
+          className="h-36"
           src={
             data.image
               ? `${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}`
@@ -32,18 +33,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
           alt="Not found"
         />
       </div>
-      <div className="flex justify-center border-t-2 border-b-2 border-blue-700 border-solid py-1 text-center">
+      <div className="productcard__name">
         {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}
       </div>
-      <div className="flex w-full">
-        <div className="w-1/2 border-r-2 border-b-2 border-blue-700 border-solid py-1 text-center">
-          BDT {data.price}
-        </div>
-        <div className="w-1/2 border-b-2 border-blue-700 border-solid py-1 text-center">
-          Wt: {data.weight}
-        </div>
+      <div className="productcard__dateprice">
+        <div className="productcard__dateprice__price">BDT {data.price}</div>
+        <div className="productcard__dateprice__weight">Wt: {data.weight}</div>
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="productcard__buttons">
         {!isAdmin ? (
           <>
             <button
@@ -57,17 +54,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 //   quantity: data.quantity,
                 // });
               }}
-              className="w-24 h-10 bg-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm text-blue-50 border-none cursor-pointer rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center"
+              className="productcard__buttons__button"
             >
               Add to Cart
             </button>
           </>
         ) : null}
         {isAdmin ? (
-          <Link
-            to={`/product/edit/${data._id}`}
-            className="w-24 h-10 bg-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm text-blue-50 border-none cursor-pointer rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center"
-          >
+          <Link to={`/product/edit/${data._id}`} className="productcard__buttons__button">
             Edit
           </Link>
         ) : null}
@@ -76,15 +70,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
             onClick={() => {
               deleteProduct?.(data._id);
             }}
-            className="w-24 h-10 bg-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm text-blue-50 border-none cursor-pointer rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center"
+            className="productcard__buttons__button"
           >
             Delete
           </button>
         ) : null}
-        <Link
-          to={`/product/${data._id}`}
-          className="w-24 h-10 bg-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-colors text-sm text-blue-50 border-none cursor-pointer rounded-xl mx-auto my-1 text-center inline-flex justify-center items-center"
-        >
+        <Link to={`/product/${data._id}`} className="productcard__buttons__button">
           Details
         </Link>
       </div>

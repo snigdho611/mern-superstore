@@ -2,6 +2,7 @@ import React from "react";
 // import "components/Form/index.css";
 import Loader from "components/Loader";
 import { FieldValues, UseFormHandleSubmit } from "react-hook-form";
+import "./index.scss";
 
 export interface Response {
   success: boolean;
@@ -18,9 +19,9 @@ interface FormProps {
 
 const Form: React.FC<FormProps> = ({ children, title, handleSubmit, onSubmission }) => {
   return (
-    <div className="w-1/2 mx-auto flex flex-col justify-center text-center bg-blue-500">
-      {title ? <h3 className="text-2xl my-10 font-bold">{title}</h3> : null}
-      <form onSubmit={handleSubmit(onSubmission)} className="flex flex-col py-5 rounded-lg">
+    <div className="customform">
+      {title ? <h3 className="customform__title">{title}</h3> : null}
+      <form onSubmit={handleSubmit(onSubmission)} className="customform__body">
         {children}
       </form>
     </div>
@@ -47,16 +48,13 @@ const InputRow: React.FC<InputRowProps> = ({
   pattern = null,
 }) => {
   return (
-    <div className="w-3/4 mx-auto flex px-4">
-      <div className="w-1/4 text-right px-3 pt-1 text-md text-slate-200">
+    <div className="forminputrow">
+      <div className="forminputrow__label">
         <label htmlFor={label}>{label}:</label>
-        {/* <div className="h-7 text-sm text-pink-300">
-          {errors[name] ? errors[name].message : null}
-        </div> */}
       </div>
-      <div className="w-3/4 flex flex-col justify-center">
+      <div className="forminputrow__input">
         <input
-          className="py-2 px-4 rounded-md focus:bg-slate-200 hover:bg-slate-200 outline-none"
+          className="forminputrow__input__tag"
           type={type}
           placeholder={label}
           {...register(`${name}`, {
@@ -70,7 +68,7 @@ const InputRow: React.FC<InputRowProps> = ({
             },
           })}
         />
-        <div className="h-7 text-sm text-pink-300">
+        <div className="forminputrow__input__error">
           {errors[name] ? errors[name].message : null}
         </div>
       </div>
