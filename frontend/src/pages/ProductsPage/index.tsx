@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, NavigateFunction } from "react-router-dom";
 import { Product } from "types";
 import { getUser } from "util/local";
+import "./index.scss";
 
 const ProductsPage = () => {
   const [dataToShow, setDataToShow] = useState<Product[]>([]);

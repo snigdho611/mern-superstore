@@ -1,0 +1,27 @@
+.navbar {
+  position: fixed;
+  z-index: 10;
+  background-color: #1e3a8a;
+  width: 15rem;
+  &__container {
+    display: flex;
+    top: 0;
+    flex-direction: column;
+    height: 100vh;
+    &__link {
+      transition-property: background-color, border-color, color, fill, stroke;
+      color: #bfdbfe;
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      padding-top: 2vh;
+      padding-bottom: 2vh;
+      &--active {
+        background-color: #bfdbfe;
+        color: #1e3a8a;
+      }
+    }
+  }
+}

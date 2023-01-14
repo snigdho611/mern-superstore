@@ -1,17 +1,18 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUser, removeUser } from "util/local/index";
+import "./index.scss";
 
 const Header: React.FC = () => {
   let user = getUser();
   const navigate = useNavigate();
 
   return (
-    <div className="bg-blue-900 sticky flex top-0 h-24 shadow-lg shadow-blue-300">
-      <div className="w-1/2 flex justify-end">
-        <Link to={user ? "/home" : "/"}>
+    <div className="header">
+      <div className="header__segment">
+        <Link to={user ? "/home" : "/"} className="header__segment__link">
           <img
-            className="h-[70px]"
+            className="header__segment__link__image"
             src={
               "https://res.cloudinary.com/drnym8nne/image/upload/v1659979478/superstore/basic/supermarket_bwbuit.png"
             }
@@ -19,28 +20,28 @@ const Header: React.FC = () => {
           />
         </Link>
       </div>
-      <div className="w-1/2 flex justify-end">
+      <div className="header__segment">
         {user ? (
           user.isAdmin ? (
             <div>
               <div>Admin Mode</div>
             </div>
           ) : (
-            <Link to="/cart" className="cart__btn">
-              <div className="h-10 w-10 mx-5 my-5 px-2 py-2 rounded-3xl bg-blue-100 hover:bg-blue-400 transition-colors">
+            <Link to="/cart" className="header__imglink">
+              <div className="header__imglink__cart">
                 <img src="/images/shopping-cart.png" alt="Not found" />
               </div>
             </Link>
           )
         ) : null}
         {user ? (
-          <div>
-            <div className="cursor-pointer h-10 w-10 mx-5 my-5 px-2 py-2 rounded-3xl bg-blue-100 hover:bg-blue-400 transition-colors">
-              <img src="/images/profile.png" alt="Not found" />
+          <div className="menu">
+            <div className="menu__imgcontainer">
+              <img src="/images/profile.png" alt="Not found" className="menu__imgcontainer__img" />
             </div>
-            <div className="text-center absolute right-0 bg-blue-200">
+            <div className="menu__options">
               <div
-                className="cursor-pointer hover:bg-blue-50 transition-colors py-1 px-5 border-2 border-blue-700 border-solid"
+                className="menu__options__option"
                 onClick={() => {
                   navigate("/history");
                 }}
@@ -48,7 +49,7 @@ const Header: React.FC = () => {
                 Check History
               </div>
               <div
-                className="cursor-pointer hover:bg-blue-50 transition-colors py-1 px-5 border-2 border-blue-700 border-solid"
+                className="menu__options__option"
                 onClick={() => {
                   navigate("/update-profile");
                 }}
@@ -56,7 +57,7 @@ const Header: React.FC = () => {
                 Update Profile
               </div>
               <div
-                className="cursor-pointer hover:bg-blue-50 transition-colors py-1 px-5 border-2 border-blue-700 border-solid"
+                className="menu__options__option"
                 onClick={() => {
                   navigate("/update-password");
                 }}
@@ -64,7 +65,7 @@ const Header: React.FC = () => {
                 Update Password
               </div>
               <div
-                className="cursor-pointer hover:bg-blue-50 transition-colors py-1 px-5 border-2 border-blue-700 border-solid"
+                className="menu__options__option"
                 onClick={() => {
                   removeUser();
                   navigate("/");
