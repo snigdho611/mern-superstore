@@ -1,0 +1,74 @@
+@use "styles/colors";
+
+.header {
+  display: flex;
+  position: sticky;
+  top: 0;
+  background-color: colors.$cyan-3;
+  height: 3rem;
+  box-shadow: 2px 5px 10px colors.$cyan-1;
+  &__segment {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+    &__link {
+      &__image {
+        height: 80%;
+      }
+    }
+  }
+  &__imglink {
+    // height: 100%;
+    &__cart {
+      // padding: 0.5rem;
+      // margin: 1.25rem;
+      margin: 0.25rem 1.25rem;
+      background-color: colors.$cyan-2;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__img {
+        height: 70%;
+        width: 70%;
+      }
+    }
+  }
+}
+
+.menu {
+  &__imgcontainer {
+    padding: 0.5rem;
+    margin: 0.25rem 1.25rem;
+    background-color: colors.$cyan-1;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    &__img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  &__options {
+    position: absolute;
+    right: 0;
+    text-align: center;
+    &__option {
+      padding: 0.5rem 1.25rem;
+      background-color: colors.$cyan-1;
+      color: colors.$grey-4;
+      outline-width: 1px;
+      outline-color: colors.$grey-4;
+      outline-style: solid;
+      cursor: pointer;
+      transition: 0.25s background-color, 0.25s color;
+      &:hover {
+        background-color: colors.$cyan-2;
+        color: colors.$grey-1;
+      }
+    }
+  }
+}

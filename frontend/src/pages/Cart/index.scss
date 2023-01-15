@@ -1,0 +1,49 @@
+@use "styles/colors";
+
+.cartpage {
+  margin-left: 20rem;
+  margin-right: 20rem;
+  margin-top: 7rem;
+  width: 66.666667%;
+  &__table {
+    width: 100%;
+    &__head {
+      &__th {
+        background-color: colors.$cyan-4;
+        color: colors.$grey-1;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        outline-width: 1px;
+        outline-color: colors.$grey-3;
+        outline-style: solid;
+        &--id {
+          @extend .cartpage__table__head__th;
+          width: 10%;
+        }
+        &--name {
+          @extend .cartpage__table__head__th;
+          width: 20%;
+        }
+        &--quantity {
+          @extend .cartpage__table__head__th;
+          width: 40%;
+        }
+        &--price {
+          @extend .cartpage__table__head__th;
+          width: 30%;
+        }
+      }
+    }
+    &__body {
+      &__td {
+        background-color: #93c5fd;
+        text-align: center;
+        outline-width: 1px;
+        outline-color: #1e3a8a;
+        outline-style: solid;
+        color: colors.$grey-3;
+        padding: 0.5rem 1.25rem;
+      }
+    }
+  }
+}

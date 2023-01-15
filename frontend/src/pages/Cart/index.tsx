@@ -133,31 +133,29 @@ const Cart = () => {
     <>
       <Header />
       <Navbar />
-      <div className="w-2/3 mx-80 mt-28">
+      <div className="cartpage">
         {cart && cart.length > 0 ? (
-          <table className="w-full">
+          <table className="cartpage__table">
             <thead>
               <tr>
-                <th className="bg-blue-700 text-blue-100 text-lg w-[10%]">#</th>
-                <th className="bg-blue-700 text-blue-100 text-lg w-[40%]">Name</th>
-                <th className="bg-blue-700 text-blue-100 text-lg w-[20%]">Qty</th>
-                <th className="bg-blue-700 text-blue-100 text-lg w-[30%]">Price</th>
+                <th className="cartpage__table__head__th--id">#</th>
+                <th className="cartpage__table__head__th--name">Name</th>
+                <th className="cartpage__table__head__th--quantity">Qty</th>
+                <th className="cartpage__table__head__th--price">Price</th>
               </tr>
             </thead>
             <tbody>
               {cart.map((element) => {
                 return (
                   <tr key={(element.productId as Product)._id}>
-                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                    <td className="cartpage__table__body__td">
                       {(element.productId as Product)._id.slice(-2)}
                     </td>
-                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                    <td className="cartpage__table__body__td">
                       {(element.productId as Product).name}
                     </td>
-                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
-                      {element.quantity}
-                    </td>
-                    <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                    <td className="cartpage__table__body__td">{element.quantity}</td>
+                    <td className="cartpage__table__body__td">
                       {(element.productId as Product).price}x{element.quantity} ={" "}
                       {((element.productId as Product).price as number) * element.quantity}
                     </td>
@@ -178,7 +176,7 @@ const Cart = () => {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td className="text-center bg-blue-300 border-2 border-solid border-blue-900">
+                <td className="cartpage__table__body__td">
                   Total: <label className="font-bold">{calculateTotal()}</label>
                 </td>
               </tr>
