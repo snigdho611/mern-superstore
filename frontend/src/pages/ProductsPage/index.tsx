@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, NavigateFunction } from "react-router-dom";
 import { Product } from "types";
 import { getUser } from "util/local";
+import "./index.scss";
 
 const ProductsPage = () => {
   const [dataToShow, setDataToShow] = useState<Product[]>([]);
@@ -143,9 +144,9 @@ const ProductsPage = () => {
       ) : null}
       <Header />
       <Navbar />
-      <div className="z-10 ml-[15%] w-[80%]">
+      <div className="productspage">
         {!response.loading ? (
-          <div className="flex flex-row justify-center flex-wrap mt-8 mb-16 mx-auto gap-5">
+          <div className="productspage__card">
             {dataToShow.length > 0 ? (
               dataToShow.map((element) => {
                 return (
@@ -167,7 +168,7 @@ const ProductsPage = () => {
           <div>No results</div>
         )}
       </div>
-      <div className="mx-auto w-full flex flex-row justify-center fixed bottom-0 gap-2 py-5 bg-[rgba(177,177,177,0.5)]">
+      <div className="productspagination">
         {parseInt(searchParams.get("page") as string) > 3 ? (
           <button
             onClick={() => {
@@ -175,7 +176,7 @@ const ProductsPage = () => {
                 setRange((prevState) => ({ min: prevState.min - 1, max: prevState.max - 1 }));
               }
             }}
-            className={`w-[80px] outline-1 outline outline-zinc-600`}
+            className="productspagination__gobackbutton"
           >
             {"<"}
           </button>
@@ -192,7 +193,7 @@ const ProductsPage = () => {
                   search: `?page=${i + 1}`,
                 });
               }}
-              className={`w-[80px] outline-1 outline outline-zinc-600 rounded-lg py-2 hover:bg-blue-300 transition-colors ${
+              className={` ${
                 parseInt(searchParams.get("page") as string) === i + 1
                   ? "bg-blue-300"
                   : "bg-blue-50"

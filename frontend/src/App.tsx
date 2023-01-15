@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
 import ProductsPage from "pages/ProductsPage";
-import "styles/index.css";
+import "styles/index.scss";
 import Login from "pages/Login";
 import Register from "pages/Register";
 import ResetPassword from "pages/ResetPassword";

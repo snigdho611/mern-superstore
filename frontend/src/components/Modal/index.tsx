@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.scss";
 
 interface ModalProps {
   message: string;
@@ -10,16 +11,14 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ message, buttons }) => {
   return (
-    <div className="h-[100vh] w-full bg-[rgba(0,0,32,0.3)]  fixed top-0 left-0 z-50 flex justify-center items-center">
-      <div className="h-[30%] w-[50%] bg-blue-800 shadow-lg shadow-slate-700 rounded-xl">
-        <div className="h-1/2 flex flex-row justify-center items-center text-blue-100">
-          {message ? message : null}
-        </div>
-        <div className="h-1/2 flex flex-row justify-center gap-10">
+    <div className="modal">
+      <div className="modal__body">
+        <div className="modal__body__message">{message ? message : null}</div>
+        <div className="modal__body__buttons">
           {buttons.map((element, i) => {
             return (
               <button
-                className="bg-blue-500 h-fit px-5 py-2 rounded-lg"
+                className="modal__body__buttons__button"
                 key={i}
                 onClick={() => element.function()}
               >

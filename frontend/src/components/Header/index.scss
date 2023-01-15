@@ -53,6 +53,8 @@
     }
   }
   &__options {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     right: 0;
     text-align: center;

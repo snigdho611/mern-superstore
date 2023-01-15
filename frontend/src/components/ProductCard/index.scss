@@ -2,23 +2,29 @@
 
 .productcard {
   display: flex;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  background-color: #bfdbfe;
+  padding: 0.5rem 0;
+  background-color: colors.$cyan-1;
   font-size: 0.75rem;
   line-height: 1rem;
   flex-direction: column;
-  width: 20%;
+  width: 15rem;
   border-radius: 0.5rem;
-  border-color: #1d4ed8;
-  border-style: solid;
-  border-width: 0.1rem;
-  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.522);
+  outline-width: 1px;
+  outline-color: colors.$cyan-3;
+  outline-style: solid;
+  box-shadow: 2px 2px 3px colors.$cyan-2;
+  height: fit-content;
   &__img {
     display: flex;
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
     justify-content: center;
+    height: 15vh;
+    // width: 20vw;
+    &__imgtag {
+      // height: 100%;
+      width: fit-content;
+    }
   }
   &__name {
     display: flex;
@@ -26,26 +32,25 @@
     padding-bottom: 0.25rem;
     text-align: center;
     justify-content: center;
-    border-top-width: 2px;
-    border-bottom-width: 2px;
-    border-color: #1d4ed8;
-    border-style: solid;
+    outline-color: colors.$cyan-3;
+    outline-style: solid;
+    outline-width: 1px;
+    font-weight: bold;
+    background-color: colors.$grey-1;
   }
   &__weightprice {
     display: flex;
     width: 100%;
+    background-color: colors.$grey-1;
     &__price,
     &__weight {
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
       text-align: center;
       width: 50%;
-      border-bottom-width: 2px;
-      border-color: #1d4ed8;
-      border-style: solid;
-    }
-    &__price {
-      border-right-width: 2px;
+      outline-color: colors.$cyan-3;
+      outline-style: solid;
+      outline-width: 1px;
     }
   }
   &__buttons {
@@ -54,12 +59,8 @@
     justify-content: center;
     &__button {
       display: inline-flex;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 0.25rem;
-      margin-bottom: 0.25rem;
+      margin: 0.25rem auto;
       background-color: #2563eb;
-      transition-property: background-color, border-color, color, fill, stroke;
       color: #eff6ff;
       font-size: 0.875rem;
       line-height: 1.25rem;
@@ -68,12 +69,17 @@
       align-items: center;
       width: 6rem;
       border-radius: 0.75rem;
-      border-style: none;
+      border: none;
+      outline-style: solid;
+      outline-width: 1px;
+      outline-color: colors.$grey-3;
+      background-color: colors.$cyan-3;
       cursor: pointer;
       transition: 0.25s color, 0.25s background-color;
+      text-decoration: none;
       &:hover {
-        color: #2563eb;
-        background-color: #eff6ff;
+        color: colors.$cyan-3;
+        background-color: colors.$grey-1;
       }
     }
   }

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUser } from "util/local/index";
 import { CartItem, Product } from "types/index";
+import "./index.scss";
 
 const Cart = () => {
   const user = getUser();

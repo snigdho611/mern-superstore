@@ -1,25 +1,26 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getUser } from "util/local/index";
+import "./index.scss";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
   const user = getUser();
 
   return (
-    <div className="fixed bg-blue-900 w-[15rem] z-10">
-      <div className="top-0 flex flex-col h-[100vh]">
+    <div className="navbar">
+      <div className="navbar__container">
         <Link
-          className={`text-center no-underline cursor-pointer text-xl transition-colors px-[10px] text-blue-200 hover:bg-blue-600 hover:text-gray-900 py-[2vh] ${
-            location.pathname === "/home" ? "bg-blue-600 text-gray-800" : null
+          className={`navbar__container__link ${
+            location.pathname === "/home" ? "navbar__container__link--active" : null
           }`}
           to="/home"
         >
           Home
         </Link>
         <Link
-          className={`text-center no-underline cursor-pointer text-xl transition-colors px-[10px] text-blue-200 hover:bg-blue-600 hover:text-gray-900 py-[2vh] ${
-            location.pathname === "/products" ? "bg-blue-600 text-gray-800" : null
+          className={`navbar__container__link ${
+            location.pathname === "/products" ? "navbar__container__link--active" : null
           }`}
           to="/products"
         >
@@ -27,8 +28,10 @@ const Navbar: React.FC = () => {
         </Link>
         {user && user.isAdmin ? (
           <Link
-            className={`text-center no-underline cursor-pointer text-xl transition-colors px-[10px] text-blue-200 hover:bg-blue-600 hover:text-gray-900 py-[2vh] ${
-              location.pathname === "/products/add" ? "bg-blue-600 text-gray-800" : null
+            className={`navbar__container__link ${
+              location.pathname === "/products/add-product"
+                ? "navbar__container__link--active"
+                : null
             }`}
             to="/products/add-product"
           >
@@ -36,8 +39,8 @@ const Navbar: React.FC = () => {
           </Link>
         ) : (
           <Link
-            className={`text-center no-underline cursor-pointer text-xl transition-colors px-[10px] text-blue-200 hover:bg-blue-600 hover:text-gray-900 py-[2vh] ${
-              location.pathname === "/deals" ? "bg-blue-600 text-gray-800" : null
+            className={`navbar__container__link ${
+              location.pathname === "/deals" ? "navbar__container__link--active" : null
             }`}
             to="/deals"
           >
