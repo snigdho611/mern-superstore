@@ -1,0 +1,36 @@
+.productspage {
+  z-index: 10;
+  margin-left: 15%;
+  width: 80%;
+  &__card {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+}
+
+.productspagination {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5rem;
+  background: rgba(177, 177, 177, 0.5);
+  &__gobackbutton {
+    outline-width: 1px;
+    outline-color: #52525b;
+    outline-style: solid;
+  }
+}

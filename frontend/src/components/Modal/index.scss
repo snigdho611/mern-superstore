@@ -1,3 +1,5 @@
+@use "styles/colors";
+
 .modal {
   display: flex;
   position: fixed;
@@ -10,14 +12,17 @@
   height: 100vh;
   background: rgba(0, 0, 32, 0.3);
   &__body {
-    background-color: #1e40af;
-    border-radius: 0.75rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    background-color: colors.$cyan-3;
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 15px colors.$cyan-1;
     height: 30%;
     width: 50%;
+    outline-width: 1px;
+    outline-color: colors.$grey-1;
+    outline-style: solid;
     &__message {
       display: flex;
-      color: #dbeafe;
+      color: white;
       flex-direction: row;
       justify-content: center;
       align-items: center;
@@ -30,14 +35,19 @@
       height: 50%;
       gap: 2.5rem;
       &__button {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-        background-color: #3b82f6;
+        padding: 0.5rem 1.75rem;
+        border: none;
+        background-color: colors.$cyan-2;
+        color: colors.$grey-4;
         border-radius: 0.5rem;
-        height: 50px;
+        height: fit-content;
         cursor: pointer;
+        color: white;
+        transition: 0.25s background-color, 0.25s color;
+        &:hover {
+          color: colors.$grey-4;
+          background-color: colors.$grey-1;
+        }
       }
     }
   }

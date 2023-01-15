@@ -1,7 +1,9 @@
+@use "styles/colors";
+
 .navbar {
   position: fixed;
   z-index: 10;
-  background-color: #1e3a8a;
+  background-color: colors.$cyan-3;
   width: 15rem;
   &__container {
     display: flex;
@@ -9,18 +11,22 @@
     flex-direction: column;
     height: 100vh;
     &__link {
-      transition-property: background-color, border-color, color, fill, stroke;
-      color: #bfdbfe;
-      font-size: 1.25rem;
+      color: colors.$cyan-1;
+      font-size: 1rem;
       line-height: 1.75rem;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
-      padding-top: 2vh;
-      padding-bottom: 2vh;
-      &--active {
-        background-color: #bfdbfe;
+      padding: 2vh 0;
+      transition: 0.25s color, 0.25s background-color;
+      outline: 1px;
+      outline-style: solid;
+      outline-color: colors.$cyan-1;
+      &--active,
+      &:hover {
+        background-color: colors.$cyan-1;
         color: #1e3a8a;
+        font-weight: bold;
       }
     }
   }

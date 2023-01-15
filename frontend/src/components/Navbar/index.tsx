@@ -29,7 +29,9 @@ const Navbar: React.FC = () => {
         {user && user.isAdmin ? (
           <Link
             className={`navbar__container__link ${
-              location.pathname === "/products/add" ? "navbar__container__link--active" : null
+              location.pathname === "/products/add-product"
+                ? "navbar__container__link--active"
+                : null
             }`}
             to="/products/add-product"
           >

@@ -1,32 +1,27 @@
+@use "styles/colors";
+
 .header {
   display: flex;
   position: sticky;
   top: 0;
-  background-color: #1e3a8a;
-  height: 6rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: colors.$cyan-3;
+  height: 3rem;
+  box-shadow: 2px 5px 10px colors.$cyan-1;
   &__segment {
     display: flex;
     justify-content: flex-end;
     width: 50%;
     &__link {
       &__image {
-        height: 70px;
+        height: 80%;
       }
     }
   }
   &__imglink {
     &__cart {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-      margin-top: 1.25rem;
-      margin-bottom: 1.25rem;
-      margin-left: 1.25rem;
-      margin-right: 1.25rem;
-      background-color: #dbeafe;
-      transition-property: background-color, border-color, color, fill, stroke;
+      padding: 0.5rem;
+      margin: 1.25rem;
+      background-color: colors.$cyan-2;
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 1.5rem;
@@ -36,18 +31,11 @@
 
 .menu {
   &__imgcontainer {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    margin-left: 1.25rem;
-    margin-right: 1.25rem;
-    background-color: #dbeafe;
-    transition-property: background-color, border-color, color, fill, stroke;
-    width: 2.5rem;
-    height: 2.5rem;
+    padding: 0.5rem;
+    margin: 0.25rem 1.25rem;
+    background-color: colors.$cyan-1;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 1.5rem;
     cursor: pointer;
     &__img {
@@ -58,18 +46,20 @@
   &__options {
     position: absolute;
     right: 0;
-    background-color: #bfdbfe;
     text-align: center;
     &__option {
-      padding-top: 0.25rem;
-      padding-bottom: 0.25rem;
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-      transition-property: background-color, border-color, color, fill, stroke;
-      border-width: 2px;
-      border-color: #1d4ed8;
-      border-style: solid;
+      padding: 0.5rem 1.25rem;
+      background-color: colors.$cyan-1;
+      color: colors.$grey-4;
+      outline-width: 1px;
+      outline-color: colors.$grey-4;
+      outline-style: solid;
       cursor: pointer;
+      transition: 0.25s background-color, 0.25s color;
+      &:hover {
+        background-color: colors.$cyan-2;
+        color: colors.$grey-1;
+      }
     }
   }
 }

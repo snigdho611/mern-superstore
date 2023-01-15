@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <div className="productcard">
       <div className="productcard__img">
         <img
-          className="h-36"
+          className="productcard__img__imgtag"
           src={
             data.image
               ? `${process.env.REACT_APP_BASE_BACKEND}${data.image.replace(/\\/g, "/")}`
@@ -36,9 +36,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="productcard__name">
         {data.name.length < 15 ? data.name : data.name.slice(0, 15) + "..."}
       </div>
-      <div className="productcard__dateprice">
-        <div className="productcard__dateprice__price">BDT {data.price}</div>
-        <div className="productcard__dateprice__weight">Wt: {data.weight}</div>
+      <div className="productcard__weightprice">
+        <div className="productcard__weightprice__price">BDT {data.price}</div>
+        <div className="productcard__weightprice__weight">Wt: {data.weight}</div>
       </div>
       <div className="productcard__buttons">
         {!isAdmin ? (
