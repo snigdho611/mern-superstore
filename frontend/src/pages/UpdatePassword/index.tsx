@@ -13,7 +13,7 @@ const UpdatePassword = () => {
     message: null,
   });
   const selector = useSelector((state: any) => ({
-    user: state.user,
+    user: state.user.user,
   }));
   // console.log(selector.user);
 

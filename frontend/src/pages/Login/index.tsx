@@ -1,21 +1,20 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
-import React, { useEffect, useState } from "react";
-// import Login from "components/Authenticate/Login";
+import React, { useState } from "react";
 import { Response } from "types";
-import { getUser, setUser } from "util/local";
 import { FieldValues, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, InputRow, InputSubmit } from "components/Form";
+import { useDispatch } from "react-redux";
+import { setUser } from "store/user";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [response, setResponse] = useState<Response>({
     success: false,
     loading: false,
     message: null,
   });
-  const user = getUser();
-
   const {
     register,
     handleSubmit,
@@ -23,11 +22,6 @@ const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (user) {
-      navigate("/home");
-    }
-  }, [navigate, user]);
 
   const onSubmission = (formData: FieldValues) => {
     setResponse({ ...response, loading: true, message: null });
@@ -44,11 +38,11 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         if (response.success) {
-          setUser(JSON.stringify(response.results));
           setResponse({ ...response, loading: false });
-          saveAndRedirect();
+          dispatch(setUser(JSON.stringify(response.results)));
+          // window.location = "/home"
+          navigate(0);
         } else {
           setResponse({
             ...response,
@@ -66,10 +60,6 @@ const Login = () => {
           loading: false,
         });
       });
-  };
-
-  const saveAndRedirect = () => {
-    navigate("/home");
   };
 
   return (

@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { getUser } from "util/local/index";
-import { useNavigate } from "react-router-dom";
 import { Form, InputRow, InputSubmit, Response } from "components/Form";
 import Navbar from "components/Navbar";
 import Header from "components/Header";
 import Footer from "components/Footer";
+import { useSelector } from "react-redux";
 
 const AddProduct = () => {
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
   const [response, setResponse] = useState<Response>({
     success: false,
     loading: false,
     message: null,
   });
-  const user = getUser();
-  const navigate = useNavigate();
 
   const [image, setImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
@@ -32,13 +32,6 @@ const AddProduct = () => {
       weight: "",
     },
   });
-
-  useEffect(() => {
-    if (user && !user.isAdmin) {
-      return navigate("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     try {
@@ -74,7 +67,7 @@ const AddProduct = () => {
       body: bodyData,
       headers: {
         // "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${user && user.access_token}`,
+        Authorization: `Bearer ${store.user && store.user.access_token}`,
       },
     })
       .then((res) => res.json())

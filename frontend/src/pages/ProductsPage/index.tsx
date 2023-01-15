@@ -6,9 +6,9 @@ import Modal from "components/Modal";
 import Navbar from "components/Navbar";
 import ProductCard from "components/ProductCard";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useSearchParams, useNavigate, NavigateFunction } from "react-router-dom";
 import { Product } from "types";
-import { getUser } from "util/local";
 import "./index.scss";
 
 const ProductsPage = () => {
@@ -27,7 +27,9 @@ const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const navigate: NavigateFunction = useNavigate();
 
-  const user = getUser();
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
 
   useEffect(() => {
     fetch(
@@ -100,17 +102,17 @@ const ProductsPage = () => {
     setModalOpen(false);
   };
 
+  // console.log(store?.user?.access_token);
   const addToCart = (_id: string) => {
-    console.log(_id);
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/add-product`, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        // Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user && user.access_token}`,
+        Authorization: `Bearer ${store.user && store.user.access_token}`,
       },
       body: JSON.stringify({
-        userId: user?._id,
+        userId: store.user?._id,
         productId: _id,
       }),
     })
@@ -156,7 +158,7 @@ const ProductsPage = () => {
                     dispatchMethod={null}
                     deleteProduct={deleteProduct}
                     addToCart={addToCart}
-                    isAdmin={(user && user.isAdmin) as boolean}
+                    isAdmin={(store.user && store.user.isAdmin) as boolean}
                   />
                 );
               })
@@ -193,7 +195,7 @@ const ProductsPage = () => {
                   search: `?page=${i + 1}`,
                 });
               }}
-              className={` ${
+              className={`w-[80px] outline-1 outline outline-zinc-600 rounded-lg py-2 hover:bg-blue-300 transition-colors ${
                 parseInt(searchParams.get("page") as string) === i + 1
                   ? "bg-blue-300"
                   : "bg-blue-50"

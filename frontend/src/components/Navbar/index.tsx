@@ -1,11 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { getUser } from "util/local/index";
 import "./index.scss";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const user = getUser();
+  // const user = getUser();
+  const store = useSelector((state: any) => ({
+    user: state.user,
+  }));
 
   return (
     <div className="navbar">
@@ -26,7 +29,7 @@ const Navbar: React.FC = () => {
         >
           Products
         </Link>
-        {user && user.isAdmin ? (
+        {store.user && store.user.isAdmin ? (
           <Link
             className={`navbar__container__link ${
               location.pathname === "/products/add-product"

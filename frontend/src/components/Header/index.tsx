@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getUser, removeUser } from "util/local/index";
+import { removeUser } from "store/user";
 import "./index.scss";
 
 const Header: React.FC = () => {
-  let user = getUser();
   const navigate = useNavigate();
   const [optmenu, setOptment] = useState<boolean>(false);
   const menuRef = useRef<any>(null);
@@ -18,11 +18,14 @@ const Header: React.FC = () => {
       }
     }
   }, [optmenu]);
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
 
   return (
     <div className="header">
       <div className="header__segment">
-        <Link to={user ? "/home" : "/"} className="header__segment__link">
+        <Link to={store.user ? "/home" : "/"} className="header__segment__link">
           <img
             className="header__segment__link__image"
             src={
@@ -33,8 +36,8 @@ const Header: React.FC = () => {
         </Link>
       </div>
       <div className="header__segment">
-        {user ? (
-          user.isAdmin ? (
+        {store.user ? (
+          store.user.isAdmin ? (
             <div>
               <div>Admin Mode</div>
             </div>
@@ -50,7 +53,7 @@ const Header: React.FC = () => {
             </Link>
           )
         ) : null}
-        {user ? (
+        {store.user ? (
           <div className="menu">
             <div
               className="menu__imgcontainer"
