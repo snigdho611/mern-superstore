@@ -12,8 +12,20 @@ export const userSlice = createSlice({
         state.user = JSON.parse(user);
       }
     },
+    // setUser: (state)=>{
+    //   localStorage.setItem("user", user);
+    // }
   },
 });
+
+export const removeUser = () => {
+  localStorage.removeItem("user");
+};
+
+export const setUser = (data: string) => {
+  localStorage.setItem("user", data);
+};
+
 
 export const { getUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -2,7 +2,7 @@
 
 .customform {
   display: flex;
-  margin: 0 auto;
+  margin: 10% auto 0 auto;
   background-color: colors.$cyan-1;
   text-align: center;
   flex-direction: column;
@@ -70,22 +70,29 @@
   display: flex;
   flex-direction: column;
   &__button {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #1e40af;
-    transition-property: background-color, border-color, color, fill, stroke;
-    color: #bfdbfe;
-    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    font-weight: 700;
+    display: inline-flex;
+    padding: 0.5rem 0;
+    font-weight: bold;
+    width: 10rem;
+    margin: 0.25rem auto;
+    color: #eff6ff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
     text-align: center;
-    width: 8rem;
-    border-radius: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.25rem;
+    border: none;
+    outline-style: solid;
+    outline-width: 1px;
+    outline-color: colors.$grey-3;
+    background-color: colors.$cyan-3;
     cursor: pointer;
+    transition: 0.25s color, 0.25s background-color;
+    text-decoration: none;
+    &:hover {
+      color: colors.$cyan-3;
+      background-color: colors.$grey-1;
+    }
   }
 }

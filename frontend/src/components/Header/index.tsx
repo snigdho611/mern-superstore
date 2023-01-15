@@ -10,10 +10,12 @@ const Header: React.FC = () => {
   const menuRef = useRef<any>(null);
 
   useEffect(() => {
-    if (optmenu) {
-      // menuRef.current.style.disply = "none";
-    } else {
-      // menuRef.current.style.disply = "none";
+    if (menuRef && menuRef.current) {
+      if (optmenu) {
+        menuRef.current.style.display = "flex";
+      } else {
+        menuRef.current.style.display = "none";
+      }
     }
   }, [optmenu]);
 

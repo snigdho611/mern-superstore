@@ -59,6 +59,8 @@
     justify-content: center;
     &__button {
       display: inline-flex;
+      padding: 0.25rem 0;
+      width: 50%;
       margin: 0.25rem auto;
       background-color: #2563eb;
       color: #eff6ff;
@@ -67,8 +69,8 @@
       text-align: center;
       justify-content: center;
       align-items: center;
-      width: 6rem;
-      border-radius: 0.75rem;
+      // width: 6rem;
+      border-radius: 0.25rem;
       border: none;
       outline-style: solid;
       outline-width: 1px;

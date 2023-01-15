@@ -75,7 +75,6 @@ const Login = () => {
   return (
     <>
       <Header />
-
       <Form
         title="Please Log In to Continue"
         onSubmission={onSubmission}
@@ -96,16 +95,12 @@ const Login = () => {
           loading={response.loading}
           message={response.message}
         />
-        <div className="my-4 flex flex-col gap-2 w-fit mx-auto">
+        <div className="formlinks">
           <Link to="/reset-password-request">
-            <div className="text-xl text-blue-900 hover:text-slate-300 w-fit mx-auto transition-colors">
-              Forgot Password
-            </div>
+            <div className="formlink">Forgot Password</div>
           </Link>
           <Link to="/register">
-            <div className="text-xl text-blue-900 hover:text-slate-300 w-fit mx-auto transition-colors">
-              Sign Up
-            </div>
+            <div className="formlink">Sign Up</div>
           </Link>
         </div>
       </Form>

@@ -3,9 +3,9 @@ import { Form, InputRow, InputSubmit } from "components/Form";
 import Header from "components/Header";
 import React, { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { Response } from "types";
 import { getUser, setUser } from "util/local";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [response, setResponse] = useState<Response>({
@@ -137,6 +137,11 @@ const Register = () => {
           loading={response.loading}
           message={response.message}
         />
+        <div className="formlinks">
+          <Link to="/login">
+            <div className="formlink">Log In</div>
+          </Link>
+        </div>
       </Form>
       <Footer />
     </>
