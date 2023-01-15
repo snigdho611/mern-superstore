@@ -6,7 +6,7 @@ import validator from "../middleware/validation";
 const router = express.Router();
 
 router.post("/get",
-  // checkAuth,
+  checkAuth,
   validator.getCart,
   CartController.getCart);
 
@@ -16,7 +16,7 @@ router.post("/add-product",
 
 router.post(
   "/remove-product",
-  // checkAuth,
+  checkAuth,
   validator.removeProduct,
   CartController.removeProductFromCart
 );
@@ -26,7 +26,7 @@ router.post("/delete", (req: Request, res: Response) => {
 });
 router.post(
   "/checkout-email",
-  // checkAuth,
+  checkAuth,
   validator.sendCheckoutEmail,
   CartController.sendCheckoutEmail
 );
