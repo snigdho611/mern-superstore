@@ -1,26 +1,18 @@
 import Footer from "components/Footer";
 import { Form, InputRow, InputSubmit } from "components/Form";
 import Header from "components/Header";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Response } from "types";
-import { getUser } from "util/local/index";
 // import classes from './index.module.css'
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
-  const user = getUser();
   const [response, setResponse] = useState<Response>({
     success: false,
     loading: false,
     message: null,
   });
-  useEffect(() => {
-    if (user) {
-      navigate("/home");
-    }
-  }, [navigate, user]);
 
   const {
     register,

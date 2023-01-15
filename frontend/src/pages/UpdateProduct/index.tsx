@@ -2,15 +2,18 @@ import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUser } from "util/local/index";
 import { Product, Response } from "types";
 import { Form, InputRow, InputSubmit } from "components/Form";
 import Header from "components/Header";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
 import "./index.scss";
+import { useSelector } from "react-redux";
 
 const UpdateProduct = () => {
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
   const { productId } = useParams();
   const [product, setProduct] = useState<Product>();
 
@@ -25,14 +28,12 @@ const UpdateProduct = () => {
     message: null,
   });
 
-  const user = getUser();
   const navigate = useNavigate();
   useEffect(() => {
-    if (user && !user.isAdmin) {
+    if (store.user && !store.user.isAdmin) {
       return navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [navigate, store.user]);
 
   useEffect(() => {
     setResponse((prevState) => ({ ...prevState, loading: true, message: null }));
@@ -127,7 +128,7 @@ const UpdateProduct = () => {
       method: "POST",
       headers: {
         // "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${user && user.access_token}`,
+        Authorization: `Bearer ${store.user && store.user.access_token}`,
       },
       body: formData,
     })
@@ -158,7 +159,7 @@ const UpdateProduct = () => {
     axios
       .put(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/edit`, editData, {
         headers: {
-          Authorization: `Bearer ${user && user.access_token}`,
+          Authorization: `Bearer ${store.user && store.user.access_token}`,
         },
       })
       .then((response) => {

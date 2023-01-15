@@ -1,18 +1,22 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
 import Navbar from "components/Navbar";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getUser } from "util/local";
 
 const Home = () => {
-  const user = getUser();
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
+
   return (
     <>
       <Header />
       <Navbar />
       <div className="mx-auto w-fit text-center">
         <h2 className="text-xl">
-          Welcome to ABC Store {` ${user && user.firstName} ${user && user.lastName} `}
+          Welcome to ABC Store{" "}
+          {` ${store.user && store.user.firstName} ${store.user && store.user.lastName} `}
         </h2>
         <p>
           Find our best deals at{" "}

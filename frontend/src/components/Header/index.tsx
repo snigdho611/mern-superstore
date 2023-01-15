@@ -1,17 +1,21 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getUser, removeUser } from "util/local/index";
+import { removeUser } from "store/user";
 import "./index.scss";
 
 const Header: React.FC = () => {
-  let user = getUser();
   const navigate = useNavigate();
   const [optmenu, setOptment] = useState<boolean>(false);
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
+  const dispatch = useDispatch();
 
   return (
     <div className="header">
       <div className="header__segment">
-        <Link to={user ? "/home" : "/"} className="header__segment__link">
+        <Link to={store.user ? "/home" : "/"} className="header__segment__link">
           <img
             className="header__segment__link__image"
             src={
@@ -22,8 +26,8 @@ const Header: React.FC = () => {
         </Link>
       </div>
       <div className="header__segment">
-        {user ? (
-          user.isAdmin ? (
+        {store.user ? (
+          store.user.isAdmin ? (
             <div>
               <div>Admin Mode</div>
             </div>
@@ -35,7 +39,7 @@ const Header: React.FC = () => {
             </Link>
           )
         ) : null}
-        {user ? (
+        {store.user ? (
           <div className="menu">
             <div
               className="menu__imgcontainer"
@@ -74,7 +78,8 @@ const Header: React.FC = () => {
                 <div
                   className="menu__options__option"
                   onClick={() => {
-                    removeUser();
+                    // removeUser();
+                    dispatch(removeUser());
                     navigate("/");
                   }}
                 >

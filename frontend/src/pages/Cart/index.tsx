@@ -4,28 +4,31 @@ import Header from "components/Header";
 import Loader from "components/Loader";
 import Navbar from "components/Navbar";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getUser } from "util/local/index";
 import { CartItem, Product } from "types/index";
 import "./index.scss";
 
 const Cart = () => {
-  const user = getUser();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [success, setSuccess] = useState<Boolean>(false);
   const [displayCheckoutMsg, setDisplayCheckoutMsg] = useState<string>();
   const [loader, setLoader] = useState<Boolean>(false);
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/get`, {
       method: "POST",
       body: JSON.stringify({
-        userId: user && user._id.toString(),
+        userId: store.user && store.user._id.toString(),
       }),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user && user.access_token}`,
+        Authorization: `Bearer ${store.user && store.user.access_token}`,
       },
     })
       .then((response) => response.json())
@@ -52,24 +55,24 @@ const Cart = () => {
   const proceedCheckout = () => {
     if (calculateTotal() === 0) {
       setDisplayCheckoutMsg(
-        `Sorry, ${user && user.firstName} ${
-          user && user.lastName
+        `Sorry, ${store.user && store.user.firstName} ${
+          store.user && store.user.lastName
         }, but you need to select something to buy it`
       );
     } else {
-      console.log(user && user._id);
+      console.log(store.user && store.user._id);
       setLoader(true);
       axios
         .post(
           `${process.env.REACT_APP_BASE_BACKEND}/cart/checkout-email`,
           {
-            userId: user && user._id,
+            userId: store.user && store.user._id,
           },
           {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              Authorization: `Bearer ${user && user.access_token}`,
+              Authorization: `Bearer ${store.user && store.user.access_token}`,
             },
           }
         )
@@ -77,8 +80,8 @@ const Cart = () => {
           setSuccess(true);
           setTimeout(() => {
             setDisplayCheckoutMsg(
-              `Thank you for shopping with us, ${user && user.firstName} ${
-                user && user.lastName
+              `Thank you for shopping with us, ${store.user && store.user.firstName} ${
+                store.user && store.user.lastName
               } please wait for a confirmation email`
             );
             setLoader(false);
@@ -100,10 +103,10 @@ const Cart = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user && user.access_token}`,
+        Authorization: `Bearer ${store.user && store.user.access_token}`,
       },
       body: JSON.stringify({
-        userId: user && user._id.toString(),
+        userId: store.user && store.user._id.toString(),
         productId: _id,
       }),
     })
