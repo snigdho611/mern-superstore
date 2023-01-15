@@ -3,25 +3,27 @@ import { Form, InputRow, InputSubmit } from "components/Form";
 import Header from "components/Header";
 import React, { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "store/user";
 import { Response } from "types";
-import { getUser, setUser } from "util/local";
 
 const Register = () => {
+  const store = useSelector((state: any) => ({
+    user: state.user.user,
+  }));
+  const dispatch = useDispatch();
   const [response, setResponse] = useState<Response>({
     success: false,
     loading: false,
     message: null,
   });
-  const user = getUser();
-
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
+    if (store.user) {
       navigate("/home");
     }
-  }, [navigate, user]);
-
+  }, [navigate, store.user]);
   const {
     register,
     handleSubmit,
@@ -55,7 +57,7 @@ const Register = () => {
             success: true,
             message: "Successfully registered, please log in",
           });
-          setUser(JSON.stringify(res.results));
+          dispatch(setUser(JSON.stringify(res.results)));
         } else {
           setResponse({
             ...response,
