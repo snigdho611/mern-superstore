@@ -5,7 +5,6 @@ import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Response } from "types";
-// import classes from './index.module.css'
 
 const ForgotPassword = () => {
   const [response, setResponse] = useState<Response>({

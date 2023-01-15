@@ -1,5 +1,5 @@
-import "./index.css";
-import "./App.css";
+import "./index.scss";
+import "./App.scss";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ForgotPassword from "pages/ForgotPassword/ForgotPassword";
 import ProductsPage from "pages/ProductsPage";

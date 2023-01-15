@@ -5,7 +5,6 @@ import Navbar from "components/Navbar";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Product, Response } from "types";
-// import "./index.css";
 
 const ProductDetails = () => {
   const { productId } = useParams();
