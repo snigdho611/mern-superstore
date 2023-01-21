@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "store/user";
 import "./index.scss";
@@ -21,6 +21,7 @@ const Header: React.FC = () => {
   const store = useSelector((state: any) => ({
     user: state.user.user,
   }));
+  const dispatch = useDispatch();
 
   return (
     <div className="header">
@@ -38,7 +39,7 @@ const Header: React.FC = () => {
       <div className="header__segment">
         {store.user ? (
           store.user.isAdmin ? (
-            <div>
+            <div className="header__segment__text">
               <div>Admin Mode</div>
             </div>
           ) : (
@@ -91,8 +92,8 @@ const Header: React.FC = () => {
               <div
                 className="menu__options__option"
                 onClick={() => {
-                  removeUser();
-                  navigate("/");
+                  dispatch(removeUser());
+                  // navigate("/");
                 }}
               >
                 Log Out

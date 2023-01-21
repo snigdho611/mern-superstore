@@ -47,3 +47,41 @@
     }
   }
 }
+
+.cartbutton {
+  display: inline-flex;
+  padding: 0.25rem 0;
+  width: 100%;
+  margin: 0.25rem auto;
+  background-color: #2563eb;
+  color: #eff6ff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  border: none;
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: colors.$grey-3;
+  background-color: colors.$cyan-3;
+  cursor: pointer;
+  transition: 0.25s color, 0.25s background-color;
+  text-decoration: none;
+  &:hover {
+    color: colors.$cyan-3;
+    background-color: colors.$grey-1;
+  }
+}
+
+.backbutton {
+  padding: 0.75rem;
+  background-color: #1e40af;
+  transition-property: background-color, border-color, color, fill, stroke;
+  color: #dbeafe;
+  font-weight: 700;
+  width: 100%;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}

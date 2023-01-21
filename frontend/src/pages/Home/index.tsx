@@ -3,6 +3,7 @@ import Header from "components/Header";
 import Navbar from "components/Navbar";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import "./index.scss";
 
 const Home = () => {
   const store = useSelector((state: any) => ({
@@ -13,7 +14,7 @@ const Home = () => {
     <>
       <Header />
       <Navbar />
-      <div className="mx-auto w-fit text-center">
+      <div className="home">
         <h2 className="text-xl">
           Welcome to ABC Store{" "}
           {` ${store.user && store.user.firstName} ${store.user && store.user.lastName} `}

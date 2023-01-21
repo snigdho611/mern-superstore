@@ -11,6 +11,13 @@
     display: flex;
     justify-content: flex-end;
     width: 50%;
+    &__text {
+      // display: "flex", alignItems: "center", justifyContent: "center"
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: colors.$cyan-1;
+    }
     &__link {
       &__image {
         height: 80%;

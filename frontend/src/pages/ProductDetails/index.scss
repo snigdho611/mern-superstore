@@ -1,0 +1,45 @@
+@use "styles/colors";
+
+.productdetails {
+  display: flex;
+  margin-top: 1.25rem;
+  outline-width: 1px;
+  outline-color: colors.$cyan-3;
+  outline-style: solid;
+  margin-left: 300px;
+  width: 70%;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    &__row {
+      display: flex;
+      flex-direction: row;
+      &__label {
+        padding: 0.5rem;
+        font-weight: 700;
+        text-align: right;
+        outline-width: 1px;
+        outline-color: colors.$cyan-3;
+        outline-style: solid;
+        width: 30%;
+      }
+      &__data {
+        padding: 0.5rem;
+        outline-width: 1px;
+        outline-color: colors.$cyan-3;
+        outline-style: solid;
+        width: 70%;
+      }
+    }
+    &__img {
+      display: flex;
+      justify-content: center;
+      width: 50%;
+      &__input {
+        // h-[260px];
+        height: 260px;
+      }
+    }
+  }
+}

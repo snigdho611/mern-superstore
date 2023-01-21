@@ -17,30 +17,30 @@ const Cart = () => {
   const store = useSelector((state: any) => ({
     user: state.user.user,
   }));
-  // const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/get`, {
-      method: "POST",
-      body: JSON.stringify({
-        userId: store.user && store.user._id.toString(),
-      }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${store.user && store.user.access_token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json.results.itemList);
-        setCart(json.results.itemList);
+    if (store.user._id) {
+      fetch(`${process.env.REACT_APP_BASE_BACKEND}/cart/get`, {
+        method: "POST",
+        body: JSON.stringify({
+          userId: store.user._id.toString(),
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${store.user && store.user.access_token}`,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
-    // eslint-disable-next-line
-  }, []);
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json.results.itemList);
+          setCart(json.results.itemList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [store.user]);
 
   const calculateTotal = () => {
     const total =
@@ -129,8 +129,6 @@ const Cart = () => {
         }
       })
     );
-
-    // setCart((prevState) => [...prevState, ]);
   };
 
   return (
@@ -186,20 +184,14 @@ const Cart = () => {
               </tr>
               <tr>
                 <td>
-                  <Link
-                    className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl p-3 w-full transition-colors hover:bg-blue-400 hover:text-blue-800"
-                    to="/products"
-                  >
+                  <Link className="backbutton" to="/products">
                     {"<="}
                   </Link>
                 </td>
                 <td></td>
                 <td></td>
                 <td>
-                  <button
-                    className="cursor-pointer bg-blue-800 font-bold text-blue-100 rounded-xl w-full h-[40px] transition-colors hover:bg-blue-400 hover:text-blue-800"
-                    onClick={() => proceedCheckout()}
-                  >
+                  <button className="cartbutton" onClick={() => proceedCheckout()}>
                     Checkout
                   </button>
                 </td>
