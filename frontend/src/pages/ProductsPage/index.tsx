@@ -85,6 +85,11 @@ const ProductsPage = () => {
   const confirmDeletion = () => {
     fetch(`${process.env.REACT_APP_BASE_BACKEND}/admin/products/delete/${productId}`, {
       method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${store.user && store.user.access_token}`,
+      },
     })
       .then((response) => response.json())
       .then((json) => {
@@ -133,6 +138,37 @@ const ProductsPage = () => {
     console.log(range);
   }, [range]);
 
+  const getPagination = (start: number, end: number) => {
+    const buttons: any = [];
+
+    // console.log(parseInt(searchParams.get("page") as string));
+
+    for (let i = start; i <= end; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => {
+            navigate({
+              pathname: "/products",
+              search: `?page=${i}`,
+            });
+          }}
+          className={`productspagination__btn ${
+            parseInt(searchParams.get("page") as string) === i
+              ? "productspagination__btn--active"
+              : ""
+          }`}
+          // className={`w-[80px] outline-1 outline outline-zinc-600 rounded-lg py-2 hover:bg-blue-300 transition-colors ${
+          //   parseInt(searchParams.get("page") as string) === i ? "bg-blue-300" : "bg-blue-50"
+          // }`}
+        >
+          {i}
+        </button>
+      );
+    }
+    return buttons;
+  };
+
   return (
     <>
       {modalOpen ? (
@@ -171,53 +207,43 @@ const ProductsPage = () => {
         )}
       </div>
       <div className="productspagination">
-        {parseInt(searchParams.get("page") as string) > 3 ? (
-          <button
-            onClick={() => {
-              if (range.max < total) {
-                setRange((prevState) => ({ min: prevState.min - 1, max: prevState.max - 1 }));
-              }
-            }}
-            className="productspagination__gobackbutton"
-          >
-            {"<"}
-          </button>
-        ) : null}
-
-        {/* {Array(3).fill(0).map((element, i) => { */}
-        {Array.from(Array(Math.ceil(total / 8)).keys()).map((element, i) => {
-          return (
+        <>
+          {parseInt(searchParams.get("page") as string) ? (
             <button
-              key={i}
               onClick={() => {
-                navigate({
-                  pathname: "/products",
-                  search: `?page=${i + 1}`,
-                });
+                if (range.min > 1) {
+                  setRange((prevState) => ({ min: prevState.min - 1, max: prevState.max - 1 }));
+                  navigate({
+                    pathname: "/products",
+                    search: `?page=${range.min - 1}`,
+                  });
+                }
               }}
-              className={`w-[80px] outline-1 outline outline-zinc-600 rounded-lg py-2 hover:bg-blue-300 transition-colors ${
-                parseInt(searchParams.get("page") as string) === i + 1
-                  ? "bg-blue-300"
-                  : "bg-blue-50"
-              }`}
+              className="productspagination__btn"
             >
-              {i + 1}
+              {"<"}
             </button>
-          );
-        })}
-        {/* {parseInt(searchParams.get("page") as string) <= Math.ceil(total / 8) - 3 ? (
-          <button
-            onClick={() => {
-              console.log(range.min);
-              if (range.min <= Math.ceil(total / 8)) {
-                setRange((prevState) => ({ min: prevState.min + 1, max: prevState.max + 1 }));
-              }
-            }}
-            className={`w-[80px] outline-1 outline outline-zinc-600`}
-          >
-            {">"}
-          </button>
-        ) : null} */}
+          ) : null}
+          {getPagination(range.min, range.max)}
+          {console.log(Math.ceil(total / 8))}
+          {parseInt(searchParams.get("page") as string) < Math.ceil(total / 8) ? (
+            <button
+              onClick={() => {
+                if (range.max <= Math.ceil(total / 8) - 1) {
+                  setRange((prevState) => ({ min: prevState.min + 1, max: prevState.max + 1 }));
+                  navigate({
+                    pathname: "/products",
+                    search: `?page=${range.max + 1}`,
+                  });
+                }
+              }}
+              // className={`w-[80px] outline-1 outline outline-zinc-600`}
+              className="productspagination__btn"
+            >
+              {">"}
+            </button>
+          ) : null}
+        </>
       </div>
       <Footer />
     </>

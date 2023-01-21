@@ -1,3 +1,5 @@
+@use "styles/colors";
+
 .productspage {
   z-index: 10;
   margin-left: 15%;
@@ -28,9 +30,25 @@
   width: 100%;
   gap: 0.5rem;
   background: rgba(177, 177, 177, 0.5);
-  &__gobackbutton {
+  z-index: 2;
+  &__btn {
     outline-width: 1px;
     outline-color: #52525b;
     outline-style: solid;
+    border: none;
+    background-color: colors.$cyan-1;
+    color: colors.$cyan-4;
+    cursor: pointer;
+    transition: 0.25s color, 0.25s background-color;
+    // font-size: rem;
+    padding: 0.25rem 0.75rem;
+    &:hover {
+      color: colors.$cyan-1;
+      background-color: colors.$cyan-4;
+    }
+    &--active {
+      color: colors.$cyan-1;
+      background-color: colors.$cyan-4;
+    }
   }
 }

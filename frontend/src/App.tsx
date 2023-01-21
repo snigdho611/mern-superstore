@@ -31,14 +31,6 @@ const App = () => {
   }, [dispatch]);
 
   const routes = [
-    // {
-    //   path: "/",
-    //   element: <Login />,
-    // },
-    // {
-    //   path: "/login",
-    //   element: <Login />,
-    // },
     {
       path: "/login",
       element: <Login />,
