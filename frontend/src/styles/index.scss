@@ -2,39 +2,40 @@
 
 body {
   font-size: 0.85rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-.text-success {
-  color: colors.$success;
-}
+// .text-success {
+//   color: colors.$success;
+// }
 
-.text-failure {
-  color: colors.$failure;
-}
+// .text-failure {
+//   color: colors.$failure;
+// }
 
-.formlink {
-  margin-left: auto;
-  margin-right: auto;
-  transition-property: background-color, border-color, color, fill, stroke;
-  color: colors.$cyan-4;
-  line-height: 1.75rem;
-  text-decoration: none;
-  transition: 0.25s color;
-  font-size: 0.85rem;
-  &:hover {
-    color: colors.$cyan-2;
-  }
-}
+// .formlink {
+//   margin-left: auto;
+//   margin-right: auto;
+//   transition-property: background-color, border-color, color, fill, stroke;
+//   color: colors.$cyan-4;
+//   line-height: 1.75rem;
+//   text-decoration: none;
+//   transition: 0.25s color;
+//   font-size: 0.85rem;
+//   &:hover {
+//     color: colors.$cyan-2;
+//   }
+// }
 
-.formlinks {
-  // my-4 flex flex-col gap-2 w-fit mx-auto
-  margin: 0.5rem auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  width: fit-content;
-}
+// .formlinks {
+//   // my-4 flex flex-col gap-2 w-fit mx-auto
+//   margin: 0.5rem auto;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.25rem;
+//   width: fit-content;
+// }
 
-a {
-  text-decoration: none;
-}
+// a {
+//   text-decoration: none;
+// }

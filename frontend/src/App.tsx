@@ -7,7 +7,7 @@ import "styles/index.scss";
 import Login from "pages/Login";
 import Register from "pages/Register";
 import ResetPassword from "pages/ResetPassword";
-import Home from "pages/Home";
+// import Home from "pages/Home";
 import VerifyEmail from "components/VerifyEmail";
 import UpdateProduct from "pages/UpdateProduct";
 import ProductDetails from "pages/ProductDetails";
@@ -19,6 +19,7 @@ import UpdatePassword from "pages/UpdatePassword";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUser } from "store/user";
+import Home from "components/Pages/Home";
 
 const App = () => {
   const store = useSelector((state: any) => ({
@@ -96,17 +97,18 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={store.user ? <Navigate replace to={"/home"} /> : <Login />} />
+        {/* <Route path={"/"} element={store.user ? <Navigate replace to={"/home"} /> : <Login />} />
         <Route
           path={"/login"}
           element={store.user ? <Navigate replace to={"/home"} /> : <Login />}
-        />
+        /> */}
         {routes.map(({ path, element }, i) => {
           return (
             <Route
               key={i}
               path={path}
-              element={store.user ? element : <Navigate replace to={"/"} />}
+              // element={store.user ? element : <Navigate replace to={"/"} />}
+              element={element}
             />
           );
         })}
