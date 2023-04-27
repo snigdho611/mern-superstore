@@ -1,7 +1,21 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const Button = () => {
-  return <div>Button</div>;
+interface IButtonProps {
+  children: ReactNode;
+  onClick?: () => void;
+  type?: string;
+}
+
+export enum ButtonType {
+  DEFAULT = "default",
+}
+
+const Button: React.FC<IButtonProps> = ({ children, onClick }) => {
+  return <button onClick={onClick}>{children}</button>;
+};
+
+Button.defaultProps = {
+  type: ButtonType.DEFAULT,
 };
 
 export default Button;

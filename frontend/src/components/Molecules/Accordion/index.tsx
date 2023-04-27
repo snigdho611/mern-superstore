@@ -1,3 +1,4 @@
+import Button from "components/Atoms/Button";
 import React, { useState } from "react";
 
 interface IAccordion {
@@ -13,15 +14,18 @@ const Accordion: React.FC<IAccordion> = ({ data }) => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       {data.map(({ id, category, list }) => {
         return (
-          <>
-            <button
-              key={id}
+          <div key={id}>
+            <Button
               onClick={() => {
-                setOpen({ id: id, state: !open.state });
+                if (open.id === id) {
+                  setOpen((prevState) => ({ ...prevState, state: !open.state }));
+                } else {
+                  setOpen({ id: id, state: true });
+                }
               }}
             >
               {category}
-            </button>
+            </Button>
             {open.id === id && open.state ? (
               <div>
                 {list.map(({ id, name }) => {
@@ -29,7 +33,7 @@ const Accordion: React.FC<IAccordion> = ({ data }) => {
                 })}
               </div>
             ) : null}
-          </>
+          </div>
         );
       })}
     </div>

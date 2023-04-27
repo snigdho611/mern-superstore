@@ -11,7 +11,7 @@ const productsList = [
         name: "headphone",
       },
       {
-        id: 1,
+        id: 2,
         name: "earbud",
       },
     ],
