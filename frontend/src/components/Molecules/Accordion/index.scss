@@ -1,0 +1,11 @@
+.accordion {
+  &_pane {
+    display: none;
+    overflow: hidden;
+    flex-direction: column;
+    transition: 4s;
+  }
+  &_pane-open {
+    display: flex;
+  }
+}

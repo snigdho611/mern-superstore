@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import "./index.scss";
 
 interface IButtonProps {
   children: ReactNode;
@@ -8,10 +9,15 @@ interface IButtonProps {
 
 export enum ButtonType {
   DEFAULT = "default",
+  ACCORDION = "accordion",
 }
 
-const Button: React.FC<IButtonProps> = ({ children, onClick }) => {
-  return <button onClick={onClick}>{children}</button>;
+const Button: React.FC<IButtonProps> = ({ children, onClick, type }) => {
+  return (
+    <button className={`button-${type}`} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 Button.defaultProps = {
