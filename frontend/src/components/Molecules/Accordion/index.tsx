@@ -1,24 +1,31 @@
 import Button, { ButtonType } from "components/Atoms/Button";
 import React, { useState } from "react";
 import "./index.scss";
+import { useSearchParams } from "react-router-dom";
 
 interface IAccordion {
   data: Array<{ id: number; category: string; list: Array<{ id: number; name: string }> }>;
+  type?: string;
 }
 
-const Accordion: React.FC<IAccordion> = ({ data }) => {
+export enum AccordionType {
+  DEFAULT = "default",
+  SIDEBAR = "sidebar",
+}
+
+const Accordion: React.FC<IAccordion> = ({ data, type }) => {
+  let [searchParams, setSearchParams] = useSearchParams();
   const [open, setOpen] = useState<{ id: number | null; state: boolean }>({
     id: null,
     state: false,
   });
-  console.log(open);
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div className="accordion">
       {data.map(({ id, category, list }) => {
         return (
           <div key={id}>
             <Button
-              type={ButtonType.ACCORDION}
+              type={type === AccordionType.SIDEBAR ? ButtonType.NAVACCORDION : ButtonType.ACCORDION}
               onClick={() => {
                 if (open.id === id) {
                   setOpen((prevState) => ({ ...prevState, state: !open.state }));
@@ -29,24 +36,37 @@ const Accordion: React.FC<IAccordion> = ({ data }) => {
             >
               {category}
             </Button>
-            {/* {open.id === id && open.state ? ( */}
             <div
-              className={
-                open.id === id && open.state
-                  ? "accordion_pane accordion_pane-open"
-                  : "accordion_pane"
-              }
+              className={"accordion_pane"}
+              style={open.id === id && open.state ? { maxHeight: "75px" } : {}}
             >
               {list.map(({ id, name }) => {
-                return <div key={id}>{name}</div>;
+                return (
+                  <div
+                    className={`accordion_pane_button ${
+                      type === AccordionType.SIDEBAR ? "accordion_pane_button-nav" : "null"
+                    }`}
+                    key={id}
+                    onClick={() => {
+                      type === AccordionType.SIDEBAR
+                        ? setSearchParams(`category=${id}&product=${id}`)
+                        : setSearchParams();
+                    }}
+                  >
+                    {name}
+                  </div>
+                );
               })}
             </div>
-            {/* ) : null} */}
           </div>
         );
       })}
     </div>
   );
+};
+
+Accordion.defaultProps = {
+  type: AccordionType.DEFAULT,
 };
 
 export default Accordion;

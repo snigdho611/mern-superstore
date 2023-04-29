@@ -10,6 +10,7 @@ interface IButtonProps {
 export enum ButtonType {
   DEFAULT = "default",
   ACCORDION = "accordion",
+  NAVACCORDION = "navaccordion",
 }
 
 const Button: React.FC<IButtonProps> = ({ children, onClick, type }) => {

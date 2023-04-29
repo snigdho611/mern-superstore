@@ -1,5 +1,6 @@
-import Accordion from "components/Molecules/Accordion";
+import Accordion, { AccordionType } from "components/Molecules/Accordion";
 import React from "react";
+import "./index.scss";
 
 const productsList = [
   {
@@ -34,7 +35,8 @@ const productsList = [
 
 const Sidebar = () => {
   return (
-    <div>
+    <div className="sidebar">
+      <Accordion type={AccordionType.SIDEBAR} data={productsList} />
       <Accordion data={productsList} />
     </div>
   );
