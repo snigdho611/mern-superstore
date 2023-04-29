@@ -21,16 +21,16 @@ const Accordion: React.FC<IAccordion> = ({ data, type }) => {
   });
   return (
     <div className="accordion">
-      {data.map(({ id, category, list }) => {
+      {data.map(({ id: categoryId, category, list }) => {
         return (
-          <div key={id}>
+          <div key={categoryId}>
             <Button
               type={type === AccordionType.SIDEBAR ? ButtonType.NAVACCORDION : ButtonType.ACCORDION}
               onClick={() => {
-                if (open.id === id) {
+                if (open.id === categoryId) {
                   setOpen((prevState) => ({ ...prevState, state: !open.state }));
                 } else {
-                  setOpen({ id: id, state: true });
+                  setOpen({ id: categoryId, state: true });
                 }
               }}
             >
@@ -38,18 +38,18 @@ const Accordion: React.FC<IAccordion> = ({ data, type }) => {
             </Button>
             <div
               className={"accordion_pane"}
-              style={open.id === id && open.state ? { maxHeight: "75px" } : {}}
+              style={open.id === categoryId && open.state ? { maxHeight: "75px" } : {}}
             >
-              {list.map(({ id, name }) => {
+              {list.map(({ id: itemId, name }) => {
                 return (
                   <div
                     className={`accordion_pane_button ${
                       type === AccordionType.SIDEBAR ? "accordion_pane_button-nav" : "null"
                     }`}
-                    key={id}
+                    key={itemId}
                     onClick={() => {
                       type === AccordionType.SIDEBAR
-                        ? setSearchParams(`category=${id}&product=${id}`)
+                        ? setSearchParams(`category=${categoryId}&product=${itemId}`)
                         : setSearchParams();
                     }}
                   >

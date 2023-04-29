@@ -37,7 +37,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <Accordion type={AccordionType.SIDEBAR} data={productsList} />
-      <Accordion data={productsList} />
+      {/* <Accordion data={productsList} /> */}
     </div>
   );
 };
