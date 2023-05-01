@@ -1,10 +1,11 @@
 import React, { ReactNode } from "react";
 import "./index.scss";
-
 interface IButtonProps {
   children: ReactNode;
   onClick?: () => void;
   type?: string;
+  bg?: string;
+  height?: string;
 }
 
 export enum ButtonType {
@@ -13,9 +14,13 @@ export enum ButtonType {
   NAVACCORDION = "navaccordion",
 }
 
-const Button: React.FC<IButtonProps> = ({ children, onClick, type }) => {
+const Button: React.FC<IButtonProps> = ({ children, onClick, type, bg, height }) => {
   return (
-    <button className={`button-${type}`} onClick={onClick}>
+    <button
+      className={`button-${type}`}
+      // style={{ backgroundColor: bg, height: height }}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

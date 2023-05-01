@@ -2,8 +2,9 @@
   position: fixed;
   width: 20%;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   justify-content: center;
   background-color: rgb(227, 255, 220);
+  transition: margin-left 0.5s;
 }
